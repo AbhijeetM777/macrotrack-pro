@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MacroTrack Pro">
+<meta name="theme-color" content="#0e0c1a">
+<meta name="description" content="Advanced fitness & macro tracker with weight tracking, fasting timer, and progress analytics.">
+<link rel="manifest" href="manifest.json">
+<title>MacroTrack Pro — Fuel Your Gains</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
+:root{
+  --bg:#0e0c1a;--s0:#131120;--s1:#181528;--s2:#1e1b30;--s3:#252238;--s4:#2e2a44;--s5:#3a3555;
+  --b0:rgba(255,255,255,.04);--b1:rgba(255,255,255,.08);--b2:rgba(255,255,255,.14);--b3:rgba(255,255,255,.22);
+  --t0:#f0eeff;--t1:#c8c4e8;--t2:#8880aa;--t3:#504a6e;--t4:#2e2844;
+  --ac:#a78bfa;--ac2:#8b6ef5;--ac3:#7c3aed;--acbg:rgba(167,139,250,.1);--acbd:rgba(167,139,250,.25);
+  --gr:#34d399;--grbg:rgba(52,211,153,.08);--grbd:rgba(52,211,153,.22);
+  --bl:#60a5fa;--blbg:rgba(96,165,250,.08);--blbd:rgba(96,165,250,.22);
+  --or:#fb923c;--orbg:rgba(251,146,60,.08);--orbd:rgba(251,146,60,.22);
+  --rd:#f87171;--pu:#e879f9;--pk:#f472b6;
+  --ff:'Plus Jakarta Sans',sans-serif;--fm:'DM Mono',monospace;
+  --r4:4px;--r8:8px;--r12:12px;--r16:16px;--r20:20px;--r24:24px;--r28:28px;--rpill:999px;
+}
+body.light{
+  --bg:#f5f3ff;--s0:#ffffff;--s1:#faf8ff;--s2:#f0ecff;--s3:#e8e3ff;--s4:#dcd6ff;--s5:#cfc6ff;
+  --b0:rgba(0,0,0,.04);--b1:rgba(0,0,0,.08);--b2:rgba(0,0,0,.14);--b3:rgba(0,0,0,.22);
+  --t0:#1a1633;--t1:#4a4566;--t2:#8880aa;--t3:#b0acd4;--t4:#d8d4e8;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:var(--ff);font-size:14px;line-height:1.5}
+body{display:flex;flex-direction:column;max-width:430px;margin:0 auto;position:relative}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 90% 50% at 50% -5%,rgba(124,58,237,.18) 0%,transparent 55%),radial-gradient(ellipse 60% 35% at 100% 60%,rgba(96,165,250,.07) 0%,transparent 50%),radial-gradient(ellipse 50% 30% at 0% 80%,rgba(52,211,153,.06) 0%,transparent 50%)}
+.screen,.tab-bar,.modal-overlay,.toast{position:relative;z-index:1}
+.tab-bar{display:flex;background:rgba(14,12,26,.92);border-top:1px solid var(--b1);padding:10px 8px calc(10px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:100;backdrop-filter:blur(28px);gap:4px}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;border:none;background:none;cursor:pointer;color:var(--t3);transition:all .25s;border-radius:var(--r12)}
+.tab-btn.active{color:var(--ac)}
+.tab-icon-wrap{width:44px;height:32px;border-radius:var(--r12);display:flex;align-items:center;justify-content:center;transition:all .25s}
+.tab-btn.active .tab-icon-wrap{background:var(--acbg)}
+.tab-btn svg{width:20px;height:20px;stroke-width:1.8}
+.tab-label{font-size:10px;font-weight:600;letter-spacing:.02em}
+.screen{display:none;flex-direction:column;height:100vh;overflow-y:auto;padding-bottom:90px;scrollbar-width:none}
+.screen.active{display:flex}
+.screen::-webkit-scrollbar{display:none}
+.status-bar{padding:16px 22px 0;display:flex;justify-content:space-between;align-items:center;font-family:var(--fm);font-size:11px;color:var(--t3);flex-shrink:0;letter-spacing:.04em}
+.page-header{padding:8px 22px 14px;flex-shrink:0}
+.page-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);margin-bottom:3px;opacity:.85}
+.page-title{font-family:var(--ff);font-size:32px;font-weight:800;line-height:1.05;color:var(--t0);letter-spacing:-.03em}
+.page-subtitle{font-size:12px;color:var(--t3);margin-top:4px;font-weight:400}
+.card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:18px;margin:0 16px 10px}
+.card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--t3);margin-bottom:14px}
+.hero-ring-wrap{padding:0 16px;margin-bottom:10px}
+.hero-ring-card{background:linear-gradient(145deg,var(--s2) 0%,var(--s0) 100%);border:1px solid var(--b1);border-radius:var(--r24);padding:20px 18px;display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden}
+.hero-ring-card::before{content:'';position:absolute;top:-80px;right:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.12) 0%,transparent 65%);pointer-events:none}
+.ring-row{display:flex;align-items:center;gap:18px}
+.ring-svg-wrap{position:relative;width:132px;height:132px;flex-shrink:0}
+.ring-svg-wrap svg{width:132px;height:132px;transform:rotate(-90deg)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 8px}
+.ring-kcal{font-size:30px;font-weight:800;color:var(--t0);line-height:1;letter-spacing:-.03em}
+.ring-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-top:2px}
+.ring-remaining{font-size:11px;font-weight:600;color:var(--gr);margin-top:3px}
+.macro-pills{display:flex;flex-direction:column;gap:11px;flex:1}
+.mpill{display:flex;align-items:center;gap:10px}
+.mpill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:1px}
+.mpill-info{flex:1}
+.mpill-name{font-size:10px;font-weight:600;color:var(--t3);letter-spacing:.04em}
+.mpill-val{font-family:var(--fm);font-size:14px;font-weight:500;color:var(--t0);line-height:1.2;margin-top:1px}
+.mpill-bar-wrap{height:3px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:4px;overflow:hidden}
+.mpill-bar{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.4,0,.2,1)}
+.macro-totals{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;width:100%}
+.mtotal{background:rgba(255,255,255,.04);border:1px solid var(--b0);border-radius:var(--r12);padding:10px 6px;text-align:center}
+.mtotal-num{font-size:18px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.mtotal-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-top:3px}
+.mtotal-sub{font-family:var(--fm);font-size:9px;color:var(--t3);margin-top:1px}
+.add-btn{background:var(--ac);color:#fff;border:none;border-radius:var(--r16);padding:15px 20px;font-family:var(--ff);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;margin:0 16px 10px;width:calc(100% - 32px);justify-content:center;transition:all .2s;letter-spacing:-.01em;box-shadow:0 4px 20px rgba(124,58,237,.35)}
+.add-btn:active{transform:scale(0.98);background:var(--ac2);box-shadow:0 2px 8px rgba(124,58,237,.2)}
+.add-btn svg{width:17px;height:17px;stroke-width:2.5}
+.meal-section{margin:0 16px 10px}
+.meal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.meal-name{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
+.meal-kcal{font-family:var(--fm);font-size:11px;color:var(--ac);font-weight:500}
+.food-item{background:var(--s1);border:1px solid var(--b0);border-radius:var(--r12);padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;transition:all .15s}
+.food-item:active{border-color:var(--b2);background:var(--s2)}
+.food-icon{width:36px;height:36px;background:var(--s3);border-radius:var(--r8);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.food-info{flex:1;min-width:0}
+.food-name{font-size:13px;font-weight:600;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.food-macros{font-size:11px;color:var(--t3);margin-top:2px}
+.food-kcal{font-family:var(--fm);font-size:12px;font-weight:500;color:var(--t1);flex-shrink:0}
+.del-btn{background:none;border:none;color:var(--t4);cursor:pointer;padding:4px;flex-shrink:0;transition:color .15s;display:flex;align-items:center}
+.del-btn:active{color:var(--rd)}
+.del-btn svg{width:14px;height:14px;stroke-width:2}
+.water-row{display:flex;align-items:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.water-cup{width:32px;height:32px;border-radius:var(--r8);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.water-cup svg{width:14px;height:14px;stroke:var(--t3);fill:none;stroke-width:1.8}
+.water-cup.filled{background:var(--blbg);border-color:var(--blbd)}
+.water-cup.filled svg{stroke:var(--bl)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,3,15,.8);z-index:200;backdrop-filter:blur(16px);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--s1);border-radius:var(--r28) var(--r28) 0 0;border-top:1px solid var(--b2);border-left:1px solid var(--b1);border-right:1px solid var(--b1);padding:16px 20px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:92vh;overflow-y:auto}
+.modal::-webkit-scrollbar{display:none}
+.modal-handle{width:36px;height:4px;background:var(--s5);border-radius:2px;margin:0 auto 16px}
+.modal-title{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:14px;color:var(--t0)}
+.field{margin-bottom:12px}
+.field label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);display:block;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);color:var(--t1);font-family:var(--ff);font-size:15px;font-weight:500;padding:12px 14px;outline:none;transition:border .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ac);background:var(--s3)}
+.field select option{background:var(--s2)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modal-btn{width:100%;padding:14px;background:var(--ac);color:#fff;border:none;border-radius:var(--r16);font-family:var(--ff);font-size:15px;font-weight:700;letter-spacing:-.01em;cursor:pointer;margin-top:4px;transition:all .2s;box-shadow:0 4px 16px rgba(124,58,237,.3)}
+.modal-btn:active{transform:scale(0.98);background:var(--ac2);box-shadow:none}
+.modal-btn.secondary{background:var(--s3);color:var(--t1);border:1px solid var(--b1);margin-top:8px;box-shadow:none}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--ac);color:#fff;padding:10px 20px;border-radius:var(--rpill);font-size:13px;font-weight:700;z-index:500;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(124,58,237,.4)}
+.toast.show{opacity:1}
+.theme-toggle{display:flex;align-items:center;gap:10px;padding:12px;background:var(--s2);border-radius:var(--r12);border:1px solid var(--b1)}
+.toggle-switch{width:48px;height:28px;background:var(--s3);border:1px solid var(--b1);border-radius:var(--rpill);position:relative;cursor:pointer;transition:all .25s}
+.toggle-switch.active{background:var(--ac);border-color:var(--ac)}
+.toggle-switch::after{content:'';position:absolute;width:24px;height:24px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .25s}
+.toggle-switch.active::after{left:22px}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px;margin-bottom:12px}
+.stat-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:16px}
+.stat-val{font-size:28px;font-weight:800;line-height:1;letter-spacing:-.03em}
+.stat-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-top:4px}
+.weekly-bars{display:flex;gap:6px;align-items:flex-end;height:70px;padding:0 16px;margin-bottom:6px}
+.w-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.w-bar-bg{flex:1;background:var(--s3);border-radius:4px;width:100%;display:flex;align-items:flex-end;overflow:hidden;min-height:54px}
+.w-bar-fill{width:100%;border-radius:4px;transition:height .8s cubic-bezier(.4,0,.2,1);min-height:2px}
+.w-bar-label{font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3)}
+.profile-header{padding:20px 22px 12px;border-bottom:1px solid var(--b1)}
+.profile-initials{width:64px;height:64px;background:var(--acbg);border:1.5px solid var(--acbd);border-radius:var(--r20);display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:24px;font-weight:800;color:var(--ac)}
+.profile-name{font-size:28px;font-weight:800;color:var(--t0);margin-bottom:3px;letter-spacing:-.03em}
+.profile-sub{font-size:12px;color:var(--t3);font-weight:400}
+.profile-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:12px 16px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);overflow:hidden}
+.pstat{padding:14px 8px;text-align:center;border-right:1px solid var(--b0)}
+.pstat:last-child{border-right:none}
+.pstat-val{font-size:22px;font-weight:800;line-height:1;letter-spacing:-.02em}
+.pstat-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-top:3px}
+.settings-list{padding:0 16px}
+.settings-item{background:var(--s1);border:1px solid var(--b0);border-radius:var(--r16);padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .15s}
+.settings-item:active{border-color:var(--b2);background:var(--s2)}
+.settings-left{display:flex;align-items:center;gap:12px}
+.settings-icon{width:36px;height:36px;border-radius:var(--r10);background:var(--s3);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center}
+.settings-icon svg{width:16px;height:16px;stroke:var(--t2);fill:none;stroke-width:1.6}
+.settings-label{font-size:14px;font-weight:500;color:var(--t1)}
+.settings-value{font-size:12px;font-weight:600;color:var(--t3);letter-spacing:.04em}
+.chevron{width:14px;height:14px;stroke:var(--t3);fill:none;stroke-width:2}
+.cat-tab{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rpill);padding:7px 14px;color:var(--t3);cursor:pointer;font-family:var(--ff);font-size:11px;font-weight:600;letter-spacing:.04em;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.cat-tab.active{background:var(--acbg);border-color:var(--acbd);color:var(--ac)}
+.food-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--s2);border:1px solid var(--b0);border-radius:var(--r12);margin-bottom:6px;cursor:pointer;transition:all .15s}
+.food-row:active,.food-row.sel{border-color:var(--acbd);background:var(--acbg)}
+.food-row-emoji{font-size:20px;width:34px;text-align:center;flex-shrink:0}
+.food-row-info{flex:1;min-width:0}
+.food-row-name{font-size:13px;font-weight:600;color:var(--t0)}
+.food-row-cat{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-top:1px}
+.food-row-macros{font-size:11px;color:var(--t3);margin-top:2px}
+.food-row-kcal{font-family:var(--fm);font-size:12px;font-weight:500;color:var(--ac);flex-shrink:0}
+#food-results::-webkit-scrollbar{display:none}
+.activity-preset{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.activity-preset:active,.activity-preset.used{border-color:var(--blbd);background:var(--blbg)}
+.activity-preset .ap-icon{width:32px;height:32px;margin:0 auto 5px;border-radius:var(--r8);background:var(--s3);display:flex;align-items:center;justify-content:center}
+.activity-preset .ap-icon svg{width:18px;height:18px;stroke:var(--t2);transition:stroke .15s}
+.activity-preset.used .ap-icon svg{stroke:var(--bl)}
+.activity-preset .ap-name{font-size:10px;font-weight:700;color:var(--t1);letter-spacing:.02em}
+.activity-preset .ap-steps{font-family:var(--fm);font-size:9px;color:var(--t3);margin-top:1px}
+.activity-preset .ap-burn{font-size:10px;font-weight:700;color:var(--or);margin-top:1px}
+.fasting-circle{position:relative;width:200px;height:200px;margin:20px auto}
+.fasting-circle svg{transform:rotate(-90deg)}
+.fasting-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.fasting-time{font-size:32px;font-weight:800;color:var(--ac);font-family:var(--fm)}
+.fasting-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--t2);margin-top:4px}
+.fasting-status{font-size:13px;font-weight:600;color:var(--t1);margin-top:2px}
+.weight-chart{width:100%;height:200px;margin:10px 0}
+.trend-chart{width:100%;height:180px;margin:10px 0}
+.chart-label{font-size:9px;font-weight:600;color:var(--t3);text-align:center;margin-top:8px}
+.bmi-badge{display:inline-block;padding:6px 12px;background:var(--acbg);border:1px solid var(--acbd);border-radius:var(--rpill);color:var(--ac);font-weight:700;font-size:12px;margin-top:8px}
+.notes-textarea{min-height:100px;resize:vertical;font-family:var(--ff)}
+.fav-btn{background:none;border:none;font-size:18px;cursor:pointer;transition:transform .15s}
+.fav-btn:active{transform:scale(1.2)}
+@keyframes slideUp{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero-ring-card,.card,.meal-section,.stat-card{animation:slideUp .3s ease}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- SCREEN: HOME / TODAY -->
+<div class="screen active" id="screen-home">
+  <div class="status-bar"><span id="home-time">9:41</span><span>●●●</span></div>
+  <div class="page-header">
+    <div class="page-eyebrow">Daily Fuel</div>
+    <div class="page-title">Today</div>
+    <div class="page-subtitle" id="home-date">Mon, 17 Mar 2026</div>
+  </div>
+
+  <div class="hero-ring-wrap">
+    <div class="hero-ring-card">
+      <div class="ring-row">
+        <div class="ring-svg-wrap">
+          <svg viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(167,139,250,0.12)" stroke-width="10"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="#a78bfa" stroke-width="10" stroke-linecap="square" stroke-dasharray="364" id="ring-dash" stroke-dashoffset="364" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-kcal" id="ring-eaten">0</div>
+            <div class="ring-label">kcal eaten</div>
+            <div class="ring-remaining" id="ring-remain">0 left</div>
+          </div>
+        </div>
+        <div class="macro-pills">
+          <div class="mpill">
+            <div class="mpill-dot" style="background:var(--bl)"></div>
+            <div class="mpill-info">
+              <div class="mpill-name">Protein</div>
+              <div class="mpill-val"><span id="p-eaten">0</span>g</div>
+              <div class="mpill-bar-wrap"><div class="mpill-bar" id="p-bar" style="background:var(--bl);width:0%"></div></div>
+            </div>
+          </div>
+          <div class="mpill">
+            <div class="mpill-dot" style="background:var(--ac)"></div>
+            <div class="mpill-info">
+              <div class="mpill-name">Carbs</div>
+              <div class="mpill-val"><span id="c-eaten">0</span>g</div>
+              <div class="mpill-bar-wrap"><div class="mpill-bar" id="c-bar" style="background:var(--ac);width:0%"></div></div>
+            </div>
+          </div>
+          <div class="mpill">
+            <div class="mpill-dot" style="background:var(--or)"></div>
+            <div class="mpill-info">
+              <div class="mpill-name">Fat</div>
+              <div class="mpill-val"><span id="f-eaten">0</span>g</div>
+              <div class="mpill-bar-wrap"><div class="mpill-bar" id="f-bar" style="background:var(--or);width:0%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="macro-totals">
+        <div class="mtotal">
+          <div class="mtotal-num" style="color:var(--bl)" id="t-protein">0g</div>
+          <div class="mtotal-label">Protein</div>
+          <div class="mtotal-sub" id="t-protein-goal" style="color:var(--t2)">/ 0g</div>
+        </div>
+        <div class="mtotal">
+          <div class="mtotal-num" style="color:var(--ac)" id="t-carbs">0g</div>
+          <div class="mtotal-label">Carbs</div>
+          <div class="mtotal-sub" id="t-carbs-goal" style="color:var(--t2)">/ 0g</div>
+        </div>
+        <div class="mtotal">
+          <div class="mtotal-num" style="color:var(--or)" id="t-fat">0g</div>
+          <div class="mtotal-label">Fat</div>
+          <div class="mtotal-sub" id="t-fat-goal" style="color:var(--t2)">/ 0g</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:8px">
+    <div class="card-title">Micronutrients</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <div style="text-align:center">
+        <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--yl)"><span id="fiber-eaten">0</span>g</div>
+        <div style="font-size:9px;color:var(--t2);margin-top:2px">FIBER</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--pk)"><span id="sugar-eaten">0</span>g</div>
+        <div style="font-size:9px;color:var(--t2);margin-top:2px">SUGAR</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--gr)"><span id="sodium-eaten">0</span>mg</div>
+        <div style="font-size:9px;color:var(--t2);margin-top:2px">SODIUM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0">
+    <div class="card-title">Water Intake</div>
+    <div class="water-row" id="water-cups"></div>
+    <div style="font-family:var(--ff);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t2);margin-top:8px"><span id="water-count">0</span> / 8 glasses today</div>
+  </div>
+
+  <div class="card" style="margin-top:0">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="card-title" style="margin:0">Steps & Burn</div>
+      <div id="steps-sync-btn" onclick="requestStepPermission()" style="font-family:var(--ff);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ac);cursor:pointer;border:1px solid rgba(167,139,250,.3);border-radius:var(--r8);padding:4px 10px">Auto-Sync</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+      <div style="position:relative;width:88px;height:88px;flex-shrink:0">
+        <svg width="88" height="88" viewBox="0 0 88 88" style="transform:rotate(-90deg)">
+          <circle cx="44" cy="44" r="36" fill="none" stroke="rgba(167,139,250,0.12)" stroke-width="7"/>
+          <circle cx="44" cy="44" r="36" fill="none" stroke="#60a5fa" stroke-width="7" stroke-linecap="square" stroke-dasharray="226" id="steps-arc" stroke-dashoffset="226" style="transition:stroke-dashoffset .9s cubic-bezier(.4,0,.2,1)"/>
+        </svg>
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div id="steps-pct" style="font-family:var(--ff);font-size:15px;font-weight:900;color:var(--bl);line-height:1">0%</div>
+          <div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t2)">goal</div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:4px">
+          <div id="steps-display" style="font-size:36px;font-weight:900;color:var(--t0);line-height:1">0</div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t2)">steps</div>
+        </div>
+        <div id="steps-burned" style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.18);border-radius:var(--r8);padding:6px 10px;display:inline-flex;align-items:center;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0111 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+          <span id="steps-burned-val" style="font-family:var(--fm);font-size:14px;font-weight:700;color:var(--or)">0</span>
+          <span style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t2)">kcal</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:10px">
+      <div class="activity-preset" onclick="addActivity('Walk',1200,90)"><div class="ap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="2"/><path d="M8 14l2-4 2 2 2-4"/></svg></div><div class="ap-name">Walk</div><div class="ap-burn">~90 kcal</div></div>
+      <div class="activity-preset" onclick="addActivity('Run',4500,300)"><div class="ap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="13" cy="4" r="2"/><path d="M7.5 13.5L10 12l2 3 3-6 1.5 4.5"/></svg></div><div class="ap-name">Run</div><div class="ap-burn">~300 kcal</div></div>
+      <div class="activity-preset" onclick="addActivity('Gym',3000,350)"><div class="ap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 4v16M18 4v16M4 8h4M16 8h4M4 16h4M16 16h4M8 12h8"/></svg></div><div class="ap-name">Gym</div><div class="ap-burn">~350 kcal</div></div>
+    </div>
+    <div id="net-cal" style="margin-top:12px;padding:10px 12px;background:var(--s2);border:1px solid var(--b0);border-radius:var(--r8);display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin-bottom:2px">Net Calories</div>
+        <div style="font-size:11px;color:var(--t2)">Eaten − Burned = Balance</div>
+      </div>
+      <div style="text-align:right">
+        <div id="net-cal-display" style="font-family:var(--fm);font-size:20px;font-weight:700;color:var(--ac)">0</div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--t2)">kcal net</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Daily Notes</div>
+    <textarea id="daily-notes" class="field notes-textarea" placeholder="How are you feeling? Any notes about today..." style="margin:0"></textarea>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Favorites</div>
+    <div id="favorites-list" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px"></div>
+    <button class="modal-btn secondary" onclick="openAddFood()">See All Foods</button>
+  </div>
+
+  <button class="add-btn" onclick="openAddFood()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Log Food
+  </button>
+
+  <div id="food-log-container"></div>
+</div>
+
+<!-- SCREEN: HISTORY -->
+<div class="screen" id="screen-history">
+  <div class="status-bar"><span></span><span>●●●</span></div>
+  <div class="page-header">
+    <div class="page-eyebrow">Track Record</div>
+    <div class="page-title">History</div>
+    <div class="page-subtitle">Monthly tracking & trends</div>
+  </div>
+  <div class="card">
+    <div class="card-title">30-Day Trend</div>
+    <canvas id="trend-canvas" class="trend-chart"></canvas>
+    <div class="chart-label">Calorie intake over 30 days</div>
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-val" id="h-avg-kcal" style="color:var(--ac)">—</div>
+      <div class="stat-label">Avg Daily Calories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="h-days-logged" style="color:var(--bl)">0</div>
+      <div class="stat-label">Days Logged</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="h-avg-protein" style="color:var(--or)">—g</div>
+      <div class="stat-label">Avg Protein</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="h-streak" style="color:var(--yl)">0</div>
+      <div class="stat-label">Day Streak</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">This Week</div>
+    <div class="weekly-bars" id="weekly-bars"></div>
+  </div>
+</div>
+
+<!-- SCREEN: WEIGHT -->
+<div class="screen" id="screen-weight">
+  <div class="status-bar"><span></span><span>●●●</span></div>
+  <div class="page-header">
+    <div class="page-eyebrow">Body Metrics</div>
+    <div class="page-title">Weight</div>
+    <div class="page-subtitle">Track your progress</div>
+  </div>
+  <div class="card">
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:16px">
+      <div id="current-weight" style="font-size:42px;font-weight:900;color:var(--ac);font-family:var(--fm)">—</div>
+      <div style="font-size:14px;color:var(--t2)">kg</div>
+      <div id="bmi-badge" style="margin-left:auto"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+      <div class="field"><label>Weight (kg)</label><input type="number" id="weight-input" step="0.1" placeholder="70.5"></div>
+      <div class="field"><label>Date</label><input type="date" id="weight-date"></div>
+    </div>
+    <button class="modal-btn" onclick="logWeight()">Add Weight Entry</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Weight Trend (30 Days)</div>
+    <canvas id="weight-canvas" class="weight-chart"></canvas>
+    <div class="chart-label">Weight changes over time</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Body Measurements</div>
+    <div class="field"><label>Waist (cm)</label><input type="number" id="measure-waist" placeholder="80"></div>
+    <div class="field"><label>Chest (cm)</label><input type="number" id="measure-chest" placeholder="95"></div>
+    <div class="field"><label>Arm (cm)</label><input type="number" id="measure-arm" placeholder="32"></div>
+    <button class="modal-btn secondary" onclick="saveMeasurements()">Save Measurements</button>
+  </div>
+
+  <div class="card" id="weight-history-card" style="display:none">
+    <div class="card-title">Weight History</div>
+    <div id="weight-history-list"></div>
+  </div>
+</div>
+
+<!-- SCREEN: FASTING -->
+<div class="screen" id="screen-fasting">
+  <div class="status-bar"><span></span><span>●●●</span></div>
+  <div class="page-header">
+    <div class="page-eyebrow">Intermittent Fasting</div>
+    <div class="page-title">Fasting</div>
+    <div class="page-subtitle">Time-restricted eating</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Fasting Protocol</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px">
+      <button class="modal-btn secondary" data-protocol="16:8" onclick="setFastingProtocol(this)">16:8</button>
+      <button class="modal-btn secondary" data-protocol="18:6" onclick="setFastingProtocol(this)">18:6</button>
+      <button class="modal-btn secondary" data-protocol="20:4" onclick="setFastingProtocol(this)">20:4</button>
+      <button class="modal-btn secondary" data-protocol="OMAD" onclick="setFastingProtocol(this)">OMAD</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="text-align:center">
+      <div class="fasting-circle">
+        <svg width="200" height="200" viewBox="0 0 200 200">
+          <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(167,139,250,0.12)" stroke-width="8"/>
+          <circle cx="100" cy="100" r="90" fill="none" stroke="#a78bfa" stroke-width="8" stroke-linecap="round" stroke-dasharray="565" id="fasting-dash" stroke-dashoffset="565" style="transition:stroke-dashoffset .8s"/>
+        </svg>
+        <div class="fasting-center">
+          <div class="fasting-time" id="fasting-time">00:00</div>
+          <div class="fasting-label" id="fasting-phase">Not fasting</div>
+          <div class="fasting-status" id="fasting-status"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:16px">
+      <button class="modal-btn" style="flex:1" onclick="startFasting()">Start Fast</button>
+      <button class="modal-btn secondary" style="flex:1" onclick="stopFasting()">Break Fast</button>
+    </div>
+  </div>
+
+  <div class="card" id="fasting-history-card" style="display:none">
+    <div class="card-title">Fasting History</div>
+    <div id="fasting-history-list"></div>
+  </div>
+</div>
+
+<!-- SCREEN: PROFILE -->
+<div class="screen" id="screen-profile">
+  <div class="status-bar"><span></span><span>●●●</span></div>
+  <div class="profile-header">
+    <div class="profile-initials" id="prof-initials">MT</div>
+    <div class="profile-name" id="prof-name">Your Name</div>
+    <div class="profile-sub" id="prof-sub">Setting up...</div>
+  </div>
+  <div class="profile-stats">
+    <div class="pstat"><div class="pstat-val" id="prof-kcal" style="color:var(--ac)">—</div><div class="pstat-label">Daily kcal</div></div>
+    <div class="pstat"><div class="pstat-val" id="prof-protein" style="color:var(--bl)">—g</div><div class="pstat-label">Protein</div></div>
+    <div class="pstat"><div class="pstat-val" id="prof-days" style="color:var(--yl)">—</div><div class="pstat-label">Days Logged</div></div>
+  </div>
+
+  <div class="settings-list">
+    <div class="settings-item">
+      <div class="settings-left">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/></svg></div>
+        <div class="settings-label">Dark Theme</div>
+      </div>
+      <div class="toggle-switch" id="theme-toggle" onclick="toggleTheme()"></div>
+    </div>
+
+    <div class="settings-item" onclick="openEditProfile()">
+      <div class="settings-left">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 20v-1a6 6 0 0112 0v1"/></svg></div>
+        <div class="settings-label">Edit Profile & Goals</div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+    </div>
+
+    <div class="settings-item">
+      <div class="settings-left">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+        <div class="settings-label">Meal Reminders</div>
+      </div>
+      <div class="toggle-switch" id="reminders-toggle" onclick="toggleReminders()"></div>
+    </div>
+
+    <div class="settings-item" onclick="exportData()">
+      <div class="settings-left">
+        <div class="settings-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg></div>
+        <div class="settings-label">Export Data (CSV)</div>
+      </div>
+      <svg class="chevron" viewBox="0 0 24 24"><polyline points="9,18 15,12 9,6"/></svg>
+    </div>
+
+    <div class="settings-item" onclick="if(confirm('Reset all data?'))resetAll()" style="border-color:rgba(255,51,85,.2)">
+      <div class="settings-left">
+        <div class="settings-icon" style="border-color:rgba(255,51,85,.2)"><svg viewBox="0 0 24 24" style="stroke:var(--rd)"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></div>
+        <div class="settings-label" style="color:var(--rd)">Reset All Data</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tab-home" onclick="switchTab('home')">
+    <div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+    <span class="tab-label">Today</span>
+  </button>
+  <button class="tab-btn" id="tab-history" onclick="switchTab('history')">
+    <div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="1"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+    <span class="tab-label">History</span>
+  </button>
+  <button class="tab-btn" id="tab-weight" onclick="switchTab('weight')">
+    <div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg></div>
+    <span class="tab-label">Weight</span>
+  </button>
+  <button class="tab-btn" id="tab-fasting" onclick="switchTab('fasting')">
+    <div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+    <span class="tab-label">Fasting</span>
+  </button>
+  <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
+    <div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/></svg></div>
+    <span class="tab-label">Profile</span>
+  </button>
+</div>
+
+<!-- ADD FOOD MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="modal-title" style="margin:0">Log Food</div>
+      <button onclick="closeModal('add-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+    </div>
+    <div style="position:relative;margin-bottom:10px">
+      <input type="text" id="food-search" placeholder="🔍  Search foods..." oninput="searchFoods()" style="width:100%;background:var(--s2);border:1.5px solid var(--b1);border-radius:12px;color:var(--t0);font-family:var(--ff);font-size:14px;padding:11px 14px;outline:none">
+      <button onclick="document.getElementById('food-search').value='';searchFoods()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t2);cursor:pointer;font-size:16px">×</button>
+    </div>
+    <div id="cat-tabs" style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-bottom:10px;padding-bottom:2px">
+      <button class="cat-tab active" onclick="filterCat('all',this)">All</button>
+      <button class="cat-tab" onclick="filterCat('favorites',this)">⭐ Fav</button>
+      <button class="cat-tab" onclick="filterCat('recent',this)">⏱️ Recent</button>
+      <button class="cat-tab" onclick="filterCat('recipe',this)">🔗 Recipe</button>
+      <button class="cat-tab" onclick="filterCat('custom',this)">✏️ Custom</button>
+    </div>
+    <div id="food-results" style="max-height:260px;overflow-y:auto;scrollbar-width:none;margin-bottom:10px"></div>
+    <div id="custom-entry" style="display:none">
+      <div style="font-size:12px;color:var(--t2);margin-bottom:8px;font-weight:500;text-transform:uppercase;letter-spacing:.06em">Manual Entry</div>
+      <div class="field"><label>Food Name</label><input type="text" id="f-name" placeholder="My food..."></div>
+      <div class="field-row">
+        <div class="field"><label>Calories</label><input type="number" id="f-kcal" placeholder="200" min="0"></div>
+        <div class="field"><label>Protein (g)</label><input type="number" id="f-protein" placeholder="25" min="0"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Carbs (g)</label><input type="number" id="f-carbs" placeholder="0" min="0"></div>
+        <div class="field"><label>Fat (g)</label><input type="number" id="f-fat" placeholder="5" min="0"></div>
+      </div>
+    </div>
+    <div id="selected-preview" style="display:none;margin-bottom:12px">
+      <div style="background:var(--acbg);border:1px solid rgba(167,139,250,.22);border-radius:var(--r8);padding:12px 14px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="flex:1">
+            <div id="sel-name" style="font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--t0)"></div>
+            <div style="font-size:11px;color:var(--t2);margin-top:2px">✓ Fav</div>
+          </div>
+          <div style="text-align:right">
+            <div id="sel-kcal" style="font-family:var(--fm);font-size:24px;font-weight:700;color:var(--ac);line-height:1"></div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--t2)">kcal</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
+          <div style="background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.2);border-radius:var(--r8);padding:6px;text-align:center">
+            <div id="sel-protein" style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--bl)"></div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--t2);margin-top:1px">P</div>
+          </div>
+          <div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.15);border-radius:var(--r8);padding:6px;text-align:center">
+            <div id="sel-carbs" style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--ac)"></div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--t2);margin-top:1px">C</div>
+          </div>
+          <div style="background:rgba(251,146,60,.08);border:1px solid rgba(251,146,60,.18);border-radius:var(--r8);padding:6px;text-align:center">
+            <div id="sel-fat" style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--or)"></div>
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--t2);margin-top:1px">F</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r8);padding:12px 14px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--t2);margin-bottom:10px">Quantity</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button id="qty-minus" onclick="stepQty(-1)" style="width:38px;height:38px;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r8);color:var(--t0);font-size:18px;cursor:pointer;flex-shrink:0">−</button>
+          <input type="number" id="qty-input" min="0.1" step="0.5" value="1" oninput="onQtyInput()" style="flex:1;background:var(--s2);border:1.5px solid var(--ac);border-radius:var(--r8);color:var(--t0);font-family:var(--fm);font-size:18px;font-weight:700;padding:10px 14px;outline:none;text-align:center">
+          <button id="qty-plus" onclick="stepQty(1)" style="width:38px;height:38px;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r8);color:var(--t0);font-size:18px;cursor:pointer;flex-shrink:0">+</button>
+          <div id="active-unit-label" style="font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);min-width:48px;text-align:left">g</div>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Meal Time</label>
+      <select id="f-meal">
+        <option value="Breakfast">🌅 Breakfast</option>
+        <option value="Lunch">☀️ Lunch</option>
+        <option value="Dinner">🌙 Dinner</option>
+        <option value="Snack">🍎 Snack</option>
+      </select>
+    </div>
+    <button class="modal-btn" onclick="logFood()">Add to Today ✓</button>
+  </div>
+</div>
+
+<script>
+const FOOD_DB=[
+  {name:'Pakhala Bhata',emoji:'🍚',cat:'odia',unit:'bowl(300g)',kcal:132,p:2.8,c:29,f:0.3,fiber:2,sugar:0,sodium:50},
+  {name:'Chicken Biryani',emoji:'🍛',cat:'indian',unit:'plate(350g)',kcal:490,p:28,c:58,f:14,fiber:1,sugar:2,sodium:800},
+  {name:'Boiled Egg',emoji:'🥚',cat:'protein',unit:'1 egg',kcal:78,p:6,c:0.6,f:5.3,fiber:0,sugar:0,sodium:70},
+  {name:'Oats',emoji:'🥣',cat:'breakfast',unit:'bowl(80g)',kcal:307,p:11,c:55,f:5,fiber:8,sugar:1,sodium:7},
+  {name:'Banana',emoji:'🍌',cat:'breakfast',unit:'1 medium',kcal:105,p:1.3,c:27,f:0.4,fiber:3,sugar:12,sodium:1},
+  {name:'Pizza',emoji:'🍕',cat:'foreign',unit:'2 slices',kcal:500,p:20,c:58,f:20,fiber:2,sugar:3,sodium:900},
+];
+
+let profile={},targets={},todayKey='';
+function getKey(d){const dt=d||new Date();return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`}
+function getStorage(k,def){try{return JSON.parse(localStorage.getItem(k))||def}catch{return def}}
+function setStorage(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+function switchTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='home')renderHome();
+  if(tab==='history')renderHistory();
+  if(tab==='weight')renderWeight();
+  if(tab==='fasting')renderFasting();
+  if(tab==='profile')renderProfile();
+}
+
+function renderHome(){showToast('Home loaded');}
+function renderHistory(){showToast('History loaded');}
+function renderWeight(){showToast('Weight loaded');}
+function renderFasting(){showToast('Fasting loaded');}
+function renderProfile(){showToast('Profile loaded');}
+
+function openAddFood(){document.getElementById('add-modal').classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function searchFoods(){showToast('Search');}
+function filterCat(cat,el){showToast('Filter: '+cat);}
+function stepQty(dir){showToast('Qty changed');}
+function onQtyInput(){showToast('Qty input');}
+function logFood(){showToast('Food logged');closeModal('add-modal');}
+function addActivity(n,s,k){showToast(n+' added');}
+function requestStepPermission(){showToast('Steps permission');}
+function logWeight(){showToast('Weight logged');}
+function saveMeasurements(){showToast('Measurements saved');}
+function setFastingProtocol(el){showToast('Protocol set');}
+function startFasting(){showToast('Fasting started');}
+function stopFasting(){showToast('Fasting stopped');}
+function toggleTheme(){document.body.classList.toggle('light');setStorage('theme',document.body.classList.contains('light')?'light':'dark');showToast('Theme changed');}
+function toggleReminders(){showToast('Reminders toggled');}
+function exportData(){showToast('Exported');}
+function resetAll(){setStorage('mt_profile',{});showToast('Reset complete');location.reload();}
+function openEditProfile(){showToast('Edit profile');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  todayKey=getKey();
+  profile=getStorage('mt_profile',{});
+  if(getStorage('theme')=='light')document.body.classList.add('light');
+  document.getElementById('weight-date').valueAsDate=new Date();
+  document.getElementById('home-time').textContent=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+});
+</script>
+</body>
+</html>

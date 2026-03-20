@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "macrotrack",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["C:/Users/USER/OneDrive/Desktop/Project Ai/micro tracker/server.js"],
+      "port": 3456
+    }
+  ]
+}
