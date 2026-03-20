@@ -476,6 +476,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     </div>
     <div class="settings-item"><div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z"/></svg></div><div class="settings-label">Diet Type</div></div><div class="settings-value" id="prof-diet">—</div></div>
     <div class="settings-item"><div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="settings-label">Goal</div></div><div class="settings-value" id="prof-goal">—</div></div>
+    <div class="settings-item" onclick="importData()">
+      <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 10 12 15 7 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="settings-label">Import CSV</div></div>
+      <div class="settings-value">›</div>
+    </div>
     <div class="settings-item" onclick="exportData()">
       <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="settings-label">Export CSV</div></div>
       <div class="settings-value">›</div>
@@ -675,6 +679,10 @@ function saveSetup(){
   const age=parseInt(document.getElementById('s-age').value)||25;
   const weight=parseFloat(document.getElementById('s-weight').value)||70;
   const height=parseInt(document.getElementById('s-height').value)||170;
+  // Validation
+  if(age<13||age>120){showToast('❌ Age must be 13-120 years');return;}
+  if(weight<30||weight>300){showToast('❌ Weight must be 30-300 kg');return;}
+  if(height<100||height>250){showToast('❌ Height must be 100-250 cm');return;}
   const gender=document.getElementById('s-gender').value;
   const name=document.getElementById('s-name').value||'User';
   const actEl=document.querySelector('.fitness-card.selected');
@@ -1108,6 +1116,39 @@ function exportData(){
   showToast('📤 Exported!');
 }
 
+function importData(){
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='.csv';
+  input.onchange=(e)=>{
+    const file=e.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=(event)=>{
+      try{
+        const csv=event.target.result;
+        const lines=csv.split('\n').slice(1);
+        let count=0;
+        lines.forEach(line=>{
+          if(!line.trim())return;
+          const [date,meal,name,kcal,protein,carbs,fat,fiber,sugar,sodium]=line.split(',');
+          if(date){
+            const logs=getStorage('mt_log_'+date.trim(),[]);
+            logs.push({meal:meal?.trim(),name:name?.replace(/"/g,'').trim(),kcal:parseFloat(kcal),protein:parseFloat(protein),carbs:parseFloat(carbs),fat:parseFloat(fat),fiber:parseFloat(fiber)||0,sugar:parseFloat(sugar)||0,sodium:parseFloat(sodium)||0});
+            setStorage('mt_log_'+date.trim(),logs);
+            count++;
+          }
+        });
+        showToast('✅ Imported '+count+' entries!');
+      }catch(err){
+        showToast('❌ Import failed: '+err.message);
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
 function resetAll(){Object.keys(localStorage).filter(k=>k.startsWith('mt_')).forEach(k=>localStorage.removeItem(k));location.reload();}
 
 // ── INIT ──
@@ -1128,6 +1169,16 @@ function init(){
   if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 }
 init();
+
+// ── ERROR HANDLING ──
+window.addEventListener('error',(event)=>{
+  console.error('App error:',event.error);
+  showToast('⚠️ Error: '+event.error.message);
+});
+window.addEventListener('unhandledrejection',(event)=>{
+  console.error('Unhandled rejection:',event.reason);
+  showToast('⚠️ Network error. Please try again.');
+});
 </script>
 </body>
 </html>
