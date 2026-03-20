@@ -3,7 +3,9 @@
     "allow": [
       "mcp__Claude_Preview__preview_start",
       "Bash(where npx:*)",
-      "Bash(where python:*)"
+      "Bash(where python:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)"
     ]
   }
 }
