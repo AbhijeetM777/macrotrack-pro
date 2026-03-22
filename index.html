@@ -236,7 +236,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
   <div class="section-label-bar"><span class="section-label-text">Activity Level</span></div>
   <div class="fitness-grid">
-    <div class="fitness-card selected" data-level="sedentary" onclick="selectFitness(this)">
+    <div class="fitness-card" data-level="sedentary" onclick="selectFitness(this)">
       <div class="fitness-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="2" rx="1"/><circle cx="12" cy="7" r="2"/></svg></div>
       <div class="fitness-name">Sedentary</div><div class="fitness-desc">Desk job</div>
     </div>
@@ -255,13 +255,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
   <div class="section-label-bar"><span class="section-label-text">Goal</span></div>
   <div class="goal-chips">
-    <div class="goal-chip selected" data-goal="cut" onclick="selectGoal(this)">🔥 Cut</div>
+    <div class="goal-chip" data-goal="cut" onclick="selectGoal(this)">🔥 Cut</div>
     <div class="goal-chip" data-goal="maintain" onclick="selectGoal(this)">⚖️ Maintain</div>
     <div class="goal-chip" data-goal="bulk" onclick="selectGoal(this)">💪 Bulk</div>
   </div>
   <div class="section-label-bar"><span class="section-label-text">Diet Type</span></div>
   <div class="diet-chips">
-    <div class="diet-chip selected" data-diet="balanced" data-ratio="30:40:30" onclick="selectDiet(this)">Balanced<small>30P:40C:30F</small></div>
+    <div class="diet-chip" data-diet="balanced" data-ratio="30:40:30" onclick="selectDiet(this)">Balanced<small>30P:40C:30F</small></div>
     <div class="diet-chip" data-diet="highprotein" data-ratio="40:35:25" onclick="selectDiet(this)">High Protein<small>40P:35C:25F</small></div>
     <div class="diet-chip" data-diet="keto" data-ratio="30:5:65" onclick="selectDiet(this)">Keto<small>30P:5C:65F</small></div>
     <div class="diet-chip" data-diet="lowcarb" data-ratio="35:25:40" onclick="selectDiet(this)">Low Carb<small>35P:25C:40F</small></div>
