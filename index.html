@@ -22,7 +22,7 @@
   --yl:#fbbf24;--ylbg:rgba(251,191,36,.08);
   --or:#fb923c;--orbg:rgba(251,146,60,.08);--orbd:rgba(251,146,60,.22);
   --rd:#f87171;--pk:#f472b6;--pu:#e879f9;
-  --ff:'Plus Jakarta Sans',sans-serif;--fm:'DM Mono',monospace;
+  --ff:'-apple-system',BlinkMacSystemFont,'SF Pro Display','Inter',sans-serif;--fm:'DM Mono',monospace;
   --r8:8px;--r12:12px;--r16:16px;--r20:20px;--r24:24px;--r28:28px;--rpill:999px;
 }
 body.light{
@@ -36,7 +36,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .screen,.tab-bar,.modal-overlay,.toast{position:relative;z-index:1}
 
 /* Tab bar */
-.tab-bar{display:none;background:rgba(14,12,26,.92);border-top:1px solid var(--b1);padding:8px 4px calc(8px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:100;backdrop-filter:blur(28px);gap:2px}
+.tab-bar{display:none;background:rgba(14,12,26,.65);border-top:1px solid var(--b1);padding:8px 4px calc(8px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;z-index:100;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);gap:2px}
 .tab-bar.visible{display:flex}
 .tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;border:none;background:none;cursor:pointer;color:var(--t3);transition:all .25s;border-radius:var(--r12)}
 .tab-btn.active{color:var(--ac)}
@@ -91,8 +91,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
 /* Buttons */
-.modal-btn{width:100%;padding:13px;background:var(--ac);color:#fff;border:none;border-radius:var(--r16);font-family:var(--ff);font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;transition:all .2s;box-shadow:0 4px 16px rgba(124,58,237,.3)}
-.modal-btn:active{transform:scale(0.98);background:var(--ac2)}
+.modal-btn{width:100%;padding:13px;background:var(--ac);color:#fff;border:none;border-radius:var(--r16);font-family:var(--ff);font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 4px 16px rgba(124,58,237,.3)}
+.modal-btn:active{transform:scale(0.96);background:var(--ac2)}
 .modal-btn.secondary{background:var(--s3);color:var(--t1);border:1px solid var(--b1);box-shadow:none}
 .add-btn{background:var(--ac);color:#fff;border:none;border-radius:var(--r16);padding:14px;font-family:var(--ff);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;margin:0 14px 10px;width:calc(100% - 28px);justify-content:center;box-shadow:0 4px 20px rgba(124,58,237,.35)}
 
@@ -140,9 +140,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 .del-btn svg{width:14px;height:14px}
 
 /* Modal */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,3,15,.85);z-index:200;backdrop-filter:blur(16px);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%)}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,3,15,.70);z-index:200;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);align-items:flex-end;justify-content:center;max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%)}
 .modal-overlay.open{display:flex}
-.modal{background:var(--s1);border-radius:var(--r28) var(--r28) 0 0;border-top:1px solid var(--b2);padding:14px 18px calc(18px + env(safe-area-inset-bottom));width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:none}
+.modal{background:var(--s1);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-radius:var(--r28) var(--r28) 0 0;border-top:1px solid var(--b2);padding:14px 18px calc(18px + env(safe-area-inset-bottom));width:100%;max-height:90vh;overflow-y:auto;scrollbar-width:none;box-shadow:0 -10px 40px rgba(0,0,0,0.3)}
 .modal::-webkit-scrollbar{display:none}
 .modal-handle{width:36px;height:4px;background:var(--s5);border-radius:2px;margin:0 auto 14px}
 .modal-title{font-size:20px;font-weight:800;color:var(--t0)}
@@ -274,6 +274,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
 
 <!-- ═══════════ HOME SCREEN ═══════════ -->
 <div class="screen" id="screen-home">
+  <div id="marketing-banner" style="background:linear-gradient(135deg, var(--ac), var(--pk));color:#fff;font-size:11px;font-weight:700;text-align:center;padding:10px 14px;display:none;border-radius:var(--r16);margin:14px 14px 0;box-shadow:0 4px 12px rgba(167,139,250,0.3);cursor:pointer;" onclick="this.style.display='none'"></div>
   <div class="page-header">
     <div class="page-eyebrow">Daily Fuel</div>
     <div class="page-title">Today</div>
@@ -505,9 +506,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="modal-handle"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
       <div class="modal-title">Log Food</div>
-      <button onclick="closeModal('add-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+      <button onclick="closeModal('add-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;transition:transform 0.2s" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">✕</button>
     </div>
-    <input type="text" id="food-search" placeholder="🔍 Search foods..." oninput="searchFoods()" style="width:100%;background:var(--s2);border:1.5px solid var(--b1);border-radius:12px;color:var(--t0);font-family:var(--ff);font-size:13px;padding:10px 12px;outline:none;margin-bottom:8px">
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <input type="text" id="food-search" placeholder="🔍 Search foods..." oninput="searchFoods()" style="flex:1;background:var(--s2);border:1.5px solid var(--b1);border-radius:12px;color:var(--t0);font-family:var(--ff);font-size:13px;padding:10px 12px;outline:none;">
+      <button onclick="aiSuggestMeal()" style="background:var(--acbg);border:1.5px solid var(--acbd);color:var(--ac);font-family:var(--ff);font-weight:800;font-size:12px;border-radius:12px;padding:0 14px;cursor:pointer;transition:transform 0.2s;white-space:nowrap;" onmousedown="this.style.transform='scale(0.9)'" onmouseup="this.style.transform='scale(1)'">AI ✨</button>
+    </div>
     <div id="cat-tabs" style="display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;margin-bottom:8px">
       <button class="cat-tab active" onclick="filterCat('all',this)">All</button>
       <button class="cat-tab" onclick="filterCat('odia',this)">🌾 Odia</button>
@@ -652,9 +656,47 @@ let profile={},targets={};
 let activeCat='all',selectedFood=null,qtyValue=1;
 
 function getKey(d){const dt=d||new Date();return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`}
-function getStorage(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def}catch{return def}}
-function setStorage(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+function getStorage(k,def){try{const v=localStorage.getItem(k);if(v)return JSON.parse(v);return def}catch(e){console.warn('Storage read err:',e);return def}}
+function setStorage(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('Storage write err:',e);if(e.name==='QuotaExceededError')showToast('⚠️ Storage Full. Clear data.');}}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
+
+// ── AI & MARKETING (BODYBUILDING EXP) ──
+const QUOTES=[
+  "Muscle is built in the kitchen. Hit your protein! 💪",
+  "Don't cheat your macros. Consistency is everything. 🥩",
+  "You can't out-train a bad diet. Dial it in. 🎯",
+  "Hydration = Performance. Drink your water today. 💧",
+  "Rest and recovery are where muscles grow. 🛌",
+  "Abs are made in the kitchen! Track every bite. 📊"
+];
+function updateMarketingBanner(){
+  const b=document.getElementById('marketing-banner');
+  if(!b)return;
+  const todayVal=Math.floor(Date.now()/86400000);
+  b.innerHTML=QUOTES[todayVal%QUOTES.length]+' <span style="opacity:0.6;font-size:9px;margin-left:6px">(Tap to dismiss)</span>';
+  b.style.display='block';
+}
+function aiSuggestMeal(){
+  closeModal('add-modal');
+  const t=targets.kcal?targets:{kcal:2000,protein:150,carbs:200,fat:60};
+  const log=getTodayLog();
+  const tot=log.reduce((a,f)=>({p:a.p+f.protein,c:a.c+f.carbs,f:a.f+f.fat}),{p:0,c:0,f:0});
+  const needP=Math.max(t.protein-tot.p,0);
+  const needC=Math.max(t.carbs-tot.c,0);
+  const needF=Math.max(t.fat-tot.f,0);
+  
+  if(needP<5 && needC<5 && needF<5) {showToast('AI: Macros already hit! 🎯');return;}
+  
+  // Create an AI suggested meal to perfectly bridge the gap
+  const aiMeal={
+    id:Date.now(),name:'AI Perfect Recovery Meal 🧠',
+    kcal:Math.round((needP*4)+(needC*4)+(needF*9)),
+    protein:Math.round(needP),carbs:Math.round(needC),fat:Math.round(needF),
+    fiber:0,sugar:0,sodium:0,meal:'Post-Workout',emoji:'✨'
+  };
+  log.push(aiMeal);saveTodayLog(log);
+  renderHome();showToast('🤖 AI logged perfect relative macro meal!');
+}
 
 // ── MACRO CALCULATION ──
 function calcBMR(p){
@@ -688,11 +730,15 @@ function saveSetup(){
   const actEl=document.querySelector('.fitness-card.selected');
   const goalEl=document.querySelector('.goal-chip.selected');
   const dietEl=document.querySelector('.diet-chip.selected');
-  const activity=actEl?actEl.dataset.level:'moderate';
-  const goal=goalEl?goalEl.dataset.goal:'maintain';
-  const dietRatioStr=dietEl?dietEl.dataset.ratio:'30:40:30';
+  // Require selections - no defaults
+  if(!actEl){showToast('❌ Please select activity level');return;}
+  if(!goalEl){showToast('❌ Please select your goal');return;}
+  if(!dietEl){showToast('❌ Please select diet type');return;}
+  const activity=actEl.dataset.level;
+  const goal=goalEl.dataset.goal;
+  const dietRatioStr=dietEl.dataset.ratio;
   const dietRatio=dietRatioStr.split(':').map(Number);
-  const dietName=dietEl?dietEl.dataset.diet:'balanced';
+  const dietName=dietEl.dataset.diet;
   profile={age,weight,height,gender,name,activity,goal,dietRatio,dietName,setupDone:true};
   setStorage('mt_profile',profile);
   targets=calcTargets(profile);
@@ -1157,6 +1203,7 @@ function init(){
   targets=getStorage('mt_targets',{});
   if(getStorage('mt_theme')==='light')document.body.classList.add('light');
   document.getElementById('home-date').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  updateMarketingBanner();
   if(profile.setupDone){
     document.getElementById('screen-setup').classList.remove('active');
     document.querySelector('.tab-bar').classList.add('visible');
