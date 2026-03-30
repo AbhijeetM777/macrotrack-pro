@@ -1011,6 +1011,10 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
       <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><div class="settings-label">Toggle Theme</div></div>
       <div class="toggle-switch" id="theme-toggle"></div>
     </div>
+    <div class="settings-item" onclick="openVideoQualityModal()">
+      <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M7 12l5-4 5 4M7 12l5 4 5-4"/></svg></div><div class="settings-label">Video Quality</div></div>
+      <div class="settings-value" id="video-quality-display">HD (720p)</div>
+    </div>
     <div class="settings-item" onclick="openEditProfile()">
       <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 20v-1a6 6 0 0112 0v1"/></svg></div><div class="settings-label">Edit Profile & Goals</div></div>
       <div class="settings-value">›</div>
@@ -1126,6 +1130,35 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     </div>
     <div class="field"><label>Meal</label><select id="f-meal"><option value="All">📋 All Meals</option><option value="Breakfast">🌅 Breakfast</option><option value="Lunch">☀️ Lunch</option><option value="Dinner">🌙 Dinner</option><option value="Snack">🍎 Snack</option><option value="Pre-Workout">⚡ Pre-Workout</option><option value="Post-Workout">💪 Post-Workout</option></select></div>
     <button class="modal-btn" onclick="logFood()">Add to Today ✓</button>
+  </div>
+</div>
+
+<!-- Video Quality Modal -->
+<div class="modal-overlay" id="video-quality-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div class="modal-title">Video Quality</div>
+      <button onclick="closeModal('video-quality-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;transition:transform 0.2s">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="settings-item" onclick="setVideoQuality('low','SD (360p)');closeModal('video-quality-modal')">
+        <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24" style="stroke:var(--t2)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="8 10 12 14 16 10"/></svg></div><div style="flex:1"><div class="settings-label">SD Quality (360p)</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Lower bandwidth, faster loading</div></div></div>
+        <div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--b1);" id="quality-low-indicator"></div>
+      </div>
+      <div class="settings-item" onclick="setVideoQuality('hd','HD (720p)');closeModal('video-quality-modal')">
+        <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24" style="stroke:var(--ac)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="8 10 12 14 16 10"/></svg></div><div style="flex:1"><div class="settings-label">HD Quality (720p)</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Recommended balance</div></div></div>
+        <div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--b1);" id="quality-hd-indicator"></div>
+      </div>
+      <div class="settings-item" onclick="setVideoQuality('ultra','Full HD (1080p)');closeModal('video-quality-modal')">
+        <div class="settings-left"><div class="settings-icon"><svg viewBox="0 0 24 24" style="stroke:var(--bl)"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="8 10 12 14 16 10"/></svg></div><div style="flex:1"><div class="settings-label">Full HD (1080p)</div><div style="font-size:10px;color:var(--t3);margin-top:2px">Highest quality, highest bandwidth</div></div></div>
+        <div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--b1);" id="quality-ultra-indicator"></div>
+      </div>
+    </div>
+    <div style="margin-top:20px;padding:12px;background:var(--s2);border-radius:var(--r12);font-size:12px;color:var(--t2)">
+      <div style="font-weight:600;color:var(--t1);margin-bottom:4px">💡 Tip:</div>
+      <div id="quality-tip">Videos will reload with new quality setting</div>
+    </div>
   </div>
 </div>
 
@@ -1531,6 +1564,53 @@ function updatePreview(){
 
 function stepQty(dir){qtyValue=Math.max(0.5,qtyValue+dir*0.5);updatePreview();}
 function onQtyInput(){const v=parseFloat(document.getElementById('qty-input').value);if(!isNaN(v)&&v>0){qtyValue=v;updatePreview();}}
+
+// ── VIDEO QUALITY MANAGEMENT ──
+const QUALITY_MAP={
+  'low':{url:p=>p.replace('/720p','/360p'),label:'SD (360p)'},
+  'hd':{url:p=>p.replace('/360p','/720p').replace('/1080p','/720p'),label:'HD (720p)'},
+  'ultra':{url:p=>p.replace('/720p','/1080p').replace('/360p','/1080p'),label:'Full HD (1080p)'}
+};
+
+function getVideoQuality(){return getStorage('video_quality','hd');}
+
+function openVideoQualityModal(){
+  openModal('video-quality-modal');
+  updateVideoQualityIndicator();
+}
+
+function updateVideoQualityIndicator(){
+  const current=getVideoQuality();
+  document.querySelectorAll('[id^="quality-"][id$="-indicator"]').forEach(el=>{
+    el.style.borderColor='var(--b1)';
+    el.style.background='transparent';
+  });
+  const currentEl=document.getElementById(`quality-${current}-indicator`);
+  if(currentEl){
+    currentEl.style.borderColor=current==='hd'?'var(--ac)':current==='ultra'?'var(--bl)':'var(--t2)';
+    currentEl.style.background=current==='hd'?'rgba(166,255,0,.2)':current==='ultra'?'rgba(0,228,255,.2)':'rgba(255,255,255,.1)';
+  }
+  document.getElementById('video-quality-display').textContent=QUALITY_MAP[current].label;
+}
+
+function setVideoQuality(quality,label){
+  setStorage('video_quality',quality);
+  document.getElementById('video-quality-display').textContent=label;
+  showToast('✅ Video quality set to '+label);
+
+  // Reload all videos with new quality
+  setTimeout(()=>{
+    const videos=document.querySelectorAll('video source');
+    videos.forEach(source=>{
+      if(source.src&&source.src.includes('cdn.coverr.co')){
+        const newSrc=QUALITY_MAP[quality].url(source.src);
+        source.src=newSrc;
+        source.parentElement.load();
+      }
+    });
+    initVideoAutoplay();
+  },300);
+}
 
 // Sanitize HTML to prevent XSS
 function sanitizeHTML(str){
@@ -2294,8 +2374,17 @@ switchTab = function(tab) {
 // ── VIDEO AUTOPLAY INITIALIZATION ──
 // Fix browser autoplay policies and ensure videos play
 function initVideoAutoplay(){
+  const quality = getVideoQuality();
   const videos = document.querySelectorAll('video');
   videos.forEach(video => {
+    // Apply video quality to sources
+    const sources = video.querySelectorAll('source');
+    sources.forEach(source => {
+      if(source.src && source.src.includes('cdn.coverr.co')) {
+        source.src = QUALITY_MAP[quality].url(source.src);
+      }
+    });
+
     // Ensure preload is set
     if(!video.hasAttribute('preload')) video.setAttribute('preload','metadata');
 
@@ -2324,7 +2413,10 @@ function initVideoAutoplay(){
 }
 
 // Initialize on page load
-window.addEventListener('load', initVideoAutoplay);
+window.addEventListener('load', () => {
+  initVideoAutoplay();
+  updateVideoQualityIndicator();
+});
 
 // Re-initialize when switching tabs (some videos may be hidden)
 const oldSwitchTab2 = switchTab;
