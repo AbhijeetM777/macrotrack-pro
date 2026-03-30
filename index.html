@@ -412,7 +412,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#000;">
       <!-- CSS Zooming Image Fallback + Video -->
       <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=2800&q=100&auto=format&fit=crop" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8;animation:slowPan 25s infinite alternate ease-in-out;">
-      <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">
+      <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">
         <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
       </video>
       <div style="position:absolute;bottom:0;left:0;width:100%;height:60vh;background:linear-gradient(to top, rgba(0,0,0,1) 10%, transparent 100%);"></div>
@@ -441,12 +441,12 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
       <!-- Left -->
       <div class="px-col-1" style="display:flex;flex-direction:column;gap:20px;transform:translateY(60px);transition:transform 0.1s linear">
         <div style="overflow:hidden;border-radius:var(--r28);aspect-ratio:4/5;background:var(--s1);position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.4)">
-          <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
+          <video autoplay preload="metadata" loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
             <source src="https://cdn.coverr.co/videos/coverr-woman-looking-in-mirror-at-the-gym-7760/720p.mp4" type="video/mp4">
           </video>
         </div>
         <div style="border-radius:var(--r28);border:1.5px solid rgba(166,255,0,0.15);overflow:hidden;position:relative;min-height:150px;">
-          <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28;z-index:0;">
+          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28;z-index:0;">
             <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
           </video>
           <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.5) 100%);z-index:1;"></div>
@@ -460,7 +460,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
       <!-- Right -->
       <div class="px-col-2" style="display:flex;flex-direction:column;gap:20px;transition:transform 0.1s linear">
         <div style="border-radius:var(--r28);border:1.5px solid rgba(0,228,255,0.15);overflow:hidden;position:relative;min-height:150px;margin-top:40px;">
-          <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;z-index:0;">
+          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;z-index:0;">
             <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
           </video>
           <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 100%);z-index:1;"></div>
@@ -471,7 +471,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
           </div>
         </div>
         <div style="overflow:hidden;border-radius:var(--r28);aspect-ratio:1/1;background:var(--s1);position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.4)">
-          <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
+          <video autoplay preload="metadata" loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
             <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
           </video>
         </div>
@@ -482,7 +482,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <!-- ── ANIMATED PLAN-MAKING SHOWCASE ── -->
   <div class="reveal" style="background:#000;padding:80px 20px 100px;position:relative;overflow:hidden;">
     <!-- Ambient background video -->
-    <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.07;z-index:0;">
+    <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.07;z-index:0;">
       <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
     </video>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(166,255,0,0.04) 0%,transparent 70%);z-index:0;"></div>
@@ -504,7 +504,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
         <!-- ── WORKOUT PLAN CARD ── -->
         <div style="background:rgba(8,8,10,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(166,255,0,0.15);border-radius:24px;overflow:hidden;position:relative;">
           <!-- Card video bg -->
-          <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.13;z-index:0;">
+          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.13;z-index:0;">
             <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
           </video>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
@@ -556,7 +556,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
         <!-- ── DIET PLAN CARD ── -->
         <div style="background:rgba(8,8,10,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(0,228,255,0.13);border-radius:24px;overflow:hidden;position:relative;">
           <!-- Card video bg -->
-          <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;">
+          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;">
             <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
           </video>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
@@ -636,7 +636,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <!-- Wearables Section (New Cinematic Section) -->
   <div class="reveal" style="position:relative;width:100%;height:80vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px;">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#000;">
-      <video autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;">
+      <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;">
         <source src="https://cdn.coverr.co/videos/coverr-woman-looking-in-mirror-at-the-gym-7760/720p.mp4" type="video/mp4">
       </video>
       <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);"></div>
@@ -799,7 +799,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 <!-- ═══════════ HOME SCREEN ═══════════ -->
 <div class="screen" id="screen-home">
   <div style="position:absolute;top:0;left:0;width:100%;height:500px;z-index:-1;overflow:hidden;mask-image:linear-gradient(to bottom, black 40%, transparent 100%);-webkit-mask-image:linear-gradient(to bottom, black 40%, transparent 100%)">
-    <video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;opacity:0.5;transform:scale(1.05);">
+    <video autoplay preload="metadata" loop muted playsinline style="width:100%;height:100%;object-fit:cover;opacity:0.5;transform:scale(1.05);">
       <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
     </video>
   </div>
@@ -1532,11 +1532,19 @@ function updatePreview(){
 function stepQty(dir){qtyValue=Math.max(0.5,qtyValue+dir*0.5);updatePreview();}
 function onQtyInput(){const v=parseFloat(document.getElementById('qty-input').value);if(!isNaN(v)&&v>0){qtyValue=v;updatePreview();}}
 
+// Sanitize HTML to prevent XSS
+function sanitizeHTML(str){
+  const div=document.createElement('div');
+  div.textContent=str;
+  return div.innerHTML;
+}
+
 function logFood(){
   let name,kcal,protein,carbs,fat,fiber=0,sugar=0,sodium=0,emoji='🍽️';
   if(activeCat==='custom'||!selectedFood){
     name=document.getElementById('f-name').value.trim();
     if(!name){showToast('Enter food name');return;}
+    name=sanitizeHTML(name); // Sanitize user input
     kcal=parseFloat(document.getElementById('f-kcal').value)||0;
     protein=parseFloat(document.getElementById('f-protein').value)||0;
     carbs=parseFloat(document.getElementById('f-carbs').value)||0;
@@ -1556,7 +1564,7 @@ function logFood(){
   const item={id:Date.now(),name,kcal,protein,carbs,fat,fiber,sugar,sodium,meal:document.getElementById('f-meal').value,emoji};
   const log=getTodayLog();log.push(item);saveTodayLog(log);
   closeModal('add-modal');selectedFood=null;qtyValue=1;
-  renderHome();showToast('✅ '+name+' added!');
+  renderHome();showToast('✅ '+sanitizeHTML(name)+' added!');
 }
 
 function deleteFood(id){const log=getTodayLog().filter(f=>f.id!==id);saveTodayLog(log);renderHome();showToast('Removed');}
@@ -2281,6 +2289,63 @@ const oldSwitchTab = switchTab;
 switchTab = function(tab) {
   oldSwitchTab(tab);
   setTimeout(() => { initLenis(); initMagneticAndHover(); }, 50);
+}
+
+// ── VIDEO AUTOPLAY INITIALIZATION ──
+// Fix browser autoplay policies and ensure videos play
+function initVideoAutoplay(){
+  const videos = document.querySelectorAll('video');
+  videos.forEach(video => {
+    // Ensure preload is set
+    if(!video.hasAttribute('preload')) video.setAttribute('preload','metadata');
+
+    // Try to play immediately (works on mobile after interaction)
+    const playPromise = video.play();
+    if(playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.warn('Video autoplay blocked:', error);
+        // Set fallback background color if video won't play
+        const parent = video.parentElement;
+        if(parent) parent.style.backgroundColor = 'rgba(0,0,0,0.5)';
+      });
+    }
+
+    // Add error handling
+    video.addEventListener('error', (e) => {
+      console.warn('Video failed to load:', video.src, e);
+      const parent = video.parentElement;
+      if(parent) parent.style.backgroundColor = 'rgba(0,0,0,0.3)';
+    });
+
+    // Ensure loop and mute are set
+    video.loop = true;
+    video.muted = true;
+  });
+}
+
+// Initialize on page load
+window.addEventListener('load', initVideoAutoplay);
+
+// Re-initialize when switching tabs (some videos may be hidden)
+const oldSwitchTab2 = switchTab;
+switchTab = function(tab) {
+  oldSwitchTab2(tab);
+  setTimeout(() => { initVideoAutoplay(); }, 100);
+};
+
+// Also try to play videos when they become visible (Intersection Observer)
+if('IntersectionObserver' in window) {
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.target.tagName === 'VIDEO') {
+        if(entry.isIntersecting) {
+          entry.target.play().catch(() => {});
+        }
+      }
+    });
+  }, { threshold: 0.25 });
+
+  document.querySelectorAll('video').forEach(v => videoObserver.observe(v));
 }
 
 // ── ERROR HANDLING ──
