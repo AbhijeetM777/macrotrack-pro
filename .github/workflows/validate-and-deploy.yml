@@ -1,0 +1,103 @@
+name: Validate & Deploy
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate Code Quality
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check HTML Syntax
+        run: |
+          # Basic HTML structure validation
+          if ! grep -q "<!DOCTYPE html>" index.html; then
+            echo "❌ Missing DOCTYPE"
+            exit 1
+          fi
+          echo "✅ HTML structure valid"
+
+      - name: Check for console.log
+        run: |
+          if grep -n "console\.log" index.html | grep -v "console\.warn\|console\.error"; then
+            echo "⚠️ Warning: Found console.log statements (OK for development)"
+          else
+            echo "✅ No console.log statements found"
+          fi
+
+      - name: Check for hardcoded secrets
+        run: |
+          if grep -iE "(api_key|secret|password|token|sk-|pk_)" index.html | grep -v "placeholder\|example"; then
+            echo "❌ Found potential hardcoded secrets"
+            exit 1
+          fi
+          echo "✅ No hardcoded secrets found"
+
+      - name: Verify video tags
+        run: |
+          VIDEO_COUNT=$(grep -c "<video" index.html)
+          echo "Found $VIDEO_COUNT video tags"
+          if grep -q "preload=" index.html; then
+            echo "✅ Videos have preload attributes"
+          else
+            echo "❌ Videos missing preload attributes"
+            exit 1
+          fi
+
+      - name: Check manifest.json
+        run: |
+          if [ -f "manifest.json" ]; then
+            echo "✅ PWA manifest exists"
+          else
+            echo "❌ PWA manifest missing"
+            exit 1
+          fi
+
+  deploy-vercel:
+    needs: validate
+    runs-on: ubuntu-latest
+    name: Deploy to Vercel
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          scope: ${{ secrets.VERCEL_SCOPE }}
+          production: true
+
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀 Deployed to Vercel! Check the workflow run for the live URL.'
+            })
+
+  lighthouse:
+    needs: validate
+    runs-on: ubuntu-latest
+    name: Lighthouse Audit
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          uploadArtifacts: true
+          temporaryPublicStorage: true
