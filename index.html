@@ -11,6 +11,8 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 :root{
+  /* ═══ PREMIUM COLOR TOKENS (Fiddle.Digital Inspired) ═══ */
+  --c-black:#101214;--c-white:#ffffff;
   --bg:#000000;--s0:#000000;--s1:#1c1c1e;--s2:#2c2c2e;--s3:#3a3a3c;
   --b0:rgba(255,255,255,.05);--b1:rgba(255,255,255,.1);--b2:rgba(255,255,255,.15);
   --t0:#ffffff;--t1:#f2f2f7;--t2:#aeaeb2;--t3:#8a8a8e;--t4:#636366;
@@ -19,6 +21,27 @@
   --rd:#fa114f;--rdbg:rgba(250,17,79,.15);--yl:#ffd60a;--or:#ff9f0a;
   --ff:system-ui,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',sans-serif;--fm:'SF Mono',monospace;
   --r8:12px;--r12:16px;--r16:20px;--r20:30px;--r24:36px;--r28:44px;--rpill:999px;
+
+  /* ═══ PREMIUM TYPOGRAPHY SCALE (Perfect Fourth: 1.333x) ═══ */
+  --type-step:1.333;--body-size:15px;
+  --p:var(--body-size);
+  --h6:calc(var(--p)*var(--type-step));
+  --h5:calc(var(--h6)*var(--type-step));
+  --h4:calc(var(--h5)*var(--type-step));
+  --h3:calc(var(--h4)*var(--type-step));
+  --h2:calc(var(--h3)*var(--type-step));
+  --h1:calc(var(--h2)*var(--type-step));
+  --ls-intensity:-0.02em;
+
+  /* ═══ PREMIUM ANIMATION EASINGS (Fiddle.Digital) ═══ */
+  --f-cubic:cubic-bezier(0.22,0.31,0,1);
+  --f-cubic-in:cubic-bezier(0.69,0,0,1);
+  --f-fast:cubic-bezier(0,0.81,0.35,1);
+  --f-smooth:cubic-bezier(0.5,0,0.3,1);
+  --f-bounce:cubic-bezier(0.22,0.61,0.36,1);
+
+  /* ═══ STAGGER ANIMATION DELAYS ═══ */
+  --stagger-1:0.075s;--stagger-2:0.15s;--stagger-3:0.225s;--stagger-4:0.3s;--stagger-5:0.375s;
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t1);font-family:var(--ff);font-size:15px;line-height:1.4;letter-spacing:-0.01em;}
 body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 auto;position:relative}
@@ -243,6 +266,101 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 @keyframes slowPan { 0% { transform: scale(1.0) translate(0,0); } 100% { transform: scale(1.15) translate(-2%, 2%); } }
 @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @keyframes drawRing { 0% { stroke-dashoffset: 350; } 100% { stroke-dashoffset: var(--target-dashoffset, 0); } }
+
+/* ═══ PREMIUM STAGGER & REVEAL ANIMATIONS (Fiddle.Digital) ═══ */
+@keyframes revealUp {
+  0% { opacity: 0; transform: translateY(2rem); filter: blur(4px); }
+  100% { opacity: 1; transform: translateZ(0); filter: blur(0); }
+}
+
+/* Stagger delay utilities */
+.-stagger-1 { animation-delay: var(--stagger-1); }
+.-stagger-2 { animation-delay: var(--stagger-2); }
+.-stagger-3 { animation-delay: var(--stagger-3); }
+.-stagger-4 { animation-delay: var(--stagger-4); }
+.-stagger-5 { animation-delay: var(--stagger-5); }
+
+/* Premium blend modes for interactive effects */
+.-blend-screen { mix-blend-mode: screen; }
+.-blend-multiply { mix-blend-mode: multiply; }
+.-blend-overlay { mix-blend-mode: overlay; }
+.-blend-exclusion { mix-blend-mode: exclusion; }
+.-blend-difference { mix-blend-mode: difference; }
+
+/* GPU acceleration utility */
+.-gpu { transform: translateZ(0); will-change: transform; }
+
+/* Premium smooth easing overrides */
+.-ease-cubic { animation-timing-function: var(--f-cubic); transition-timing-function: var(--f-cubic); }
+.-ease-smooth { animation-timing-function: var(--f-smooth); transition-timing-function: var(--f-smooth); }
+.-ease-fast { animation-timing-function: var(--f-fast); transition-timing-function: var(--f-fast); }
+
+/* Reveal animation with stagger support */
+.food-item, .meal-section, .history-entry, .weight-entry, .fast-history-item {
+  animation: revealUp 0.6s var(--f-cubic) both;
+}
+
+/* Apply stagger delays to list items */
+.food-item:nth-child(1) { animation-delay: calc(var(--stagger-1) * 1); }
+.food-item:nth-child(2) { animation-delay: calc(var(--stagger-1) * 2); }
+.food-item:nth-child(3) { animation-delay: calc(var(--stagger-1) * 3); }
+.food-item:nth-child(4) { animation-delay: calc(var(--stagger-1) * 4); }
+.food-item:nth-child(5) { animation-delay: calc(var(--stagger-1) * 5); }
+.food-item:nth-child(n+6) { animation-delay: calc(var(--stagger-1) * 5); }
+
+.meal-section:nth-child(1) { animation-delay: calc(var(--stagger-2) * 1); }
+.meal-section:nth-child(2) { animation-delay: calc(var(--stagger-2) * 2); }
+.meal-section:nth-child(3) { animation-delay: calc(var(--stagger-2) * 3); }
+
+.history-entry:nth-child(1) { animation-delay: calc(var(--stagger-1) * 1); }
+.history-entry:nth-child(2) { animation-delay: calc(var(--stagger-1) * 2); }
+.history-entry:nth-child(3) { animation-delay: calc(var(--stagger-1) * 3); }
+.history-entry:nth-child(4) { animation-delay: calc(var(--stagger-1) * 4); }
+.history-entry:nth-child(5) { animation-delay: calc(var(--stagger-1) * 5); }
+.history-entry:nth-child(n+6) { animation-delay: calc(var(--stagger-1) * 5); }
+
+/* Premium card interactions with blend modes */
+.card, .hero-ring-card, .fitness-card, .stat-card {
+  transition: transform 0.6s var(--f-cubic), box-shadow 0.6s var(--f-cubic), filter 0.4s var(--f-smooth);
+}
+
+.card:hover, .hero-ring-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(166,255,0,0.1), 0 8px 16px rgba(0,0,0,0.3);
+  filter: brightness(1.05);
+}
+
+/* Calorie ring premium hover effect */
+.ring-svg-wrap svg:hover {
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 12px rgba(166,255,0,0.3));
+}
+
+/* Modal overlay glass upgrade */
+.modal-overlay {
+  backdrop-filter: blur(32px) saturate(180%) brightness(0.8);
+  -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(0.8);
+}
+
+/* Premium button transitions */
+.modal-btn, .add-btn, .tab-btn {
+  transition: all 0.4s var(--f-cubic);
+}
+
+.modal-btn:hover, .add-btn:hover {
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: 0 12px 32px rgba(166,255,0,0.2);
+}
+
+/* Tab transitions with premium easing */
+.tab-btn {
+  transition: color 0.4s var(--f-cubic), transform 0.4s var(--f-cubic);
+}
+
+.tab-btn.active {
+  color: var(--ac);
+  transform: translateY(-2px) scale(1.08);
+}
 
 /* Setup Side Panel */
 .setup-panel {
@@ -813,13 +931,16 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <div class="hero-ring-card" style="background:rgba(28,28,30,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.05)">
     <div class="ring-row">
       <div class="ring-svg-wrap">
-        <svg viewBox="0 0 120 120" style="filter: drop-shadow(0 0 4px rgba(0,0,0,0.5))">
-          <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(250,17,79,0.2)" stroke-width="10"/>
-          <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rd)" stroke-width="10" stroke-linecap="round" stroke-dasharray="301" id="ring-dash" stroke-dashoffset="301" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
-          <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(166,255,0,0.2)" stroke-width="10"/>
-          <circle cx="60" cy="60" r="36" fill="none" stroke="var(--gr)" stroke-width="10" stroke-linecap="round" stroke-dasharray="226" id="ring-p-dash" stroke-dashoffset="226" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
-          <circle cx="60" cy="60" r="24" fill="none" stroke="rgba(0,228,255,0.2)" stroke-width="10"/>
-          <circle cx="60" cy="60" r="24" fill="none" stroke="var(--bl)" stroke-width="10" stroke-linecap="round" stroke-dasharray="150" id="ring-c-dash" stroke-dashoffset="150" style="transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+        <svg viewBox="0 0 120 120" style="filter: drop-shadow(0 0 6px rgba(0,0,0,0.6)); transition: filter 0.6s var(--f-cubic);">
+          <!-- Calorie ring (Red) -->
+          <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(250,17,79,0.15)" stroke-width="10"/>
+          <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rd)" stroke-width="10" stroke-linecap="round" stroke-dasharray="301" id="ring-dash" stroke-dashoffset="301" style="transition:stroke-dashoffset 0.9s var(--f-cubic), stroke 0.4s var(--f-smooth)"/>
+          <!-- Protein ring (Green) -->
+          <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(166,255,0,0.15)" stroke-width="10"/>
+          <circle cx="60" cy="60" r="36" fill="none" stroke="var(--gr)" stroke-width="10" stroke-linecap="round" stroke-dasharray="226" id="ring-p-dash" stroke-dashoffset="226" style="transition:stroke-dashoffset 0.9s var(--f-cubic), stroke 0.4s var(--f-smooth)"/>
+          <!-- Carbs/Fat ring (Cyan) -->
+          <circle cx="60" cy="60" r="24" fill="none" stroke="rgba(0,228,255,0.15)" stroke-width="10"/>
+          <circle cx="60" cy="60" r="24" fill="none" stroke="var(--bl)" stroke-width="10" stroke-linecap="round" stroke-dasharray="150" id="ring-c-dash" stroke-dashoffset="150" style="transition:stroke-dashoffset 0.9s var(--f-cubic), stroke 0.4s var(--f-smooth)"/>
         </svg>
         <div class="ring-center">
           <div class="ring-kcal" id="ring-eaten">0</div>
@@ -1565,6 +1686,16 @@ function updatePreview(){
 function stepQty(dir){qtyValue=Math.max(0.5,qtyValue+dir*0.5);updatePreview();}
 function onQtyInput(){const v=parseFloat(document.getElementById('qty-input').value);if(!isNaN(v)&&v>0){qtyValue=v;updatePreview();}}
 
+// ── PREMIUM ANIMATION UTILITIES ──
+function applyStaggerAnimation(container, itemSelector, delayMultiplier = 0.075) {
+  if (!container) return;
+  const items = container.querySelectorAll(itemSelector);
+  items.forEach((item, i) => {
+    item.style.animation = `revealUp 0.6s var(--f-cubic) forwards`;
+    item.style.animationDelay = `${i * delayMultiplier}s`;
+  });
+}
+
 // ── VIDEO QUALITY MANAGEMENT ──
 const QUALITY_MAP={
   'low':{url:p=>p.replace('/720p','/360p'),label:'SD (360p)'},
@@ -1697,6 +1828,10 @@ function renderHome(){
     container.innerHTML+=`<div class="meal-section"><div class="meal-header"><div class="meal-name">${meal}</div><div class="meal-kcal">${Math.round(mkcal)} kcal</div></div>${foods.map(f=>`<div class="food-item"><div class="food-icon">${f.emoji}</div><div class="food-info"><div class="food-name">${f.name}</div><div class="food-macros">P:${Math.round(f.protein)}g C:${Math.round(f.carbs)}g F:${Math.round(f.fat)}g</div></div><div class="food-kcal">${Math.round(f.kcal)}</div><button class="del-btn" onclick="deleteFood(${f.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join('')}</div>`;
   });
 
+  // Apply premium stagger animations to food items
+  setTimeout(() => applyStaggerAnimation(container, '.food-item', 0.075), 10);
+  setTimeout(() => applyStaggerAnimation(container, '.meal-section', 0.15), 10);
+
   updateNetCal();
 }
 
@@ -1781,9 +1916,12 @@ function renderHistory(){
     const kcal=log.reduce((a,f)=>a+f.kcal,0);
     const pct=Math.min(kcal/maxKcal,1);
     const col=kcal>=maxKcal?'var(--yl)':kcal>0?'var(--ac)':'var(--s3)';
-    barHtml+=`<div class="w-bar-wrap"><div class="w-bar-bg"><div class="w-bar-fill" style="height:${Math.round(pct*100)}%;background:${col}"></div></div><div class="w-bar-label">${weekDays[(d.getDay()+6)%7]}</div></div>`;
+    barHtml+=`<div class="history-entry w-bar-wrap" style="animation:revealUp 0.6s var(--f-cubic) both;"><div class="w-bar-bg"><div class="w-bar-fill" style="height:${Math.round(pct*100)}%;background:${col};transition:height 0.6s var(--f-cubic)"></div></div><div class="w-bar-label">${weekDays[(d.getDay()+6)%7]}</div></div>`;
   }
-  document.getElementById('weekly-bars').innerHTML=barHtml;
+  const wbContainer=document.getElementById('weekly-bars');
+  wbContainer.innerHTML=barHtml;
+  // Apply stagger to weekly bars
+  setTimeout(()=>applyStaggerAnimation(wbContainer,'.history-entry',0.1),10);
 
   // Trend chart
   drawTrendChart();
@@ -1823,7 +1961,9 @@ function renderWeight(){
     document.getElementById('bmi-badge').textContent='BMI: '+bmi+' ('+cat+')';
     document.getElementById('bmi-badge').style.display='inline-block';
     document.getElementById('weight-history-card').style.display='block';
-    document.getElementById('weight-history-list').innerHTML=entries.slice().reverse().slice(0,10).map(e=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b0);font-size:12px"><span>${e.date}</span><span style="font-weight:700;color:var(--ac)">${e.weight} kg</span></div>`).join('');
+    const whList=document.getElementById('weight-history-list');
+    whList.innerHTML=entries.slice().reverse().slice(0,10).map(e=>`<div class="weight-entry" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b0);font-size:12px"><span>${e.date}</span><span style="font-weight:700;color:var(--ac)">${e.weight} kg</span></div>`).join('');
+    setTimeout(()=>applyStaggerAnimation(whList,'.weight-entry',0.075),10);
   }else{
     document.getElementById('current-weight').textContent=profile.weight||'—';
     document.getElementById('bmi-badge').style.display='none';
@@ -1888,7 +2028,9 @@ function renderFasting(){
   const hist=getStorage('mt_fast_history',[]);
   if(hist.length){
     document.getElementById('fasting-history-card').style.display='block';
-    document.getElementById('fasting-history-list').innerHTML=hist.slice().reverse().slice(0,10).map(h=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b0);font-size:12px"><span>${h.date}</span><span style="color:var(--ac);font-weight:700">${h.duration}</span></div>`).join('');
+    const fhList=document.getElementById('fasting-history-list');
+    fhList.innerHTML=hist.slice().reverse().slice(0,10).map(h=>`<div class="fast-history-item" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--b0);font-size:12px"><span>${h.date}</span><span style="color:var(--ac);font-weight:700">${h.duration}</span></div>`).join('');
+    setTimeout(()=>applyStaggerAnimation(fhList,'.fast-history-item',0.075),10);
   }
 }
 
