@@ -1,0 +1,1147 @@
+{
+  "project": "MacroTrack Pro - Fitness Tracking PWA",
+  "version": "1.0",
+  "current_state": {
+    "codebase_size": "2696 lines total",
+    "structure": "Single monolithic HTML file (2596 lines) with embedded CSS and JavaScript",
+    "backend": "None - localStorage only",
+    "testing": "No tests",
+    "database": "150+ food entries in hardcoded array",
+    "features": [
+      "Daily macro tracking",
+      "Weight logging",
+      "Fasting timer",
+      "History (30 days)",
+      "Water tracking",
+      "Steps/activity logging",
+      "Profile setup with BMR/TDEE calculations",
+      "Food search and categorization",
+      "Custom food entry",
+      "AI meal suggestions"
+    ]
+  },
+  "analysis": {
+    "identified_bugs": [
+      {
+        "id": "BUG-001",
+        "severity": "HIGH",
+        "title": "localStorage Quota Exceeded Not Handled Gracefully",
+        "description": "The app catches QuotaExceededError but only shows a toast. On quota full, subsequent writes silently fail, corrupting data integrity without user awareness.",
+        "location": "Line 1507: setStorage() function",
+        "impact": "Data loss on older devices with limited storage (iOS, Android)",
+        "reproduction": "Fill localStorage to ~5MB, attempt to log food entries",
+        "current_code": "if(e.name==='QuotaExceededError')showToast('⚠️ Storage Full. Clear data.');",
+        "fix_complexity": "MEDIUM"
+      },
+      {
+        "id": "BUG-002",
+        "severity": "CRITICAL",
+        "title": "Date Key Generation Timezone Issue",
+        "description": "getKey() uses local Date object without timezone consideration. Users traveling or in different timezones get date shifts. Daily resets may not align with user intent.",
+        "location": "Line 1505: getKey() function",
+        "impact": "Incorrect daily tracking across timezones",
+        "reproduction": "User in EST uses app, travels to PST, logs food - appears under wrong date",
+        "current_code": "const dt=d||new Date();return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`",
+        "fix_complexity": "LOW"
+      },
+      {
+        "id": "BUG-003",
+        "severity": "MEDIUM",
+        "title": "Macro Calculation Bug in renderHome()",
+        "description": "Line 1802 combines carbs+fat incorrectly for display: `document.getElementById('c-eaten').textContent=Math.round(tot.carbs+tot.fat)` should only show carbs.",
+        "location": "Line 1802: renderHome() function",
+        "impact": "Incorrect carb totals displayed to user",
+        "reproduction": "Log food with known carbs/fat, check display vs actual",
+        "current_code": "document.getElementById('c-eaten').textContent=Math.round(tot.carbs+tot.fat);",
+        "fix_complexity": "LOW"
+      },
+      {
+        "id": "BUG-004",
+        "severity": "MEDIUM",
+        "title": "XSS Vulnerability in sanitizeHTML()",
+        "description": "sanitizeHTML() uses textContent which is safe, but custom food entry bypasses proper validation. HTML entities aren't re-escaped in display contexts.",
+        "location": "Lines 1747-1751, 1758, 1778",
+        "impact": "Potential XSS if attacker can inject via custom food name",
+        "reproduction": "Create custom food with name: `<img src=x onerror=\"alert('xss')\">`,
+        "fix_complexity": "LOW"
+      },
+      {
+        "id": "BUG-005",
+        "severity": "MEDIUM",
+        "title": "Quantity Input Allows Negative/Excessive Values",
+        "description": "onQtyInput() at line 1687 checks `v>0` but stepQty() allows 0.5 increments without upper bound. User can input 999+ quantities.",
+        "location": "Lines 1686-1687: stepQty() and onQtyInput() functions",
+        "impact": "Nonsensical log entries, UI confusion",
+        "reproduction": "In food quantity modal, type '9999' or decrement below 0.5",
+        "fix_complexity": "LOW"
+      }
+    ],
+    "code_quality_issues": [
+      {
+        "category": "Architecture",
+        "severity": "CRITICAL",
+        "issues": [
+          "Monolithic 2600-line single file - 0 separation of concerns",
+          "2 global state variables (profile, targets) with no encapsulation",
+          "11 global functions with no module organization",
+          "Food database hardcoded in JavaScript - not externalized",
+          "No dependency injection or testability hooks"
+        ]
+      },
+      {
+        "category": "Code Style",
+        "severity": "HIGH",
+        "issues": [
+          "Inconsistent naming: FOOD_DB vs `activeCat` vs `selectedFood`",
+          "Single-letter variable names: `d`, `t`, `f`, `p`, `c`, `a`",
+          "Functions exceed 50 lines: renderHome (52 lines), renderHistory, etc.",
+          "Deep nesting in renderFoodList (6 levels)",
+          "No JSDoc or inline comments explaining complex logic"
+        ]
+      },
+      {
+        "category": "Error Handling",
+        "severity": "MEDIUM",
+        "issues": [
+          "Try-catch only in storage functions, no validation elsewhere",
+          "No error recovery for malformed localStorage data",
+          "Silent failures in profile load if setup incomplete",
+          "No validation of BMR/TDEE calculations"
+        ]
+      },
+      {
+        "category": "Testing",
+        "severity": "CRITICAL",
+        "issues": [
+          "Zero test coverage",
+          "No unit test infrastructure",
+          "No E2E test framework configured",
+          "Cannot safely refactor without regressions"
+        ]
+      }
+    ],
+    "security_findings": [
+      {
+        "id": "SEC-001",
+        "severity": "MEDIUM",
+        "title": "No Input Validation on User Profile",
+        "description": "Age, weight, height validated with basic range checks but no type coercion safety. Could cause BMR calculation errors.",
+        "lines": "1568-1574"
+      },
+      {
+        "id": "SEC-002",
+        "severity": "LOW",
+        "title": "localStorage Used for Sensitive Fitness Data",
+        "description": "Fitness goals, weight, age stored unencrypted in localStorage. On shared devices, exposing personal health data.",
+        "lines": "1590-1591"
+      },
+      {
+        "id": "SEC-003",
+        "severity": "MEDIUM",
+        "title": "No CSRF Protection",
+        "description": "No future-proofing for backend integration. Will need CSRF tokens when cloud sync added.",
+        "lines": "Server integration phase"
+      }
+    ]
+  },
+  "improvement_roadmap": {
+    "phases": [
+      {
+        "phase": 1,
+        "name": "Quick Wins - Stability & Bug Fixes",
+        "duration_hours": 8,
+        "effort": "QUICK",
+        "priority": "CRITICAL",
+        "user_impact": "HIGH",
+        "tasks": [
+          {
+            "task_id": "QW-001",
+            "title": "Fix Timezone Date Bug (BUG-002)",
+            "description": "Use ISO date string with UTC to prevent timezone shifts",
+            "implementation_details": {
+              "approach": "Replace getKey() to use UTC date: const getKey=(d)=>{const dt=d||new Date();const offset=dt.getTimezoneOffset();const localISOTime=new Date(dt.getTime()-offset*60000).toISOString().split('T')[0];return localISOTime;",
+              "files_affected": ["index.html"],
+              "testing": "Test across multiple timezone simulations"
+            },
+            "time_estimate": 0.5,
+            "deliverable": "Fix in getKey() function"
+          },
+          {
+            "task_id": "QW-002",
+            "title": "Fix Carbs Display Bug (BUG-003)",
+            "description": "Correct carbs display calculation - remove fat component",
+            "implementation_details": {
+              "approach": "Change line 1802 from `tot.carbs+tot.fat` to just `tot.carbs`",
+              "files_affected": ["index.html"],
+              "testing": "Log food, verify carb display"
+            },
+            "time_estimate": 0.25,
+            "deliverable": "Single line fix in renderHome()"
+          },
+          {
+            "task_id": "QW-003",
+            "title": "Add Quantity Input Validation (BUG-005)",
+            "description": "Constrain food quantity to 0.5-99 range",
+            "implementation_details": {
+              "approach": "Update stepQty() and onQtyInput() with min/max bounds",
+              "files_affected": ["index.html"],
+              "testing": "Try boundary values: 0, 0.5, 100, -1"
+            },
+            "time_estimate": 0.5,
+            "deliverable": "Validated quantity input"
+          },
+          {
+            "task_id": "QW-004",
+            "title": "Improve localStorage Quota Handling (BUG-001)",
+            "description": "Implement fallback mechanism and user notification strategy",
+            "implementation_details": {
+              "approach": "Add data compression for history, implement prioritized deletion (delete oldest history entries), warn user at 80% quota",
+              "files_affected": ["index.html"],
+              "testing": "Fill storage to limits, verify graceful degradation"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Robust quota management with user options"
+          },
+          {
+            "task_id": "QW-005",
+            "title": "Enhanced XSS Prevention (BUG-004)",
+            "description": "Strengthen input sanitization",
+            "implementation_details": {
+              "approach": "Replace sanitizeHTML with DOMPurify-lite or enhance to handle edge cases. Add Content Security Policy meta tag.",
+              "files_affected": ["index.html"],
+              "testing": "Test with special characters, HTML entities, emoji"
+            },
+            "time_estimate": 1,
+            "deliverable": "Robust HTML sanitization"
+          },
+          {
+            "task_id": "QW-006",
+            "title": "Add Data Validation Layer",
+            "description": "Validate loaded localStorage data before use",
+            "implementation_details": {
+              "approach": "Create validateProfile(), validateLog(), validateTargets() functions that verify data types and ranges before use",
+              "files_affected": ["index.html"],
+              "testing": "Corrupt localStorage entries, verify app handles gracefully"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Data validation functions"
+          },
+          {
+            "task_id": "QW-007",
+            "title": "Create Manifest & Icons",
+            "description": "Proper PWA manifest with app icons and install prompts",
+            "implementation_details": {
+              "approach": "Update manifest.json with proper icon sizes (192x192, 512x512), add app name, description, screenshots",
+              "files_affected": ["manifest.json"],
+              "testing": "Test install on mobile/desktop"
+            },
+            "time_estimate": 1,
+            "deliverable": "Complete PWA manifest"
+          }
+        ],
+        "subtotal_hours": 6.25,
+        "success_metrics": [
+          "All 5 bugs fixed and tested",
+          "App handles corrupted data gracefully",
+          "Timezone-aware date tracking verified",
+          "localStorage quota handled elegantly"
+        ]
+      },
+      {
+        "phase": 2,
+        "name": "Code Quality & Modularity",
+        "duration_hours": 20,
+        "effort": "MEDIUM",
+        "priority": "HIGH",
+        "user_impact": "MEDIUM",
+        "tasks": [
+          {
+            "task_id": "CQ-001",
+            "title": "Extract Food Database Module",
+            "description": "Separate food database from main HTML into JSON file with module wrapper",
+            "implementation_details": {
+              "approach": "Create foods.js with ES6 module export. Implement category management as class. Add search/filter utilities.",
+              "files_affected": ["index.html", "foods.js (new)"],
+              "testing": "Verify all 150+ foods load, categories filter correctly"
+            },
+            "time_estimate": 2,
+            "deliverable": "foods.js module + updated HTML"
+          },
+          {
+            "task_id": "CQ-002",
+            "title": "Create Storage Abstraction Layer",
+            "description": "Abstract localStorage behind Repository pattern with encryption option",
+            "implementation_details": {
+              "approach": "Create StorageRepository class with methods: get/set/delete/clear. Implement compression for history. Support optional encryption hook for future backend.",
+              "files_affected": ["storage.js (new)", "index.html"],
+              "testing": "Unit tests for CRUD operations"
+            },
+            "time_estimate": 2.5,
+            "deliverable": "storage.js module"
+          },
+          {
+            "task_id": "CQ-003",
+            "title": "Extract State Management",
+            "description": "Create AppState class to manage profile, targets, logs, weight, fasting",
+            "implementation_details": {
+              "approach": "Create state.js with AppState class. Implement getters/setters with validation. Add change event system for UI updates.",
+              "files_affected": ["state.js (new)", "index.html"],
+              "testing": "Verify state consistency across views"
+            },
+            "time_estimate": 3,
+            "deliverable": "state.js module"
+          },
+          {
+            "task_id": "CQ-004",
+            "title": "Extract UI Components as Functions",
+            "description": "Create component module for reusable UI elements",
+            "implementation_details": {
+              "approach": "Create components/: MacroRing, FoodItem, StatCard, etc. Each as pure function returning HTML. Implement event binding system.",
+              "files_affected": ["components.js (new)", "index.html"],
+              "testing": "Verify all components render correctly"
+            },
+            "time_estimate": 3.5,
+            "deliverable": "components.js module with 8+ components"
+          },
+          {
+            "task_id": "CQ-005",
+            "title": "Extract Calculation Utilities",
+            "description": "Create separate math module for BMR, TDEE, macros, calories",
+            "implementation_details": {
+              "approach": "Create calculations.js with: calcBMR(), calcTDEE(), calcMacros(), stepsToKcal(). Add unit tests.",
+              "files_affected": ["calculations.js (new)", "index.html"],
+              "testing": "Verify against standard formulas (Harris-Benedict, Mifflin-St Jeor)"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "calculations.js module"
+          },
+          {
+            "task_id": "CQ-006",
+            "title": "Create Router Module",
+            "description": "Explicit routing system instead of switchTab() global function",
+            "implementation_details": {
+              "approach": "Create router.js with Router class. Implement navigation history, state preservation, URL-based routing for mobile web share.",
+              "files_affected": ["router.js (new)", "index.html"],
+              "testing": "Test all 5 screens navigate correctly"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "router.js module"
+          },
+          {
+            "task_id": "CQ-007",
+            "title": "Add Logging & Analytics System",
+            "description": "Create structured logging for debugging and analytics",
+            "implementation_details": {
+              "approach": "Create logger.js with info/warn/error levels. Store structured logs in IndexedDB (5MB limit). Add error reporting hook for backend.",
+              "files_affected": ["logger.js (new)", "index.html"],
+              "testing": "Verify logs captured, no PII in logs"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "logger.js module + structured logging"
+          },
+          {
+            "task_id": "CQ-008",
+            "title": "Add JSDoc & Documentation",
+            "description": "Document all public APIs with JSDoc comments",
+            "implementation_details": {
+              "approach": "Add JSDoc to all functions, classes, and modules. Generate HTML docs with JSDoc tool.",
+              "files_affected": ["All .js files"],
+              "testing": "Verify JSDoc parses without errors"
+            },
+            "time_estimate": 2,
+            "deliverable": "Complete JSDoc coverage"
+          }
+        ],
+        "subtotal_hours": 17.5,
+        "success_metrics": [
+          "Codebase modularized into 7+ files",
+          "Main HTML reduced below 1500 lines",
+          "No global functions except initialization",
+          "All modules have JSDoc comments",
+          "100% code coverage for calculations module"
+        ]
+      },
+      {
+        "phase": 3,
+        "name": "Testing Infrastructure",
+        "duration_hours": 16,
+        "effort": "MEDIUM",
+        "priority": "HIGH",
+        "user_impact": "LOW (internal quality)",
+        "tasks": [
+          {
+            "task_id": "TEST-001",
+            "title": "Setup Jest Testing Framework",
+            "description": "Configure Jest with Babel for ES6 support",
+            "implementation_details": {
+              "approach": "Install Jest, @babel/preset-env. Create jest.config.js. Configure coverage thresholds.",
+              "files_affected": ["package.json", "jest.config.js", ".babelrc"],
+              "testing": "Verify Jest runs and reports coverage"
+            },
+            "time_estimate": 1,
+            "deliverable": "Jest configured with 80% coverage threshold"
+          },
+          {
+            "task_id": "TEST-002",
+            "title": "Unit Tests: Calculations Module",
+            "description": "100% test coverage for BMR, TDEE, macro calculations",
+            "implementation_details": {
+              "approach": "Create __tests__/calculations.test.js. Test: calcBMR (male/female), calcTDEE (all activity levels), calcMacros (all diet ratios), stepsToKcal()",
+              "files_affected": ["__tests__/calculations.test.js"],
+              "test_cases": 20,
+              "testing": "All calculations match known good values"
+            },
+            "time_estimate": 2,
+            "deliverable": "20 calculation unit tests"
+          },
+          {
+            "task_id": "TEST-003",
+            "title": "Unit Tests: Storage Module",
+            "description": "Test repository pattern implementation",
+            "implementation_details": {
+              "approach": "Create __tests__/storage.test.js. Test: get/set/delete/clear, quota handling, compression, data persistence",
+              "files_affected": ["__tests__/storage.test.js"],
+              "test_cases": 15,
+              "testing": "Mock localStorage for isolation"
+            },
+            "time_estimate": 2,
+            "deliverable": "15 storage unit tests"
+          },
+          {
+            "task_id": "TEST-004",
+            "title": "Unit Tests: State Management",
+            "description": "Test AppState class operations",
+            "implementation_details": {
+              "approach": "Create __tests__/state.test.js. Test: profile updates, log additions/deletions, target calculations, event emissions",
+              "files_affected": ["__tests__/state.test.js"],
+              "test_cases": 18,
+              "testing": "Verify immutability of state updates"
+            },
+            "time_estimate": 2,
+            "deliverable": "18 state unit tests"
+          },
+          {
+            "task_id": "TEST-005",
+            "title": "Unit Tests: Food Database",
+            "description": "Test food search, filtering, categories",
+            "implementation_details": {
+              "approach": "Create __tests__/foods.test.js. Test: search by name, filter by category, nutrition calculations, duplicate checking",
+              "files_affected": ["__tests__/foods.test.js"],
+              "test_cases": 12,
+              "testing": "Verify all 150+ foods load correctly"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "12 food database tests"
+          },
+          {
+            "task_id": "TEST-006",
+            "title": "Integration Tests: Food Logging Flow",
+            "description": "Test end-to-end food logging workflow",
+            "implementation_details": {
+              "approach": "Create __tests__/integration-logging.test.js. Test: select food -> adjust quantity -> log -> verify daily totals update",
+              "files_affected": ["__tests__/integration-logging.test.js"],
+              "test_cases": 8,
+              "testing": "Mock DOM elements for integration"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "8 integration tests"
+          },
+          {
+            "task_id": "TEST-007",
+            "title": "Integration Tests: Profile Setup",
+            "description": "Test profile creation and target calculation",
+            "implementation_details": {
+              "approach": "Create __tests__/integration-profile.test.js. Test: invalid inputs rejected, targets calculated correctly, profile persisted",
+              "files_affected": ["__tests__/integration-profile.test.js"],
+              "test_cases": 10,
+              "testing": "Verify validation boundaries"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "10 profile integration tests"
+          },
+          {
+            "task_id": "TEST-008",
+            "title": "E2E Tests: Playwright Setup",
+            "description": "Configure Playwright for critical user flows",
+            "implementation_details": {
+              "approach": "Install @playwright/test. Create playwright.config.js. Test on Chromium, Firefox, WebKit. Add screenshot comparison.",
+              "files_affected": ["playwright.config.js", "e2e/"],
+              "testing": "Run tests headless and headed modes"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Playwright configured with browsers"
+          },
+          {
+            "task_id": "TEST-009",
+            "title": "E2E Tests: Core User Flows",
+            "description": "Test critical user journeys",
+            "implementation_details": {
+              "approach": "Create e2e/workflows.spec.js covering: setup profile -> log breakfast -> check macros -> view history -> update weight -> check fasting timer",
+              "files_affected": ["e2e/workflows.spec.js"],
+              "test_cases": 6,
+              "testing": "Run against production build"
+            },
+            "time_estimate": 2,
+            "deliverable": "6 critical user flow E2E tests"
+          }
+        ],
+        "subtotal_hours": 15,
+        "success_metrics": [
+          "Jest configured with 80% coverage threshold",
+          "65+ unit tests written",
+          "18+ integration tests passing",
+          "6 E2E tests covering critical flows",
+          "All tests passing on CI/CD"
+        ]
+      },
+      {
+        "phase": 4,
+        "name": "Cloud Sync & Backend Integration",
+        "duration_hours": 24,
+        "effort": "LARGE",
+        "priority": "HIGH",
+        "user_impact": "CRITICAL",
+        "tasks": [
+          {
+            "task_id": "CLOUD-001",
+            "title": "Choose Backend Service & Setup Auth",
+            "description": "Select between Firebase, Supabase, or custom Node.js backend",
+            "implementation_details": {
+              "approach": "Comparison matrix: cost, features, learning curve. Recommendation: Supabase for PostgreSQL + real-time sync. Setup authentication with OAuth2.",
+              "options": {
+                "supabase": {
+                  "pros": "PostgreSQL, Row Level Security, real-time, open-source friendly",
+                  "cons": "Alpha stability (mitigated by version stability)",
+                  "setup_time": "2 hours"
+                },
+                "firebase": {
+                  "pros": "Mature, offline support built-in, Google backing",
+                  "cons": "Expensive at scale, vendor lock-in",
+                  "setup_time": "1.5 hours"
+                },
+                "custom": {
+                  "pros": "Full control, cost efficient, learning opportunity",
+                  "cons": "DevOps overhead, scaling required",
+                  "setup_time": "6 hours"
+                }
+              },
+              "files_affected": ["auth.js (new)", "config.js"],
+              "testing": "Verify OAuth flow works"
+            },
+            "time_estimate": 2,
+            "deliverable": "Backend service selected, auth configured"
+          },
+          {
+            "task_id": "CLOUD-002",
+            "title": "Implement Cloud Storage Service",
+            "description": "Create abstraction layer for cloud storage operations",
+            "implementation_details": {
+              "approach": "Create cloud-storage.js with CloudStorage class. Implement: sync profile, sync daily logs, sync weight history, sync fasting data. Support offline queue.",
+              "methods": [
+                "syncProfile(profile)",
+                "syncDailyLog(date, foods)",
+                "syncWeight(date, weight)",
+                "syncFastingSession(data)",
+                "getCloudBackup()",
+                "restoreFromCloud(backup)"
+              ],
+              "files_affected": ["cloud-storage.js (new)"],
+              "testing": "Test online/offline transitions"
+            },
+            "time_estimate": 3,
+            "deliverable": "cloud-storage.js module"
+          },
+          {
+            "task_id": "CLOUD-003",
+            "title": "Setup Sync Conflict Resolution",
+            "description": "Implement last-write-wins and merge strategies",
+            "implementation_details": {
+              "approach": "Create sync-resolver.js with conflict detection. For logs: merge by meal type. For weight: keep latest. For profile: manual resolution prompt.",
+              "files_affected": ["sync-resolver.js (new)"],
+              "strategies": [
+                "Last-write-wins (for weight)",
+                "Merge-by-type (for logs)",
+                "Manual resolution (for profile conflicts)"
+              ],
+              "testing": "Test simultaneous edits from multiple devices"
+            },
+            "time_estimate": 2,
+            "deliverable": "sync-resolver.js module"
+          },
+          {
+            "task_id": "CLOUD-004",
+            "title": "Add Background Sync",
+            "description": "Implement Service Worker background sync",
+            "implementation_details": {
+              "approach": "Update sw.js with sync event handlers. Create SyncQueue for offline changes. Retry failed syncs with exponential backoff.",
+              "features": [
+                "Queue operations while offline",
+                "Sync when connection restored",
+                "Exponential backoff retry (1s, 2s, 4s, 8s)",
+                "User notification of sync status"
+              ],
+              "files_affected": ["sw.js", "sync-queue.js (new)"],
+              "testing": "Simulate offline/online transitions"
+            },
+            "time_estimate": 2,
+            "deliverable": "Background sync in service worker"
+          },
+          {
+            "task_id": "CLOUD-005",
+            "title": "Create User Dashboard",
+            "description": "Web dashboard for viewing sync status, device management",
+            "implementation_details": {
+              "approach": "Create dashboard.html showing: linked devices, last sync time, data backup status, export options. Link account to multiple devices.",
+              "features": [
+                "Device list with last sync time",
+                "Manual sync trigger button",
+                "Data export (CSV, JSON)",
+                "Account settings",
+                "Linked device management"
+              ],
+              "files_affected": ["dashboard.html (new)"],
+              "testing": "Verify dashboard loads with cloud data"
+            },
+            "time_estimate": 2,
+            "deliverable": "dashboard.html with sync management"
+          },
+          {
+            "task_id": "CLOUD-006",
+            "title": "Implement Data Export/Import",
+            "description": "Support exporting and importing full data backup",
+            "implementation_details": {
+              "approach": "Create export.js with functions: exportToJSON(), exportToCSV(), importFromJSON(), importFromCSV(). Support bulk operations.",
+              "formats": [
+                "JSON (full fidelity)",
+                "CSV (logs only, spreadsheet compatible)",
+                "Google Sheets sync (via API)"
+              ],
+              "files_affected": ["export.js (new)"],
+              "testing": "Test round-trip export/import preserves data"
+            },
+            "time_estimate": 2,
+            "deliverable": "export.js module with format support"
+          },
+          {
+            "task_id": "CLOUD-007",
+            "title": "Add Real-time Notifications",
+            "description": "Notify user of sync events, conflicts, errors",
+            "implementation_details": {
+              "approach": "Extend toast system with: sync-start, sync-success, sync-error, conflict-detected. Add toast queue for multiple messages.",
+              "events": [
+                "Sync started",
+                "Sync completed",
+                "Conflict detected",
+                "Offline detected",
+                "Online restored",
+                "Quota warnings"
+              ],
+              "files_affected": ["index.html", "notifications.js (new)"],
+              "testing": "Trigger each notification type"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Enhanced notification system"
+          },
+          {
+            "task_id": "CLOUD-008",
+            "title": "Implement Encryption for Sensitive Data",
+            "description": "Optional encryption for cloud storage using TweetNaCl.js",
+            "implementation_details": {
+              "approach": "Create encryption.js with encrypt/decrypt functions. Store encryption key in secure storage. Enable per-user settings.",
+              "approach_details": "Use nacl.secretbox for symmetric encryption. Key derivation from password using scrypt.",
+              "files_affected": ["encryption.js (new)"],
+              "testing": "Verify encrypted data is unreadable without key"
+            },
+            "time_estimate": 2,
+            "deliverable": "Optional encryption layer"
+          },
+          {
+            "task_id": "CLOUD-009",
+            "title": "Create API Documentation",
+            "description": "Document cloud sync API endpoints and schemas",
+            "implementation_details": {
+              "approach": "Create API_SPEC.md documenting all endpoints, request/response schemas, authentication, rate limits, error codes.",
+              "endpoints": [
+                "POST /api/sync/profile - sync user profile",
+                "POST /api/sync/logs - sync daily logs",
+                "GET /api/sync/status - get sync status",
+                "POST /api/devices/link - link new device",
+                "GET /api/backups - list backups",
+                "POST /api/backups/restore - restore from backup"
+              ],
+              "files_affected": ["API_SPEC.md (new)"],
+              "testing": "API spec validates against implementation"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Complete API specification"
+          },
+          {
+            "task_id": "CLOUD-010",
+            "title": "Add Cloud Sync Tests",
+            "description": "Unit and integration tests for cloud sync",
+            "implementation_details": {
+              "approach": "Create __tests__/cloud-sync.test.js. Mock cloud service. Test: sync conflicts, offline queue, retry logic, error handling.",
+              "test_cases": 20,
+              "files_affected": ["__tests__/cloud-sync.test.js"],
+              "testing": "Test with network failures and corruption"
+            },
+            "time_estimate": 2,
+            "deliverable": "20 cloud sync tests"
+          }
+        ],
+        "subtotal_hours": 21.5,
+        "success_metrics": [
+          "Multi-device sync working end-to-end",
+          "Offline queue captures changes",
+          "Conflict resolution tested across devices",
+          "Background sync triggers on network restore",
+          "Data can be exported in multiple formats",
+          "Cloud sync tests at 80%+ coverage",
+          "Dashboard shows sync status correctly"
+        ]
+      },
+      {
+        "phase": 5,
+        "name": "Feature Enhancements",
+        "duration_hours": 28,
+        "effort": "LARGE",
+        "priority": "MEDIUM",
+        "user_impact": "CRITICAL",
+        "tasks": [
+          {
+            "task_id": "FEAT-001",
+            "title": "Enhanced Food Database with Images",
+            "description": "Add food images via USDA/Nutritionix API or Unsplash integration",
+            "implementation_details": {
+              "approach": "Integrate FatSecret or USDA FoodData Central API. Cache images locally. Show food photos in search results.",
+              "features": [
+                "Search USDA database for 8000+ foods",
+                "Fetch real nutrition data",
+                "Cache images in IndexedDB",
+                "Barcode scanning via Quagga.js"
+              ],
+              "files_affected": ["food-api.js (new)", "index.html"],
+              "testing": "Verify API limits not exceeded, images load"
+            },
+            "time_estimate": 4,
+            "deliverable": "USDA food database integration with images"
+          },
+          {
+            "task_id": "FEAT-002",
+            "title": "Advanced Analytics Dashboard",
+            "description": "Weekly/monthly trends, macro progression, insights",
+            "implementation_details": {
+              "approach": "Create analytics.html with: calories trend chart, macro pie charts, weight trend line, consistency score. Use Chart.js for visualization.",
+              "visualizations": [
+                "7/30-day calorie trend",
+                "Weekly macro distribution",
+                "Weight progression line chart",
+                "Food frequency heatmap",
+                "Consistency streak badge"
+              ],
+              "files_affected": ["analytics.html (new)", "analytics.js (new)"],
+              "testing": "Verify charts update with new data"
+            },
+            "time_estimate": 4,
+            "deliverable": "Advanced analytics dashboard"
+          },
+          {
+            "task_id": "FEAT-003",
+            "title": "Social Features - Challenges & Leaderboards",
+            "description": "Optional social challenges with friends",
+            "implementation_details": {
+              "approach": "Create challenges.js. Implement: 30-day consistency challenge, macro accuracy challenge, weight loss competition. Leaderboard with rankings.",
+              "challenges": [
+                "30-day logging streak",
+                "Hit macros 20+ days/month",
+                "Fastest weight loss",
+                "Most water logged"
+              ],
+              "files_affected": ["challenges.js (new)", "leaderboard.html (new)"],
+              "testing": "Simulate multiple users, verify rankings"
+            },
+            "time_estimate": 3,
+            "deliverable": "Challenges and leaderboards"
+          },
+          {
+            "task_id": "FEAT-004",
+            "title": "Advanced Fasting Insights",
+            "description": "Fasting metrics, autophagy window indicators, health insights",
+            "implementation_details": {
+              "approach": "Track fasting windows (12h, 16h, 20h, 24h). Show insulin sensitivity indicators. Provide insights on fasting benefits.",
+              "metrics": [
+                "Current fasting window duration",
+                "Recommended fasting protocol",
+                "Weekly fasting hours total",
+                "Insulin sensitivity score",
+                "Autophagy window (16h+)"
+              ],
+              "files_affected": ["fasting.js (new)"],
+              "testing": "Verify fasting calculations"
+            },
+            "time_estimate": 2,
+            "deliverable": "Advanced fasting insights"
+          },
+          {
+            "task_id": "FEAT-005",
+            "title": "AI-Powered Meal Recommendations",
+            "description": "Improve AI suggestions with ML predictions",
+            "implementation_details": {
+              "approach": "Integrate OpenAI API or use local model. Based on: remaining macros, food history, preferences, fasting state. Suggest optimal next meal.",
+              "features": [
+                "Analyze remaining macros",
+                "Consider user preferences",
+                "Suggest 3 meal options",
+                "Estimate prep time",
+                "Link to recipes"
+              ],
+              "files_affected": ["ai-meals.js (new)"],
+              "testing": "Verify suggestions fit macro targets"
+            },
+            "time_estimate": 3,
+            "deliverable": "AI meal recommendations"
+          },
+          {
+            "task_id": "FEAT-006",
+            "title": "Integration with Fitness Trackers",
+            "description": "Sync with Apple Health, Google Fit, Fitbit, Oura",
+            "implementation_details": {
+              "approach": "Use official APIs to pull steps, heart rate, sleep data. Display in context with nutrition.",
+              "integrations": [
+                "Apple HealthKit (iOS)",
+                "Google Fit (Android)",
+                "Fitbit API",
+                "Oura Ring"
+              ],
+              "files_affected": ["integrations.js (new)"],
+              "testing": "Test permission flows on iOS/Android"
+            },
+            "time_estimate": 5,
+            "deliverable": "Fitness tracker integrations"
+          },
+          {
+            "task_id": "FEAT-007",
+            "title": "Customizable Meal Templates",
+            "description": "Save and reuse favorite meal combinations",
+            "implementation_details": {
+              "approach": "Create templates.js. Allow users to save multi-food meals as templates. Implement template library with search.",
+              "features": [
+                "Save current meals as template",
+                "Apply template with one tap",
+                "Adjust quantities in template",
+                "Share templates (JSON export)",
+                "Community templates"
+              ],
+              "files_affected": ["templates.js (new)"],
+              "testing": "Verify templates apply all foods correctly"
+            },
+            "time_estimate": 2,
+            "deliverable": "Meal template system"
+          },
+          {
+            "task_id": "FEAT-008",
+            "title": "Voice Input & Smart Recognition",
+            "description": "Log food by voice commands",
+            "implementation_details": {
+              "approach": "Use Web Speech API. Implement: 'Log 150g chicken', 'Add 2 cups rice'. Train custom model for food recognition.",
+              "features": [
+                "Voice-to-text food entry",
+                "Natural language parsing",
+                "Quantity extraction",
+                "Meal type detection"
+              ],
+              "files_affected": ["voice.js (new)"],
+              "testing": "Test various voice commands"
+            },
+            "time_estimate": 2,
+            "deliverable": "Voice logging system"
+          },
+          {
+            "task_id": "FEAT-009",
+            "title": "Smart Notifications & Reminders",
+            "description": "Contextual notifications based on goals and patterns",
+            "implementation_details": {
+              "approach": "Implement push notifications. Remind user: lunch time, logging consistency, approaching goals, hydration time.",
+              "reminders": [
+                "Daily logging streak reminder",
+                "Mealtime suggestions based on history",
+                "Hydration reminders (8 per day)",
+                "Macro achievement celebration",
+                "Weekly insights summary"
+              ],
+              "files_affected": ["reminders.js (new)"],
+              "testing": "Verify notifications fire at correct times"
+            },
+            "time_estimate": 2,
+            "deliverable": "Smart reminder system"
+          },
+          {
+            "task_id": "FEAT-010",
+            "title": "Dark/Light Theme Toggle with System Preference",
+            "description": "Enhanced theme system with persistence",
+            "implementation_details": {
+              "approach": "Detect system theme preference. Allow manual override. Add accent color picker. Persist preference.",
+              "features": [
+                "System preference detection",
+                "Manual override option",
+                "3 accent color themes",
+                "High contrast mode",
+                "AMOLED black mode"
+              ],
+              "files_affected": ["themes.js (new)", "index.html"],
+              "testing": "Verify theme persists across sessions"
+            },
+            "time_estimate": 1.5,
+            "deliverable": "Advanced theming system"
+          }
+        ],
+        "subtotal_hours": 28.5,
+        "success_metrics": [
+          "8000+ foods searchable via API",
+          "Analytics dashboard with 5+ charts",
+          "Social challenges with working leaderboard",
+          "Fitness tracker sync functional",
+          "Voice logging works for common foods",
+          "Smart notifications deliver contextual messages",
+          "AI meal suggestions match user macros",
+          "All features have E2E tests"
+        ]
+      }
+    ],
+    "implementation_timeline": {
+      "phase_1": {
+        "name": "Quick Wins",
+        "start_week": 1,
+        "duration": "1-2 weeks",
+        "team_size": "1 developer",
+        "critical_path": true
+      },
+      "phase_2": {
+        "name": "Modularity",
+        "start_week": 2,
+        "duration": "2-3 weeks",
+        "team_size": "1 developer",
+        "depends_on": ["phase_1"]
+      },
+      "phase_3": {
+        "name": "Testing",
+        "start_week": 4,
+        "duration": "2 weeks",
+        "team_size": "1-2 developers",
+        "depends_on": ["phase_2"],
+        "parallel_with": ["early phase_4"]
+      },
+      "phase_4": {
+        "name": "Cloud Sync",
+        "start_week": 5,
+        "duration": "3 weeks",
+        "team_size": "1-2 developers",
+        "depends_on": ["phase_3"],
+        "critical_for_launch": true
+      },
+      "phase_5": {
+        "name": "Enhancements",
+        "start_week": 8,
+        "duration": "3-4 weeks",
+        "team_size": "2 developers",
+        "depends_on": ["phase_4"],
+        "can_run_parallel": true
+      }
+    }
+  },
+  "estimated_effort_summary": {
+    "phase_1_quick_wins": {
+      "hours": 6.25,
+      "days": 1,
+      "developer_count": 1,
+      "difficulty": "EASY"
+    },
+    "phase_2_modularity": {
+      "hours": 17.5,
+      "days": 4,
+      "developer_count": 1,
+      "difficulty": "MEDIUM"
+    },
+    "phase_3_testing": {
+      "hours": 15,
+      "days": 3,
+      "developer_count": 1,
+      "difficulty": "MEDIUM"
+    },
+    "phase_4_cloud": {
+      "hours": 21.5,
+      "days": 5,
+      "developer_count": 1,
+      "difficulty": "HARD"
+    },
+    "phase_5_features": {
+      "hours": 28.5,
+      "days": 6,
+      "developer_count": 2,
+      "difficulty": "HARD"
+    },
+    "total_effort": {
+      "hours": 88.75,
+      "weeks": "12-14",
+      "team_months": 2.2,
+      "cost_estimate_at_100_usd_per_hour": 8875
+    }
+  },
+  "prioritization_matrix": {
+    "tier_1_critical": [
+      {
+        "item": "Fix timezone bug (BUG-002)",
+        "reason": "Data integrity issue affecting cross-timezone users",
+        "phase": 1,
+        "hours": 0.5
+      },
+      {
+        "item": "Fix carbs display (BUG-003)",
+        "reason": "Incorrect user-facing calculations",
+        "phase": 1,
+        "hours": 0.25
+      },
+      {
+        "item": "Modularity refactor",
+        "reason": "Enables all future work without regressions",
+        "phase": 2,
+        "hours": 17.5
+      },
+      {
+        "item": "Cloud sync implementation",
+        "reason": "Differentiator, enables multi-device use",
+        "phase": 4,
+        "hours": 21.5
+      }
+    ],
+    "tier_2_high": [
+      {
+        "item": "Testing infrastructure (80% coverage)",
+        "reason": "Safe refactoring and feature additions",
+        "phase": 3,
+        "hours": 15
+      },
+      {
+        "item": "Enhanced food database with USDA",
+        "reason": "User-facing value, 8000+ foods",
+        "phase": 5,
+        "hours": 4
+      },
+      {
+        "item": "Analytics dashboard",
+        "reason": "Retention driver, engagement metric",
+        "phase": 5,
+        "hours": 4
+      }
+    ],
+    "tier_3_medium": [
+      {
+        "item": "Storage quota handling (BUG-001)",
+        "reason": "Edge case handling, prevents crashes",
+        "phase": 1,
+        "hours": 1.5
+      },
+      {
+        "item": "Fitness tracker integration",
+        "reason": "Competitive feature, valuable for users",
+        "phase": 5,
+        "hours": 5
+      },
+      {
+        "item": "Social challenges",
+        "reason": "Engagement and retention driver",
+        "phase": 5,
+        "hours": 3
+      }
+    ],
+    "tier_4_nice_to_have": [
+      {
+        "item": "Voice input",
+        "reason": "Nice-to-have, not critical",
+        "phase": 5,
+        "hours": 2
+      },
+      {
+        "item": "Advanced theming",
+        "reason": "UX polish",
+        "phase": 5,
+        "hours": 1.5
+      }
+    ]
+  },
+  "success_metrics": {
+    "code_quality": {
+      "test_coverage": "80%+",
+      "cyclomatic_complexity": "<10 per function",
+      "lines_per_file": "<800",
+      "functions_per_file": "<15"
+    },
+    "performance": {
+      "initial_load_time": "<2 seconds",
+      "time_to_interactive": "<3 seconds",
+      "lighthouse_score": "90+",
+      "largest_contentful_paint": "<2.5 seconds"
+    },
+    "reliability": {
+      "uptime": "99%+",
+      "crash_rate": "<0.1%",
+      "data_loss_incidents": "0",
+      "sync_conflict_resolution": "100% successful"
+    },
+    "user_engagement": {
+      "daily_active_users": "+50% vs current",
+      "session_duration": "+100%",
+      "feature_adoption": "80%+ cloud sync adoption in 3 months",
+      "user_retention": "70%+ 30-day retention"
+    }
+  },
+  "risks_and_mitigations": [
+    {
+      "risk": "localStorage quota exceeded during migration to cloud",
+      "severity": "HIGH",
+      "mitigation": "Implement automatic history compression, give user option to clear old data before cloud migration",
+      "phase": 1
+    },
+    {
+      "risk": "Cloud sync conflicts during refactoring",
+      "severity": "MEDIUM",
+      "mitigation": "Implement comprehensive sync conflict tests before Phase 4, use feature flags for gradual rollout",
+      "phase": 4
+    },
+    {
+      "risk": "Breaking changes in public APIs during modularity refactor",
+      "severity": "MEDIUM",
+      "mitigation": "Add comprehensive test coverage first (Phase 3), use deprecation warnings for 2 releases",
+      "phase": 2
+    },
+    {
+      "risk": "Third-party API rate limits (USDA, Fitbit, OpenAI)",
+      "severity": "MEDIUM",
+      "mitigation": "Implement caching, queuing, and user quotas. Use fallback to local database if API unavailable",
+      "phase": 5
+    },
+    {
+      "risk": "Timezone data corruption from legacy dates",
+      "severity": "HIGH",
+      "mitigation": "Create data migration utility to fix existing dates, add validation checks",
+      "phase": 1
+    }
+  ],
+  "next_steps": {
+    "immediate": [
+      "1. Run through Phase 1 bugs (6 hours)",
+      "2. Set up version control and CI/CD",
+      "3. Choose cloud backend (Supabase recommended)"
+    ],
+    "week_1": [
+      "Complete Phase 1 quick wins",
+      "Set up development environment",
+      "Plan Phase 2 modularity refactor"
+    ],
+    "week_2": [
+      "Begin Phase 2 code modularity",
+      "Start Phase 3 test infrastructure",
+      "Document current architecture"
+    ]
+  }
+}

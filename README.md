@@ -266,7 +266,7 @@ https://github.com/AbhijeetM777/macrotrack-pro/issues
 - [ ] Recipe builder & scaling
 - [ ] AI-powered macro recommendations
 - [ ] Social features (challenges, friends)
-- [ ] Wearable integration (Apple Watch, Fitbit)
+- [ ] Wearable integration (Smart Watches, Fitbit)
 - [ ] Meal planning
 - [ ] Grocery list generator
 

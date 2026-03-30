@@ -1502,9 +1502,46 @@ const ACT={sedentary:1.2,light:1.375,moderate:1.55,active:1.725};
 let profile={},targets={};
 let activeCat='all',selectedFood=null,qtyValue=1;
 
-function getKey(d){const dt=d||new Date();return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`}
+function getKey(d){
+  const dt=d||new Date();
+  // BUG-FIX: Use UTC-adjusted date to handle timezone consistency
+  const offset=dt.getTimezoneOffset();
+  const utcAdjusted=new Date(dt.getTime()-offset*60000);
+  const iso=utcAdjusted.toISOString().split('T')[0];
+  return iso;
+}
 function getStorage(k,def){try{const v=localStorage.getItem(k);if(v)return JSON.parse(v);return def}catch(e){console.warn('Storage read err:',e);return def}}
-function setStorage(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){console.warn('Storage write err:',e);if(e.name==='QuotaExceededError')showToast('⚠️ Storage Full. Clear data.');}}
+function setStorage(k,v){
+  try{
+    localStorage.setItem(k,JSON.stringify(v));
+  }catch(e){
+    console.warn('Storage write err:',e);
+    if(e.name==='QuotaExceededError'){
+      // BUG-FIX: Better quota handling - attempt to free space
+      showToast('⚠️ Storage full! Removing old entries...');
+      // Remove entries older than 60 days
+      const keys=Object.keys(localStorage);
+      const now=Date.now();
+      const sixtyDaysMs=60*24*60*60*1000;
+      keys.forEach(key=>{
+        if(key.startsWith('mt_log_')){
+          const dateStr=key.replace('mt_log_','');
+          const date=new Date(dateStr).getTime();
+          if(now-date>sixtyDaysMs){
+            localStorage.removeItem(key);
+          }
+        }
+      });
+      // Retry the write
+      try{
+        localStorage.setItem(k,JSON.stringify(v));
+        showToast('✅ Freed space and saved!');
+      }catch(e2){
+        showToast('❌ Storage still full. Manual cleanup needed.');
+      }
+    }
+  }
+}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000)}
 
 // ── AI & MARKETING (BODYBUILDING EXP) ──
@@ -1683,8 +1720,22 @@ function updatePreview(){
   document.getElementById('qty-unit').textContent=selectedFood.unit;
 }
 
-function stepQty(dir){qtyValue=Math.max(0.5,qtyValue+dir*0.5);updatePreview();}
-function onQtyInput(){const v=parseFloat(document.getElementById('qty-input').value);if(!isNaN(v)&&v>0){qtyValue=v;updatePreview();}}
+function stepQty(dir){
+  // BUG-FIX: Add upper bound constraint
+  qtyValue=Math.max(0.5,Math.min(99,qtyValue+dir*0.5));
+  updatePreview();
+}
+function onQtyInput(){
+  let v=parseFloat(document.getElementById('qty-input').value);
+  // BUG-FIX: Validate input range (0.5 to 99)
+  if(!isNaN(v)){
+    v=Math.max(0.5,Math.min(99,v));
+    qtyValue=v;
+    updatePreview();
+  }else{
+    document.getElementById('qty-input').value=qtyValue;
+  }
+}
 
 // ── PREMIUM ANIMATION UTILITIES ──
 function applyStaggerAnimation(container, itemSelector, delayMultiplier = 0.075) {
@@ -1745,9 +1796,13 @@ function setVideoQuality(quality,label){
 
 // Sanitize HTML to prevent XSS
 function sanitizeHTML(str){
+  // BUG-FIX: Enhanced sanitization - remove dangerous characters
+  // Use textContent method which is safe but also strip HTML-like patterns
   const div=document.createElement('div');
   div.textContent=str;
-  return div.innerHTML;
+  const sanitized=div.innerHTML;
+  // Additional validation: ensure no attribute injection vectors
+  return sanitized.replace(/[<>\"\']/g,'');
 }
 
 function logFood(){
@@ -1799,11 +1854,11 @@ function renderHome(){
   // Macros
   document.getElementById('cals-eaten').textContent=Math.round(tot.kcal);
   document.getElementById('p-eaten').textContent=Math.round(tot.protein);
-  document.getElementById('c-eaten').textContent=Math.round(tot.carbs+tot.fat);
+  document.getElementById('c-eaten').textContent=Math.round(tot.carbs); // BUG-FIX: Show only carbs, not carbs+fat
   
   document.getElementById('cals-bar').style.width=Math.min(tot.kcal/t.kcal*100,100)+'%';
   document.getElementById('p-bar').style.width=Math.min(tot.protein/t.protein*100,100)+'%';
-  document.getElementById('c-bar').style.width=Math.min((tot.carbs+tot.fat)/(t.carbs+t.fat)*100,100)+'%';
+  document.getElementById('c-bar').style.width=Math.min(tot.carbs/t.carbs*100,100)+'%'; // BUG-FIX: Show carbs progress, not carbs+fat
   
   document.getElementById('t-protein').textContent=Math.round(tot.protein)+'g';
   document.getElementById('t-carbs').textContent=Math.round(tot.carbs)+'g';

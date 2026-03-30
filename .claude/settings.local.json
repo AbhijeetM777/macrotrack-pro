@@ -5,7 +5,11 @@
       "Bash(where npx:*)",
       "Bash(where python:*)",
       "Bash(gh auth:*)",
-      "Bash(gh repo:*)"
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(npx vercel:*)",
+      "WebFetch(domain:abhijeetm777.github.io)",
+      "Bash(xargs kill:*)"
     ]
   }
 }
