@@ -6,8 +6,13 @@
 <meta name="theme-color" content="#0e0c1a">
 <link rel="manifest" href="manifest.json">
 <title>MacroTrack Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js" defer></script>
+<meta http-equiv="x-ua-compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased}
 :root{
@@ -48,8 +53,8 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 .screen,.tab-bar,.modal-overlay,.toast{position:relative;z-index:1}
 
 /* Tab bar */
-.tab-bar{display:none;background:rgba(14,12,26,.65);border-top:1px solid var(--b1);padding:8px 4px calc(8px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;z-index:100;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);gap:2px}
-.tab-bar.visible{display:flex;animation:fadeSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards}
+.tab-bar{display:none;background:rgba(14,12,26,.65);border-top:1px solid var(--b1);padding:8px 4px calc(8px + env(safe-area-inset-bottom));position:fixed;bottom:0;left:0;right:0;width:100%;justify-content:center;align-items:center;z-index:100;backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);gap:2px}
+.tab-bar.visible{display:flex;animation:fadeSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;max-width:100%;margin:0 auto}
 .tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px;border:none;background:none;cursor:pointer;color:var(--t3);transition:all .4s cubic-bezier(0.16,1,0.3,1);border-radius:var(--r12)}
 .tab-btn:hover{color:var(--t1);transform:translateY(-2px)}
 .tab-btn.active{color:var(--ac);transform:translateY(-2px) scale(1.05)}
@@ -409,12 +414,15 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   .tab-bar {
     max-width: 600px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
     border-radius: 0;
     border: 1px solid rgba(255,255,255,0.1);
     border-bottom: none;
     padding: 8px 12px;
     box-shadow: 0 -4px 40px rgba(0,0,0,0.8);
     background: rgba(28,28,30,0.75);
+    width: auto;
   }
   
   /* Cap modal widths cleanly */
@@ -579,102 +587,20 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:8px 16px;font-size:13px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s">Sign In</button>
   </div>
 
-  <!-- Hero Section -->
-  <div style="position:relative;width:100%;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:120px;text-align:center;">
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#000;">
-      <!-- CSS Zooming Image Fallback + Video -->
-      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=2800&q=100&auto=format&fit=crop" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8;animation:slowPan 25s infinite alternate ease-in-out;">
-      <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">
-        <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
-      </video>
-      <div style="position:absolute;bottom:0;left:0;width:100%;height:60vh;background:linear-gradient(to top, rgba(0,0,0,1) 10%, transparent 100%);"></div>
-    </div>
-    <div style="position:relative;z-index:2;padding:0 20px;">
-      <div class="landing-hero-text" style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:8px;transform:translateY(30px);animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;">Gets you</div>
-      <div class="landing-hero-text" style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:24px;transform:translateY(30px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;">tracked.</div>
-      <div style="font-size:18px;font-weight:500;color:var(--t2);margin-bottom:36px;line-height:1.4;max-width:300px;margin-inline:auto;transform:translateY(20px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;">World-class macro tracking, fasting timers, and Premium‑tier insights.</div>
-      <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:18px 48px;font-size:18px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s;box-shadow:0 8px 32px rgba(166,255,0,0.3);transform:translateY(20px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;">Try it free*</button>
+  <!-- Simplified Login Page -->
+  <div style="position:relative;width:100%;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center;background:linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,5,20,0.95) 100%);">
+    <div style="position:relative;z-index:2;padding:0 20px;max-width:400px;">
+      <div style="font-size:48px;font-weight:800;color:#fff;letter-spacing:-0.04em;margin-bottom:16px;">Welcome to<br><span style="color:var(--gr)">MacroTrack+</span></div>
+      <div style="font-size:16px;font-weight:500;color:var(--t2);margin-bottom:48px;line-height:1.6;">Track your macros, crush your goals, and achieve your fitness dreams.</div>
+      <button onclick="startApp()" style="width:100%;background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:16px 24px;font-size:16px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 8px 32px rgba(166,255,0,0.3);margin-bottom:16px;">Sign In</button>
+      <button onclick="startApp()" style="width:100%;background:transparent;color:var(--gr);border:2px solid var(--gr);border-radius:var(--rpill);padding:14px 24px;font-size:16px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s;">Let's Go</button>
     </div>
   </div>
+</div>
 
-  <!-- Marquee -->
-  <div style="padding:40px 0;overflow:hidden;background:#000;border-bottom:1px solid var(--b1); border-top:1px solid var(--b1);">
-    <div style="display:flex;width:200%;animation:marquee 15s linear infinite;">
-      <div class="landing-marquee-text" style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
-      <div class="landing-marquee-text" style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
-    </div>
-  </div>
-
-  <div class="reveal" style="padding:60px 20px;background:#000;display:flex;flex-direction:column;gap:30px;min-height:100vh;">
-    <div style="font-size:44px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:20px;">
-      Eat smarter.<br><span style="color:var(--t2)">Burn faster.</span>
-    </div>
-    <div class="landing-feature-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-      <!-- Left -->
-      <div class="px-col-1" style="display:flex;flex-direction:column;gap:20px;transform:translateY(60px);transition:transform 0.1s linear">
-        <div style="overflow:hidden;border-radius:var(--r28);aspect-ratio:4/5;background:var(--s1);position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.4)">
-          <video autoplay preload="auto" loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
-            <source src="https://cdn.coverr.co/videos/coverr-woman-looking-in-mirror-at-the-gym-7760/720p.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div style="border-radius:var(--r28);border:1.5px solid rgba(166,255,0,0.15);overflow:hidden;position:relative;min-height:150px;">
-          <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.28;z-index:0;">
-            <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.5) 100%);z-index:1;"></div>
-          <div style="position:relative;z-index:2;padding:24px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.15em;color:var(--ac);text-transform:uppercase;margin-bottom:6px;">Log Food</div>
-            <h3 style="font-size:20px;color:#fff;margin-bottom:8px;font-weight:700;">Every Calorie.</h3>
-            <p style="font-size:14px;color:var(--t2);line-height:1.5">Scan, search, or tap to log perfectly mapped macros.</p>
-          </div>
-        </div>
-      </div>
-      <!-- Right -->
-      <div class="px-col-2" style="display:flex;flex-direction:column;gap:20px;transition:transform 0.1s linear">
-        <div style="border-radius:var(--r28);border:1.5px solid rgba(0,228,255,0.15);overflow:hidden;position:relative;min-height:150px;margin-top:40px;">
-          <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;z-index:0;">
-            <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.5) 100%);z-index:1;"></div>
-          <div style="position:relative;z-index:2;padding:24px;">
-            <div style="font-size:9px;font-weight:700;letter-spacing:0.15em;color:var(--bl);text-transform:uppercase;margin-bottom:6px;">Fasting Timer</div>
-            <h3 style="font-size:20px;color:#fff;margin-bottom:8px;font-weight:700;">Perfect Fasting.</h3>
-            <p style="font-size:14px;color:var(--t2);line-height:1.5">Adaptive timers loop seamlessly to your rhythm.</p>
-          </div>
-        </div>
-        <div style="overflow:hidden;border-radius:var(--r28);aspect-ratio:1/1;background:var(--s1);position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.4)">
-          <video autoplay preload="auto" loop muted playsinline style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s" onmouseover="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'">
-            <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- ── ANIMATED PLAN-MAKING SHOWCASE ── -->
-  <div class="reveal" style="background:#000;padding:80px 20px 100px;position:relative;overflow:hidden;">
-    <!-- Ambient background video -->
-    <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.07;z-index:0;">
-      <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
-    </video>
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(166,255,0,0.04) 0%,transparent 70%);z-index:0;"></div>
-    <!-- Content -->
-    <div style="position:relative;z-index:1;max-width:900px;margin:0 auto;">
-      <!-- Header -->
-      <div style="text-align:center;margin-bottom:56px;">
-        <div style="font-size:40px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1.1;margin-bottom:16px;">Your plan.<br><span style="color:var(--ac)">Built live.</span></div>
-        <p style="font-size:16px;color:var(--t2);max-width:380px;margin:0 auto;line-height:1.5;">Hyper-personalised workout splits and meal plans, generated in seconds from your goals.</p>
-      </div>
-
-      <!-- Split cards: Workout + Diet -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;">
-
-        <!-- ── WORKOUT PLAN CARD ── -->
-        <div style="background:rgba(8,8,10,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(166,255,0,0.15);border-radius:24px;overflow:hidden;position:relative;">
-          <!-- Card video bg -->
-          <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.13;z-index:0;">
-            <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/720p.mp4" type="video/mp4">
-          </video>
+<!-- ═══════════ TRACKER LINK MODAL ═══════════ -->
+<div class="tracker-modal-overlay" id="trackerLinkModal">
+  <div class="tracker-modal-box">
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
           <div style="position:relative;z-index:2;padding:18px 16px;">
             <!-- Card header -->
@@ -724,7 +650,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
         <!-- ── DIET PLAN CARD ── -->
         <div style="background:rgba(8,8,10,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(0,228,255,0.13);border-radius:24px;overflow:hidden;position:relative;">
           <!-- Card video bg -->
-          <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;">
+          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;">
             <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
           </video>
           <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
@@ -804,7 +730,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <!-- Wearables Section (New Cinematic Section) -->
   <div class="reveal" style="position:relative;width:100%;height:80vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px;">
     <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#000;">
-      <video autoplay preload="auto" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;">
+      <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;">
         <source src="https://cdn.coverr.co/videos/coverr-woman-looking-in-mirror-at-the-gym-7760/720p.mp4" type="video/mp4">
       </video>
       <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);"></div>
@@ -837,9 +763,20 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 </div>
 
 <!-- Signature Footer -->
-<div style="position:fixed;bottom:20px;right:20px;font-size:12px;color:#ffffff;font-weight:600;z-index:10;font-family:var(--ff);letter-spacing:0.02em;">
+<div style="position:fixed;bottom:100px;right:16px;font-size:11px;color:#ffffff;font-weight:600;z-index:50;font-family:var(--ff);letter-spacing:0.02em;text-align:right;line-height:1.4;max-width:120px;">
   @ft.24savage
 </div>
+
+<!-- Mobile Footer Adjustment -->
+<style>
+  @media (max-width: 767px) {
+    div:has(+ .tracker-modal-overlay) {
+      bottom: 120px !important;
+      right: 12px !important;
+      font-size: 10px !important;
+    }
+  }
+</style>
 
 <!-- ═══════════ TRACKER LINK MODAL ═══════════ -->
 <div class="tracker-modal-overlay" id="tracker-modal">
@@ -993,8 +930,8 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 <!-- ═══════════ HOME SCREEN ═══════════ -->
 <div class="screen" id="screen-home">
   <div style="position:absolute;top:0;left:0;width:100%;height:500px;z-index:-1;overflow:hidden;mask-image:linear-gradient(to bottom, black 40%, transparent 100%);-webkit-mask-image:linear-gradient(to bottom, black 40%, transparent 100%)">
-    <video autoplay preload="auto" loop muted playsinline style="width:100%;height:100%;object-fit:cover;opacity:0.5;transform:scale(1.05);">
-      <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
+    <video autoplay="autoplay" preload="metadata" loop muted="muted" playsinline="true" style="width:100%;height:100%;object-fit:cover;opacity:0.6;transform:scale(1.05);" poster="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80">
+      <source src="https://cdn.coverr.co/videos/coverr-men-training-in-the-gym-4532/480p.mp4" type="video/mp4">
     </video>
   </div>
   <div id="marketing-banner" style="background:#1c1c1e;color:#fff;font-size:13px;font-weight:600;text-align:center;padding:12px 14px;display:none;border-radius:var(--r16);margin:14px 14px 0;box-shadow:0 4px 12px rgba(0,0,0,0.5);border:1px solid var(--b0);cursor:pointer;" onclick="this.style.display='none'"></div>
