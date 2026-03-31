@@ -432,6 +432,59 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   }
 }
 
+/* ── MOBILE BREAKPOINT (max 767px) ── */
+@media (max-width: 767px) {
+  /* Stack two-column feature grid to single column */
+  .landing-feature-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Override stuck translateY on mobile */
+  #screen-landing .px-col-1,
+  #screen-landing .px-col-2 {
+    transform: none !important;
+  }
+
+  /* Shrink hero text */
+  .landing-hero-text {
+    font-size: 40px !important;
+  }
+
+  /* Shrink marquee text */
+  .landing-marquee-text {
+    font-size: 44px !important;
+  }
+}
+
+/* ── LANDING SCREEN MOBILE SCROLL ── */
+#screen-landing {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+}
+
+/* ── ATHLETE WELCOME CAROUSEL ── */
+.athlete-slide {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.athlete-slide.active {
+  opacity: 1;
+}
+
+@keyframes athletePan {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08) translate(-1%, -1%);
+  }
+}
+
+.athlete-slide.active {
+  animation: athletePan 4s ease-in-out forwards;
+}
+
 /* ── TRACKER MODAL ── */
 .tracker-modal-overlay{
   display:none;position:fixed;inset:0;z-index:3000;
@@ -536,8 +589,8 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
       <div style="position:absolute;bottom:0;left:0;width:100%;height:60vh;background:linear-gradient(to top, rgba(0,0,0,1) 10%, transparent 100%);"></div>
     </div>
     <div style="position:relative;z-index:2;padding:0 20px;">
-      <div style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:8px;transform:translateY(30px);animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;">Gets you</div>
-      <div style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:24px;transform:translateY(30px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;">tracked.</div>
+      <div class="landing-hero-text" style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:8px;transform:translateY(30px);animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) forwards;">Gets you</div>
+      <div class="landing-hero-text" style="font-size:56px;font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:24px;transform:translateY(30px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;">tracked.</div>
       <div style="font-size:18px;font-weight:500;color:var(--t2);margin-bottom:36px;line-height:1.4;max-width:300px;margin-inline:auto;transform:translateY(20px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;">World-class macro tracking, fasting timers, and Premium‑tier insights.</div>
       <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:18px 48px;font-size:18px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s;box-shadow:0 8px 32px rgba(166,255,0,0.3);transform:translateY(20px);opacity:0;animation:fadeSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;">Try it free*</button>
     </div>
@@ -546,8 +599,8 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <!-- Marquee -->
   <div style="padding:40px 0;overflow:hidden;background:#000;border-bottom:1px solid var(--b1); border-top:1px solid var(--b1);">
     <div style="display:flex;width:200%;animation:marquee 15s linear infinite;">
-      <div style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
-      <div style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
+      <div class="landing-marquee-text" style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
+      <div class="landing-marquee-text" style="font-size:72px;font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t3);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">NUTRITION · MACROS · FASTING · INSIGHTS · Premium‑Tier ·</div>
     </div>
   </div>
 
@@ -555,7 +608,7 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     <div style="font-size:44px;font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:20px;">
       Eat smarter.<br><span style="color:var(--t2)">Burn faster.</span>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div class="landing-feature-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
       <!-- Left -->
       <div class="px-col-1" style="display:flex;flex-direction:column;gap:20px;transform:translateY(60px);transition:transform 0.1s linear">
         <div style="overflow:hidden;border-radius:var(--r28);aspect-ratio:4/5;background:var(--s1);position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.4)">
@@ -912,6 +965,27 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   <div style="padding:0 14px 40px">
     <div class="field"><label>Your Name</label><input type="text" id="s-name" placeholder="e.g. Abhijeet"></div>
     <button class="modal-btn" onclick="saveSetup()" style="padding:16px;font-size:16px;">Calculate My Macros</button>
+  </div>
+</div>
+
+<!-- ═══════════ ATHLETE WELCOME SCREEN ═══════════ -->
+<div class="screen" id="screen-welcome" style="padding:0;overflow:hidden;position:relative;">
+  <!-- Athlete image carousel background -->
+  <div class="athlete-bg" style="position:absolute;inset:0;z-index:0;">
+    <!-- 5 athlete images cycling as full-bleed covers -->
+    <img class="athlete-slide active" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80&auto=format&fit=crop" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <img class="athlete-slide" src="https://imgs.search.brave.com/YzXSWlI4lj-EeD3_H1-k1SEpisxyX3hoQ0IkOuWPwdA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5NTgz/NTkuanBn" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <img class="athlete-slide" src="https://imgs.search.brave.com/WcwEplEEgaEperV-GoJWKlxocoCHYH6ErzeJTGrw4nU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvbWVz/c2ktZ29hdC1jb25j/ZXB0LXBob3RvLXg5/bjdsdm4xMnhtcTZp/NTYuanBn" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <img class="athlete-slide" src="https://imgs.search.brave.com/GWFuMT-FQ2cqc8Srj2-0V4lRtSwnA26md7jo_PjRBTA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdG9yemU6Ly9zeXN0ZW0vcmVzb3VyY2VzL3RodW1ibmFpbHMvMDI3LzEwNS8wMDYvc21hbGwvb3V0bGluZS1vZi1hLWRhcmstZ29hdC1mcmVlLXBob3RvLmpwZw==" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <img class="athlete-slide" src="https://imgs.search.brave.com/E88BXaOHrbNHZhuLTn_yIy4DN29k4flGAy5omVaerEg/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJzLmNvbS9p/bWFnZXMvaGQvdG9t/LWJyYWR5LWdvYXQt/Mm52NWxoYWdwdTd6/d2I4My5qcGc=" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);z-index:1;"></div>
+  </div>
+  <!-- Foreground content -->
+  <div style="position:absolute;bottom:0;left:0;right:0;z-index:2;padding:40px 28px 80px;text-align:center;">
+    <div style="font-size:13px;font-weight:700;letter-spacing:0.14em;color:var(--ac);text-transform:uppercase;margin-bottom:8px;">Fitness+</div>
+    <div style="font-size:52px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1.1;margin-bottom:8px;">Welcome back.</div>
+    <div id="welcome-username" style="font-size:18px;color:var(--t2);margin-bottom:40px;"></div>
+    <button onclick="goHome()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:16px 40px;font-size:16px;font-weight:700;font-family:var(--ff);cursor:pointer;">Continue</button>
   </div>
 </div>
 
@@ -1629,8 +1703,7 @@ function saveSetup(){
     document.getElementById('screen-setup').classList.remove('active');
     const landing = document.getElementById('screen-landing');
     if (landing) landing.classList.remove('active');
-    document.querySelector('.tab-bar').classList.add('visible');
-    switchTab('home');
+    showWelcome();
   },600);
 }
 
@@ -2333,11 +2406,39 @@ function initReveal(){
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 }
 
+// ── ATHLETE WELCOME SCREEN ──
+let welcomeTimer = null;
+
+function showWelcome() {
+  const ws = document.getElementById('screen-welcome');
+  document.getElementById('welcome-username').textContent = (profile.name || 'Athlete') + '!';
+  ws.classList.add('active');
+  startAthleteCarousel();
+  // Auto-dismiss after 4 seconds
+  welcomeTimer = setTimeout(() => goHome(), 4000);
+}
+
+function goHome() {
+  clearTimeout(welcomeTimer);
+  document.getElementById('screen-welcome').classList.remove('active');
+  document.querySelector('.tab-bar').classList.add('visible');
+  switchTab('home');
+}
+
+function startAthleteCarousel() {
+  const slides = document.querySelectorAll('.athlete-slide');
+  let idx = 0;
+  setInterval(() => {
+    slides[idx].classList.remove('active');
+    idx = (idx + 1) % slides.length;
+    slides[idx].classList.add('active');
+  }, 1500);
+}
+
 function startApp(){
   if(profile.setupDone){
     document.getElementById('screen-landing').classList.remove('active');
-    document.querySelector('.tab-bar').classList.add('visible');
-    switchTab('home');
+    showWelcome();
   } else {
     // Show tracker link modal first, then setup
     openTrackerModal();
