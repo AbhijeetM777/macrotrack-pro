@@ -443,25 +443,9 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 
 /* ── MOBILE BREAKPOINT (max 767px) ── */
 @media (max-width: 767px) {
-  /* Stack two-column feature grid to single column */
-  .landing-feature-grid {
+  /* Stack two-column grids to single column on mobile */
+  #screen-landing div[style*="grid-template-columns: 1fr 1fr"] {
     grid-template-columns: 1fr !important;
-  }
-
-  /* Override stuck translateY on mobile */
-  #screen-landing .px-col-1,
-  #screen-landing .px-col-2 {
-    transform: none !important;
-  }
-
-  /* Shrink hero text */
-  .landing-hero-text {
-    font-size: 40px !important;
-  }
-
-  /* Shrink marquee text */
-  .landing-marquee-text {
-    font-size: 44px !important;
   }
 }
 
@@ -580,203 +564,194 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
 <div class="toast" id="toast"></div>
 
 <!-- ═══════════ LANDING PAGE ═══════════ -->
-<div class="screen active" id="screen-landing" style="padding:0; display:block;">
-  
-  <div style="position:fixed;top:0;left:0;width:100%;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(28,28,30,0.4);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:999;border-bottom:1px solid rgba(255,255,255,0.05)">
+<div class="screen active" id="screen-landing" style="padding:0; display:block; overflow-y:auto; height:100vh;">
+
+  <!-- Fixed Nav Bar -->
+  <div style="position:fixed;top:0;left:0;width:100%;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.6);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:999;border-bottom:1px solid rgba(255,255,255,0.05)">
     <div style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.03em;">MacroTrack<span style="color:var(--gr)">+</span></div>
     <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:8px 16px;font-size:13px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s">Sign In</button>
   </div>
 
-  <!-- Simplified Login Page -->
-  <div style="position:relative;width:100%;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;text-align:center;background:linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(10,5,20,0.95) 100%);">
-    <div style="position:relative;z-index:2;padding:0 20px;max-width:400px;">
-      <div style="font-size:48px;font-weight:800;color:#fff;letter-spacing:-0.04em;margin-bottom:16px;">Welcome to<br><span style="color:var(--gr)">MacroTrack+</span></div>
-      <div style="font-size:16px;font-weight:500;color:var(--t2);margin-bottom:48px;line-height:1.6;">Track your macros, crush your goals, and achieve your fitness dreams.</div>
-      <button onclick="startApp()" style="width:100%;background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:16px 24px;font-size:16px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 8px 32px rgba(166,255,0,0.3);margin-bottom:16px;">Sign In</button>
-      <button onclick="startApp()" style="width:100%;background:transparent;color:var(--gr);border:2px solid var(--gr);border-radius:var(--rpill);padding:14px 24px;font-size:16px;font-weight:700;font-family:var(--ff);cursor:pointer;transition:transform 0.2s;">Let's Go</button>
+  <!-- ── HERO SECTION ── -->
+  <div style="position:relative;width:100%;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:0 20px 100px;text-align:center;">
+    <div style="position:absolute;inset:0;z-index:0;background:#000;">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80&auto=format&fit=crop" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.7;">
+      <div style="position:absolute;bottom:0;left:0;width:100%;height:70vh;background:linear-gradient(to top, rgba(0,0,0,1) 15%, transparent 100%);"></div>
+    </div>
+    <div style="position:relative;z-index:2;max-width:480px;">
+      <div style="font-size:clamp(40px,10vw,60px);font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:8px;">Gets you</div>
+      <div style="font-size:clamp(40px,10vw,60px);font-weight:800;line-height:1;color:#fff;letter-spacing:-0.04em;margin-bottom:20px;">tracked.</div>
+      <div style="font-size:clamp(15px,3.5vw,18px);font-weight:500;color:var(--t2);margin-bottom:32px;line-height:1.5;max-width:320px;margin-inline:auto;">Track macros, crush workouts, and fuel your body right. All you've got to do is show up.</div>
+      <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:16px 44px;font-size:17px;font-weight:700;font-family:var(--ff);cursor:pointer;box-shadow:0 8px 32px rgba(166,255,0,0.3);transition:transform 0.2s;">Start Free</button>
     </div>
   </div>
-</div>
 
-<!-- ═══════════ TRACKER LINK MODAL ═══════════ -->
-<div class="tracker-modal-overlay" id="trackerLinkModal">
-  <div class="tracker-modal-box">
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
-          <div style="position:relative;z-index:2;padding:18px 16px;">
-            <!-- Card header -->
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
-              <div>
-                <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;color:var(--ac);text-transform:uppercase;">Workout Plan</div>
-                <div style="font-size:15px;font-weight:800;color:#fff;margin-top:3px;letter-spacing:-0.02em;">Push Day · Week 1</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:3px;background:rgba(166,255,0,0.1);border:1px solid rgba(166,255,0,0.25);border-radius:99px;padding:4px 8px;">
-                <span style="font-size:8px;font-weight:700;color:var(--ac);letter-spacing:0.08em;">BUILDING</span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--ac);border-radius:50%;display:inline-block;"></span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--ac);border-radius:50%;display:inline-block;"></span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--ac);border-radius:50%;display:inline-block;"></span>
-              </div>
-            </div>
-            <!-- Workout items -->
-            <div style="display:flex;flex-direction:column;gap:6px;" id="plan-anim-workout">
-              <div class="plan-item pa-workout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;">
-                <div><div style="font-size:12px;font-weight:600;color:#fff;">Bench Press</div><div style="font-size:9px;color:var(--t3);margin-top:1px;">Chest · Primary</div></div>
-                <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--ac);font-family:var(--fm);">4 × 8</div><div style="font-size:9px;color:var(--t3);">80 kg</div></div>
-              </div>
-              <div class="plan-item pa-workout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;">
-                <div><div style="font-size:12px;font-weight:600;color:#fff;">Incline DB Press</div><div style="font-size:9px;color:var(--t3);margin-top:1px;">Upper Chest</div></div>
-                <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--ac);font-family:var(--fm);">3 × 10</div><div style="font-size:9px;color:var(--t3);">22 kg</div></div>
-              </div>
-              <div class="plan-item pa-workout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;">
-                <div><div style="font-size:12px;font-weight:600;color:#fff;">Overhead Press</div><div style="font-size:9px;color:var(--t3);margin-top:1px;">Shoulders</div></div>
-                <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--ac);font-family:var(--fm);">3 × 12</div><div style="font-size:9px;color:var(--t3);">50 kg</div></div>
-              </div>
-              <div class="plan-item pa-workout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;">
-                <div><div style="font-size:12px;font-weight:600;color:#fff;">Tricep Pushdowns</div><div style="font-size:9px;color:var(--t3);margin-top:1px;">Triceps · Isolation</div></div>
-                <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--ac);font-family:var(--fm);">3 × 15</div><div style="font-size:9px;color:var(--t3);">Cable</div></div>
-              </div>
-              <div class="plan-item pa-workout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;display:flex;justify-content:space-between;align-items:center;">
-                <div><div style="font-size:12px;font-weight:600;color:#fff;">Lateral Raises</div><div style="font-size:9px;color:var(--t3);margin-top:1px;">Side Delts</div></div>
-                <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--ac);font-family:var(--fm);">4 × 15</div><div style="font-size:9px;color:var(--t3);">10 kg</div></div>
-              </div>
-            </div>
-            <!-- Burn estimate -->
-            <div style="margin-top:10px;padding:9px 10px;background:rgba(255,159,10,0.08);border:1px solid rgba(255,159,10,0.18);border-radius:12px;display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-size:10px;color:var(--or);font-weight:700;letter-spacing:0.06em;">EST. BURN</div>
-              <div style="font-size:14px;font-weight:800;color:var(--or);font-family:var(--fm);">~340 kcal</div>
-            </div>
-          </div>
+  <!-- ── MARQUEE ── -->
+  <div style="padding:28px 0;overflow:hidden;background:#000;border-bottom:1px solid var(--b1);border-top:1px solid var(--b1);">
+    <div style="display:flex;width:200%;animation:marquee 18s linear infinite;">
+      <div style="font-size:clamp(36px,8vw,72px);font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t4);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">MACROS · STRENGTH · FASTING · HIIT · NUTRITION · YOGA · PILATES ·</div>
+      <div style="font-size:clamp(36px,8vw,72px);font-weight:800;color:transparent;-webkit-text-stroke:1px var(--t4);white-space:nowrap;padding-right:40px;letter-spacing:-0.02em;">MACROS · STRENGTH · FASTING · HIIT · NUTRITION · YOGA · PILATES ·</div>
+    </div>
+  </div>
+
+  <!-- ── FEATURE CARDS: Move your way ── -->
+  <div style="padding:60px 20px;background:#000;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--ac);text-transform:uppercase;margin-bottom:8px;">Move your way</div>
+      <div style="font-size:clamp(28px,6vw,44px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px;">Thousands of ways<br><span style="color:var(--t3)">to train smarter.</span></div>
+      <p style="font-size:15px;color:var(--t2);max-width:420px;line-height:1.5;margin-bottom:32px;">HIIT, strength, yoga, Pilates, cardio — find the programme that fits your goals, your schedule, and your life.</p>
+
+      <!-- Training type cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;">
+        <div style="background:var(--s1);border:1.5px solid var(--b1);border-radius:var(--r16);padding:20px 14px;text-align:center;transition:border-color 0.2s;">
+          <div style="font-size:28px;margin-bottom:8px;">🏋️</div>
+          <div style="font-size:13px;font-weight:700;color:var(--t0);">Strength</div>
+          <div style="font-size:10px;color:var(--t3);margin-top:3px;">Build lean muscle</div>
         </div>
-
-        <!-- ── DIET PLAN CARD ── -->
-        <div style="background:rgba(8,8,10,0.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1.5px solid rgba(0,228,255,0.13);border-radius:24px;overflow:hidden;position:relative;">
-          <!-- Card video bg -->
-          <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;">
-            <source src="https://cdn.coverr.co/videos/coverr-colorful-salad-bowl-1709/720p.mp4" type="video/mp4">
-          </video>
-          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.85) 100%);z-index:1;"></div>
-          <div style="position:relative;z-index:2;padding:18px 16px;">
-            <!-- Card header -->
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
-              <div>
-                <div style="font-size:9px;font-weight:700;letter-spacing:0.14em;color:var(--bl);text-transform:uppercase;">Meal Plan</div>
-                <div style="font-size:15px;font-weight:800;color:#fff;margin-top:3px;letter-spacing:-0.02em;">2,100 kcal · Cutting</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:3px;background:rgba(0,228,255,0.08);border:1px solid rgba(0,228,255,0.2);border-radius:99px;padding:4px 8px;">
-                <span style="font-size:8px;font-weight:700;color:var(--bl);letter-spacing:0.08em;">BUILDING</span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--bl);border-radius:50%;display:inline-block;animation-delay:0.1s;"></span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--bl);border-radius:50%;display:inline-block;animation-delay:0.3s;"></span>
-                <span class="gen-dot" style="width:3px;height:3px;background:var(--bl);border-radius:50%;display:inline-block;animation-delay:0.5s;"></span>
-              </div>
-            </div>
-            <!-- Meal items -->
-            <div style="display:flex;flex-direction:column;gap:6px;" id="plan-anim-diet">
-              <div class="plan-item pa-diet" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div><div style="font-size:11px;font-weight:700;color:var(--yl);">🌅 Breakfast</div><div style="font-size:11px;font-weight:600;color:#fff;margin-top:2px;">Oats + Egg Whites</div></div>
-                  <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--t1);font-family:var(--fm);">485</div><div style="font-size:9px;color:var(--t3);">kcal</div></div>
-                </div>
-                <div style="font-size:9px;color:var(--t3);margin-top:4px;">P 28g · C 58g · F 9g</div>
-              </div>
-              <div class="plan-item pa-diet" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div><div style="font-size:11px;font-weight:700;color:var(--ac);">☀️ Lunch</div><div style="font-size:11px;font-weight:600;color:#fff;margin-top:2px;">Chicken Rice Bowl</div></div>
-                  <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--t1);font-family:var(--fm);">680</div><div style="font-size:9px;color:var(--t3);">kcal</div></div>
-                </div>
-                <div style="font-size:9px;color:var(--t3);margin-top:4px;">P 45g · C 72g · F 14g</div>
-              </div>
-              <div class="plan-item pa-diet" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div><div style="font-size:11px;font-weight:700;color:var(--bl);">🌙 Dinner</div><div style="font-size:11px;font-weight:600;color:#fff;margin-top:2px;">Salmon + Veggies</div></div>
-                  <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--t1);font-family:var(--fm);">720</div><div style="font-size:9px;color:var(--t3);">kcal</div></div>
-                </div>
-                <div style="font-size:9px;color:var(--t3);margin-top:4px;">P 38g · C 45g · F 22g</div>
-              </div>
-              <div class="plan-item pa-diet" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:9px 10px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <div><div style="font-size:11px;font-weight:700;color:var(--or);">🍎 Snacks</div><div style="font-size:11px;font-weight:600;color:#fff;margin-top:2px;">Greek Yogurt + Nuts</div></div>
-                  <div style="text-align:right"><div style="font-size:12px;font-weight:700;color:var(--t1);font-family:var(--fm);">215</div><div style="font-size:9px;color:var(--t3);">kcal</div></div>
-                </div>
-                <div style="font-size:9px;color:var(--t3);margin-top:4px;">P 12g · C 18g · F 9g</div>
-              </div>
-            </div>
-            <!-- Macro summary -->
-            <div style="margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">
-              <div style="background:rgba(0,228,255,0.07);border:1px solid rgba(0,228,255,0.15);border-radius:10px;padding:7px 4px;text-align:center;">
-                <div style="font-size:13px;font-weight:800;color:var(--bl);font-family:var(--fm);">123g</div>
-                <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px;">Protein</div>
-              </div>
-              <div style="background:rgba(255,214,10,0.07);border:1px solid rgba(255,214,10,0.15);border-radius:10px;padding:7px 4px;text-align:center;">
-                <div style="font-size:13px;font-weight:800;color:var(--yl);font-family:var(--fm);">193g</div>
-                <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px;">Carbs</div>
-              </div>
-              <div style="background:rgba(255,159,10,0.07);border:1px solid rgba(255,159,10,0.15);border-radius:10px;padding:7px 4px;text-align:center;">
-                <div style="font-size:13px;font-weight:800;color:var(--or);font-family:var(--fm);">54g</div>
-                <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px;">Fats</div>
-              </div>
-            </div>
-          </div>
+        <div style="background:var(--s1);border:1.5px solid var(--b1);border-radius:var(--r16);padding:20px 14px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">⚡</div>
+          <div style="font-size:13px;font-weight:700;color:var(--t0);">HIIT</div>
+          <div style="font-size:10px;color:var(--t3);margin-top:3px;">Torch calories fast</div>
         </div>
-
-      </div><!-- /grid -->
-
-      <!-- CTA chips -->
-      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:40px;">
-        <div style="background:rgba(255,255,255,0.05);border:1.5px solid var(--b1);backdrop-filter:blur(20px);border-radius:var(--rpill);padding:14px 28px;font-size:14px;font-weight:800;color:var(--t0);display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.borderColor='var(--ac)';this.style.background='rgba(166,255,0,0.05)'" onmouseleave="this.style.borderColor='var(--b1)';this.style.background='rgba(255,255,255,0.05)'"><span style="color:var(--ac);font-size:18px">🥗</span> Custom Meals</div>
-        <div style="background:rgba(255,255,255,0.05);border:1.5px solid var(--b1);backdrop-filter:blur(20px);border-radius:var(--rpill);padding:14px 28px;font-size:14px;font-weight:800;color:var(--t0);display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.3s" onmouseover="this.style.borderColor='var(--bl)';this.style.background='rgba(0,228,255,0.05)'" onmouseleave="this.style.borderColor='var(--b1)';this.style.background='rgba(255,255,255,0.05)'"><span style="color:var(--bl);font-size:18px">🏋️</span> Training Splits</div>
+        <div style="background:var(--s1);border:1.5px solid var(--b1);border-radius:var(--r16);padding:20px 14px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">🧘</div>
+          <div style="font-size:13px;font-weight:700;color:var(--t0);">Yoga</div>
+          <div style="font-size:10px;color:var(--t3);margin-top:3px;">Flexibility & recovery</div>
+        </div>
+        <div style="background:var(--s1);border:1.5px solid var(--b1);border-radius:var(--r16);padding:20px 14px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">🔥</div>
+          <div style="font-size:13px;font-weight:700;color:var(--t0);">Cardio</div>
+          <div style="font-size:10px;color:var(--t3);margin-top:3px;">Heart health & endurance</div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Wearables Section (New Cinematic Section) -->
-  <div class="reveal" style="position:relative;width:100%;height:80vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px;">
-    <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;background:#000;">
-      <video autoplay preload="metadata" loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6;">
-        <source src="https://cdn.coverr.co/videos/coverr-woman-looking-in-mirror-at-the-gym-7760/720p.mp4" type="video/mp4">
-      </video>
-      <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);"></div>
-    </div>
-    <div style="font-size:12px;font-weight:700;letter-spacing:0.15em;color:var(--ac);text-transform:uppercase;margin-bottom:12px;">Wearable Integration</div>
-    <div style="font-size:44px;font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1;margin-bottom:20px;">Synced with <br>your life.</div>
-    <p style="font-size:16px;color:var(--t2);max-width:280px;line-height:1.5;margin-bottom:32px;">Every step, every beat, everywhere. MacroTrack syncs with Health, Google Fit, and Garmin automatically.</p>
-    <div style="display:flex;gap:20px;">
-      <div style="font-size:24px;filter:grayscale(1) opacity(0.5);transition:all 0.3s" onmouseover="this.style.filter='grayscale(0) opacity(1)'" onmouseleave="this.style.filter='grayscale(1) opacity(0.5)'">❤️</div>
-      <div style="font-size:24px;filter:grayscale(1) opacity(0.5);transition:all 0.3s" onmouseover="this.style.filter='grayscale(0) opacity(1)'" onmouseleave="this.style.filter='grayscale(1) opacity(0.5)'">🏃</div>
-      <div style="font-size:24px;filter:grayscale(1) opacity(0.5);transition:all 0.3s" onmouseover="this.style.filter='grayscale(0) opacity(1)'" onmouseleave="this.style.filter='grayscale(1) opacity(0.5)'">⌚</div>
+  <!-- ── FUEL YOURSELF: Nutrition Section ── -->
+  <div style="padding:60px 20px;background:linear-gradient(180deg,#000 0%,#0a0a0f 100%);position:relative;overflow:hidden;">
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;">
+      <!-- Text -->
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--bl);text-transform:uppercase;margin-bottom:8px;">Fuel yourself forward</div>
+        <div style="font-size:clamp(24px,5vw,36px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px;">Every calorie.<br>Every macro.<br><span style="color:var(--t3)">Mapped.</span></div>
+        <p style="font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:20px;">Power your progress with precise macro tracking. Scan barcodes, search foods, or build custom meals — take the guesswork out of nutrition.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="background:var(--acbg);border:1px solid var(--acbd);border-radius:var(--rpill);padding:6px 14px;font-size:11px;font-weight:700;color:var(--ac);">Barcode Scanner</span>
+          <span style="background:var(--blbg);border:1px solid rgba(0,228,255,0.3);border-radius:var(--rpill);padding:6px 14px;font-size:11px;font-weight:700;color:var(--bl);">Custom Meals</span>
+          <span style="background:var(--rdbg);border:1px solid rgba(250,17,79,0.3);border-radius:var(--rpill);padding:6px 14px;font-size:11px;font-weight:700;color:var(--rd);">Recipe Ideas</span>
+        </div>
+      </div>
+      <!-- Macro preview card -->
+      <div style="background:rgba(28,28,30,0.8);backdrop-filter:blur(20px);border:1.5px solid var(--b1);border-radius:24px;padding:20px;position:relative;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--t3);text-transform:uppercase;margin-bottom:14px;">Daily Target</div>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+          <svg viewBox="0 0 80 80" style="width:70px;height:70px;transform:rotate(-90deg);flex-shrink:0;">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(250,17,79,0.2)" stroke-width="6"/>
+            <circle cx="40" cy="40" r="32" fill="none" stroke="var(--rd)" stroke-width="6" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="50" style="animation:drawRing 2s cubic-bezier(0.16,1,0.3,1) forwards;"/>
+            <circle cx="40" cy="40" r="24" fill="none" stroke="rgba(166,255,0,0.2)" stroke-width="6"/>
+            <circle cx="40" cy="40" r="24" fill="none" stroke="var(--gr)" stroke-width="6" stroke-linecap="round" stroke-dasharray="150" stroke-dashoffset="35" style="animation:drawRing 2s cubic-bezier(0.16,1,0.3,1) 0.15s forwards;"/>
+            <circle cx="40" cy="40" r="16" fill="none" stroke="rgba(0,228,255,0.2)" stroke-width="6"/>
+            <circle cx="40" cy="40" r="16" fill="none" stroke="var(--bl)" stroke-width="6" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="20" style="animation:drawRing 2s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;"/>
+          </svg>
+          <div>
+            <div style="font-size:24px;font-weight:800;color:#fff;line-height:1;">2,100</div>
+            <div style="font-size:10px;font-weight:600;color:var(--t3);margin-top:2px;">KCAL TARGET</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">
+          <div style="background:rgba(166,255,0,0.08);border:1px solid rgba(166,255,0,0.15);border-radius:12px;padding:8px;text-align:center;">
+            <div style="font-size:14px;font-weight:800;color:var(--ac);font-family:var(--fm);">140g</div>
+            <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;">Protein</div>
+          </div>
+          <div style="background:rgba(255,214,10,0.08);border:1px solid rgba(255,214,10,0.15);border-radius:12px;padding:8px;text-align:center;">
+            <div style="font-size:14px;font-weight:800;color:var(--yl);font-family:var(--fm);">210g</div>
+            <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;">Carbs</div>
+          </div>
+          <div style="background:rgba(255,159,10,0.08);border:1px solid rgba(255,159,10,0.15);border-radius:12px;padding:8px;text-align:center;">
+            <div style="font-size:14px;font-weight:800;color:var(--or);font-family:var(--fm);">58g</div>
+            <div style="font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:0.08em;">Fats</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- Outro Rings -->
-  <div style="padding:100px 20px 140px;background:#000;text-align:center;">
-    <div style="width:180px;height:180px;margin:0 auto 40px;position:relative;">
-        <svg viewBox="0 0 120 120" style="width:100%;height:100%;filter:drop-shadow(0 0 16px rgba(166,255,0,0.4))">
-          <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(250,17,79,0.2)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rd)" stroke-width="8" stroke-linecap="round" stroke-dasharray="301" style="--target-dashoffset: 60; animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) forwards infinite alternate;"/>
-          <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(166,255,0,0.2)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="36" fill="none" stroke="var(--gr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" style="--target-dashoffset: 40; animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) 0.2s forwards infinite alternate;"/>
-          <circle cx="60" cy="60" r="24" fill="none" stroke="rgba(0,228,255,0.2)" stroke-width="8"/>
-          <circle cx="60" cy="60" r="24" fill="none" stroke="var(--bl)" stroke-width="8" stroke-linecap="round" stroke-dasharray="150" style="--target-dashoffset: 30; animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) 0.4s forwards infinite alternate;"/>
-        </svg>
+
+  <!-- ── FASTING & RECOVERY ── -->
+  <div style="padding:60px 20px;background:#000;text-align:center;">
+    <div style="max-width:600px;margin:0 auto;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--or);text-transform:uppercase;margin-bottom:8px;">Intermittent Fasting</div>
+      <div style="font-size:clamp(28px,6vw,40px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px;">Built-in fasting timers.</div>
+      <p style="font-size:15px;color:var(--t2);line-height:1.5;margin-bottom:28px;max-width:380px;margin-inline:auto;">16:8, 18:6, 20:4, or custom windows. Adaptive timers that loop seamlessly with your eating schedule.</p>
+      <!-- Fasting window pills -->
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;">
+        <span style="background:rgba(255,159,10,0.1);border:1.5px solid rgba(255,159,10,0.25);border-radius:var(--rpill);padding:10px 20px;font-size:14px;font-weight:800;color:var(--or);">16 : 8</span>
+        <span style="background:rgba(255,159,10,0.1);border:1.5px solid rgba(255,159,10,0.25);border-radius:var(--rpill);padding:10px 20px;font-size:14px;font-weight:800;color:var(--or);">18 : 6</span>
+        <span style="background:rgba(255,159,10,0.1);border:1.5px solid rgba(255,159,10,0.25);border-radius:var(--rpill);padding:10px 20px;font-size:14px;font-weight:800;color:var(--or);">20 : 4</span>
+        <span style="background:rgba(255,159,10,0.1);border:1.5px solid rgba(255,159,10,0.25);border-radius:var(--rpill);padding:10px 20px;font-size:14px;font-weight:800;color:var(--or);">Custom</span>
+      </div>
     </div>
-    <div style="font-size:36px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px;">Close every ring.</div>
-    <div style="font-size:16px;font-weight:500;color:var(--t2);margin-bottom:40px;">Your goals have never looked better.</div>
-    <button onclick="startApp()" style="background:var(--rd);color:#fff;border:none;border-radius:var(--rpill);padding:18px 48px;font-size:18px;font-weight:700;font-family:var(--ff);cursor:pointer;box-shadow:0 8px 32px rgba(250,17,79,0.4)">Let's Go</button>
   </div>
-</div>
 
-<!-- Signature Footer -->
-<div style="position:fixed;bottom:100px;right:16px;font-size:11px;color:#ffffff;font-weight:600;z-index:50;font-family:var(--ff);letter-spacing:0.02em;text-align:right;line-height:1.4;max-width:120px;">
-  @ft.24savage
-</div>
+  <!-- ── WEARABLE SYNC ── -->
+  <div style="position:relative;width:100%;min-height:50vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:60px 20px;">
+    <div style="position:absolute;inset:0;z-index:0;background:#000;">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80&auto=format&fit=crop" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.85) 100%);"></div>
+    </div>
+    <div style="position:relative;z-index:1;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--ac);text-transform:uppercase;margin-bottom:10px;">Wearable Integration</div>
+      <div style="font-size:clamp(28px,6vw,44px);font-weight:800;color:#fff;letter-spacing:-0.04em;line-height:1.1;margin-bottom:14px;">Synced with<br>your life.</div>
+      <p style="font-size:15px;color:var(--t2);max-width:320px;line-height:1.5;margin:0 auto 28px;">Every step, every beat, everywhere. MacroTrack syncs with Apple Health, Google Fit, Fitbit, Samsung Health, and Garmin.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">❤️</span><span style="font-size:12px;font-weight:700;color:var(--t1);">Apple Health</span></div>
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">🏃</span><span style="font-size:12px;font-weight:700;color:var(--t1);">Google Fit</span></div>
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:8px;"><span style="font-size:18px;">⌚</span><span style="font-size:12px;font-weight:700;color:var(--t1);">Garmin</span></div>
+      </div>
+    </div>
+  </div>
 
-<!-- Mobile Footer Adjustment -->
-<style>
-  @media (max-width: 767px) {
-    div:has(+ .tracker-modal-overlay) {
-      bottom: 120px !important;
-      right: 12px !important;
-      font-size: 10px !important;
-    }
-  }
-</style>
+  <!-- ── WEIGHT & BODY TRACKING ── -->
+  <div style="padding:60px 20px;background:#000;">
+    <div style="max-width:600px;margin:0 auto;text-align:center;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--rd);text-transform:uppercase;margin-bottom:8px;">Progress Tracking</div>
+      <div style="font-size:clamp(28px,6vw,40px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:12px;">See results,<br>not guesses.</div>
+      <p style="font-size:15px;color:var(--t2);line-height:1.5;margin-bottom:28px;max-width:380px;margin-inline:auto;">Log your weight, track body measurements, and watch your transformation over weeks and months.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:360px;margin:0 auto;">
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r16);padding:16px 8px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--rd);">-4.2</div>
+          <div style="font-size:9px;font-weight:600;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:0.08em;">KG this month</div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r16);padding:16px 8px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--ac);">+12%</div>
+          <div style="font-size:9px;font-weight:600;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:0.08em;">Strength up</div>
+        </div>
+        <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r16);padding:16px 8px;text-align:center;">
+          <div style="font-size:22px;font-weight:800;color:var(--bl);">28</div>
+          <div style="font-size:9px;font-weight:600;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:0.08em;">Day streak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CLOSE EVERY RING CTA ── -->
+  <div style="padding:80px 20px 120px;background:#000;text-align:center;">
+    <div style="width:140px;height:140px;margin:0 auto 32px;position:relative;">
+      <svg viewBox="0 0 120 120" style="width:100%;height:100%;filter:drop-shadow(0 0 16px rgba(166,255,0,0.4))">
+        <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(250,17,79,0.2)" stroke-width="8"/>
+        <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rd)" stroke-width="8" stroke-linecap="round" stroke-dasharray="301" style="--target-dashoffset:60;animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) forwards infinite alternate;"/>
+        <circle cx="60" cy="60" r="36" fill="none" stroke="rgba(166,255,0,0.2)" stroke-width="8"/>
+        <circle cx="60" cy="60" r="36" fill="none" stroke="var(--gr)" stroke-width="8" stroke-linecap="round" stroke-dasharray="226" style="--target-dashoffset:40;animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) 0.2s forwards infinite alternate;"/>
+        <circle cx="60" cy="60" r="24" fill="none" stroke="rgba(0,228,255,0.2)" stroke-width="8"/>
+        <circle cx="60" cy="60" r="24" fill="none" stroke="var(--bl)" stroke-width="8" stroke-linecap="round" stroke-dasharray="150" style="--target-dashoffset:30;animation:drawRing 3s cubic-bezier(0.16,1,0.3,1) 0.4s forwards infinite alternate;"/>
+      </svg>
+    </div>
+    <div style="font-size:clamp(28px,6vw,36px);font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:10px;">Close every ring.</div>
+    <div style="font-size:15px;font-weight:500;color:var(--t2);margin-bottom:36px;max-width:320px;margin-inline:auto;">Your goals have never looked this good. Set yourself up for success — we've got the rest.</div>
+    <button onclick="startApp()" style="background:var(--gr);color:#000;border:none;border-radius:var(--rpill);padding:16px 44px;font-size:17px;font-weight:700;font-family:var(--ff);cursor:pointer;box-shadow:0 8px 32px rgba(166,255,0,0.3);transition:transform 0.2s;">Let's Go</button>
+    <div style="margin-top:20px;font-size:12px;color:var(--t4);">@ft.24savage</div>
+  </div>
+
+</div>
 
 <!-- ═══════════ TRACKER LINK MODAL ═══════════ -->
 <div class="tracker-modal-overlay" id="tracker-modal">
