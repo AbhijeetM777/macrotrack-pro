@@ -28,20 +28,34 @@
   "author": "Abhijeet M",
   "license": "MIT",
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.2",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/user-event": "^14.5.1",
+    "@vitejs/plugin-react": "^4.7.0",
     "@vitejs/plugin-vue": "^4.5.2",
     "@vitest/coverage-v8": "^1.2.2",
     "@vitest/ui": "^1.2.2",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.1.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.9.3",
     "vite": "^5.1.1",
     "vitest": "^1.2.2"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.6"
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-tooltip": "^1.2.8",
+    "@supabase/supabase-js": "^2.39.6",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.27",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^1.7.0",
+    "motion": "^12.38.0",
+    "postcss": "^8.5.8",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.2"
   },
   "engines": {
     "node": ">=16.0.0"
