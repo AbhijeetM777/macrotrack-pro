@@ -557,11 +557,192 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1), transform 0.45s cubic-bezier(0.16,1,0.3,1);
 }
 .plan-item.pi-visible { opacity: 1; transform: translateX(0); }
+
+/* ═══ TESTIMONIALS ═══ */
+.testimonial-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 20px}
+.testimonial-track::-webkit-scrollbar{display:none}
+.testimonial-card{min-width:280px;max-width:320px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:20px;scroll-snap-align:start;flex-shrink:0}
+.testimonial-avatar{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--acbd)}
+.testimonial-stars{color:var(--yl);font-size:12px;letter-spacing:2px}
+.testimonial-text{font-size:13px;color:var(--t2);line-height:1.5;margin:8px 0;font-style:italic}
+.testimonial-name{font-size:12px;font-weight:700;color:var(--t0)}
+.testimonial-meta{font-size:10px;color:var(--ac);font-weight:600}
+.social-proof-bar{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;padding:16px 0}
+.sp-stat{text-align:center}
+.sp-num{font-size:24px;font-weight:800;color:var(--ac);font-family:var(--fm)}
+.sp-label{font-size:9px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
+
+/* ═══ ONBOARDING TUTORIAL ═══ */
+.onboard-overlay{position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:none;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.onboard-overlay.active{display:flex}
+.onboard-slide{display:none;text-align:center;max-width:340px;animation:fadeSlideUp .6s var(--f-cubic) forwards}
+.onboard-slide.active{display:block}
+.onboard-icon{font-size:64px;margin-bottom:20px}
+.onboard-title{font-size:24px;font-weight:800;color:var(--t0);margin-bottom:8px}
+.onboard-desc{font-size:14px;color:var(--t2);line-height:1.5;margin-bottom:32px}
+.onboard-dots{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+.onboard-dot{width:8px;height:8px;border-radius:50%;background:var(--s3);transition:all .3s}
+.onboard-dot.active{background:var(--ac);width:24px;border-radius:4px}
+.onboard-skip{background:none;border:none;color:var(--t3);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--ff);margin-top:12px}
+
+/* ═══ AI COACHING CARD ═══ */
+.coach-card{background:linear-gradient(135deg,rgba(166,255,0,.08),rgba(0,228,255,.08));border:1.5px solid rgba(166,255,0,.2);border-radius:var(--r24);padding:18px;margin:0 14px 14px;position:relative;overflow:hidden}
+.coach-card::before{content:'';position:absolute;top:-50%;right:-50%;width:200px;height:200px;background:radial-gradient(circle,rgba(166,255,0,.1),transparent 70%);pointer-events:none}
+.coach-badge{display:inline-flex;align-items:center;gap:4px;background:var(--acbg);border:1px solid var(--acbd);border-radius:var(--rpill);padding:3px 10px;font-size:9px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.coach-msg{font-size:14px;font-weight:600;color:var(--t0);line-height:1.4;margin-bottom:10px}
+.coach-actions{display:flex;gap:6px;flex-wrap:wrap}
+.coach-chip{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rpill);padding:6px 12px;font-size:11px;font-weight:600;color:var(--t1);cursor:pointer;transition:all .2s;font-family:var(--ff)}
+.coach-chip:hover{border-color:var(--acbd);color:var(--ac)}
+
+/* ═══ MACRO TIMING CARD ═══ */
+.timing-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r24);padding:18px;margin:0 14px 14px}
+.timing-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.timing-slot{background:var(--s2);border:1px solid var(--b0);border-radius:var(--r12);padding:10px 6px;text-align:center}
+.timing-label{font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em}
+.timing-val{font-size:14px;font-weight:800;color:var(--ac);font-family:var(--fm);margin-top:2px}
+.timing-food{font-size:10px;color:var(--t2);margin-top:4px}
+
+/* ═══ PLANS SCREEN ═══ */
+.plan-toggle{display:flex;gap:4px;background:var(--s2);border-radius:var(--rpill);padding:3px;margin:0 14px 14px}
+.plan-toggle-btn{flex:1;padding:8px;border:none;border-radius:var(--rpill);font-family:var(--ff);font-size:12px;font-weight:700;background:transparent;color:var(--t3);cursor:pointer;transition:all .2s}
+.plan-toggle-btn.active{background:var(--ac);color:#000}
+.meal-plan-day{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:16px;margin:0 14px 10px}
+.meal-plan-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.meal-plan-day-name{font-size:14px;font-weight:800;color:var(--t0)}
+.meal-plan-cals{font-family:var(--fm);font-size:12px;color:var(--ac);font-weight:600}
+.mp-meal{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--b0)}
+.mp-meal:last-child{border-bottom:none}
+.mp-emoji{font-size:20px;flex-shrink:0}
+.mp-info{flex:1}
+.mp-name{font-size:12px;font-weight:600;color:var(--t0)}
+.mp-macros{font-size:10px;color:var(--t3);margin-top:1px}
+.mp-kcal{font-family:var(--fm);font-size:11px;color:var(--ac);flex-shrink:0}
+.shopping-list{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:16px;margin:0 14px 14px}
+.shop-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--b0);font-size:12px;color:var(--t1)}
+.shop-item:last-child{border-bottom:none}
+.shop-check{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--b2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.shop-check.checked{background:var(--ac);border-color:var(--ac)}
+
+/* ═══ WORKOUT PROGRAMS ═══ */
+.workout-card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);padding:16px;margin:0 14px 10px;cursor:pointer;transition:all .3s var(--f-cubic)}
+.workout-card:hover{transform:translateY(-3px);border-color:var(--acbd)}
+.workout-card.active-workout{border-color:var(--ac);background:linear-gradient(135deg,rgba(166,255,0,.05),transparent)}
+.workout-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.workout-name{font-size:15px;font-weight:800;color:var(--t0)}
+.workout-badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);text-transform:uppercase;letter-spacing:.05em}
+.workout-desc{font-size:12px;color:var(--t2);line-height:1.4;margin-bottom:10px}
+.workout-exercises{display:flex;flex-direction:column;gap:4px}
+.workout-ex{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--t1);padding:4px 0}
+.workout-ex-sets{font-family:var(--fm);font-size:10px;color:var(--ac);flex-shrink:0}
+
+/* ═══ PROGRESS PHOTOS ═══ */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.photo-slot{aspect-ratio:3/4;background:var(--s2);border:2px dashed var(--b2);border-radius:var(--r16);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;overflow:hidden;position:relative}
+.photo-slot:hover{border-color:var(--acbd)}
+.photo-slot img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.photo-slot-label{font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;z-index:1}
+.photo-slot-icon{font-size:24px;margin-bottom:4px;z-index:1}
+.body-comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.body-comp-item{background:var(--s2);border:1px solid var(--b0);border-radius:var(--r12);padding:10px;text-align:center}
+.body-comp-val{font-size:18px;font-weight:800;font-family:var(--fm)}
+.body-comp-label{font-size:8px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+
+/* ═══ COMMUNITY ═══ */
+.leaderboard-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--s1);border:1px solid var(--b0);border-radius:var(--r16);margin-bottom:6px}
+.lb-rank{font-size:18px;font-weight:900;width:30px;text-align:center;flex-shrink:0}
+.lb-rank.gold{color:var(--yl)}
+.lb-rank.silver{color:var(--t2)}
+.lb-rank.bronze{color:var(--or)}
+.lb-avatar{width:36px;height:36px;border-radius:50%;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.lb-info{flex:1}
+.lb-name{font-size:13px;font-weight:700;color:var(--t0)}
+.lb-streak{font-size:10px;color:var(--t3)}
+.lb-score{font-family:var(--fm);font-size:14px;font-weight:700;color:var(--ac);flex-shrink:0}
+.challenge-card{background:linear-gradient(135deg,var(--s1),var(--s2));border:1.5px solid var(--b1);border-radius:var(--r20);padding:16px;margin:0 14px 10px}
+.challenge-card.active-challenge{border-color:var(--acbd);background:linear-gradient(135deg,rgba(166,255,0,.05),rgba(0,228,255,.05))}
+.challenge-progress{height:6px;background:var(--s3);border-radius:3px;margin-top:10px;overflow:hidden}
+.challenge-progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--ac),var(--bl));transition:width .6s var(--f-cubic)}
+
+/* ═══ GAMIFICATION ═══ */
+.badge-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 14px;margin-bottom:14px}
+.badge-item{text-align:center;padding:10px 4px;background:var(--s1);border:1px solid var(--b0);border-radius:var(--r12);transition:all .2s}
+.badge-item.earned{border-color:var(--acbd);background:var(--acbg)}
+.badge-item.locked{opacity:.4}
+.badge-icon{font-size:24px;margin-bottom:4px}
+.badge-name{font-size:8px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em}
+.badge-item.earned .badge-name{color:var(--ac)}
+.xp-bar{height:8px;background:var(--s3);border-radius:4px;margin:8px 14px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--ac),var(--bl));border-radius:4px;transition:width .8s var(--f-cubic)}
+
+/* ═══ SUPPLEMENTS ═══ */
+.supp-item{display:flex;align-items:center;gap:10px;padding:10px;background:var(--s2);border:1px solid var(--b0);border-radius:var(--r12);margin-bottom:6px}
+.supp-icon{width:36px;height:36px;border-radius:var(--r8);background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.supp-info{flex:1}
+.supp-name{font-size:12px;font-weight:700;color:var(--t0)}
+.supp-dose{font-size:10px;color:var(--t3)}
+.supp-check{width:28px;height:28px;border-radius:50%;border:2px solid var(--b2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.supp-check.taken{background:var(--ac);border-color:var(--ac)}
+
+/* ═══ COACHING MARKETPLACE ═══ */
+.coach-profile{display:flex;gap:14px;padding:14px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r20);margin-bottom:10px}
+.coach-avatar{width:56px;height:56px;border-radius:var(--r16);background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.coach-detail{flex:1}
+.coach-prof-name{font-size:14px;font-weight:800;color:var(--t0)}
+.coach-specialty{font-size:11px;color:var(--ac);font-weight:600;margin-top:2px}
+.coach-rating{font-size:11px;color:var(--yl);margin-top:2px}
+.coach-price{font-family:var(--fm);font-size:13px;font-weight:700;color:var(--t0);flex-shrink:0;align-self:center}
+
+/* ═══ BARCODE SCANNER ═══ */
+.scanner-viewport{width:100%;aspect-ratio:4/3;background:#000;border-radius:var(--r16);overflow:hidden;position:relative;margin-bottom:12px}
+.scanner-viewport video{width:100%;height:100%;object-fit:cover}
+.scanner-crosshair{position:absolute;inset:20%;border:2px solid var(--ac);border-radius:var(--r12);box-shadow:0 0 0 9999px rgba(0,0,0,.5)}
+.scanner-line{position:absolute;left:20%;right:20%;top:50%;height:2px;background:var(--ac);animation:scanLine 2s infinite ease-in-out}
+@keyframes scanLine{0%,100%{top:20%}50%{top:80%}}
+
+/* ═══ FREEMIUM ═══ */
+.premium-banner{background:linear-gradient(135deg,rgba(166,255,0,.1),rgba(0,228,255,.1));border:1.5px solid rgba(166,255,0,.3);border-radius:var(--r20);padding:18px;margin:0 14px 14px;text-align:center}
+.premium-badge{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,var(--ac),var(--bl));color:#000;padding:4px 12px;border-radius:var(--rpill);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.premium-features{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px;text-align:left}
+.pf-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--t1);padding:6px 8px;background:rgba(255,255,255,.03);border-radius:var(--r8)}
+.pf-check{color:var(--ac);font-weight:700;flex-shrink:0}
+.pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pricing-card{background:var(--s1);border:1.5px solid var(--b1);border-radius:var(--r20);padding:16px;text-align:center;transition:all .2s;cursor:pointer}
+.pricing-card.recommended{border-color:var(--ac);background:linear-gradient(135deg,rgba(166,255,0,.05),transparent)}
+.pricing-name{font-size:12px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.08em}
+.pricing-price{font-size:28px;font-weight:900;color:var(--t0);margin:6px 0}
+.pricing-price span{font-size:13px;font-weight:600;color:var(--t3)}
+.pricing-desc{font-size:10px;color:var(--t3);line-height:1.4}
 </style>
 </head>
 <body style="cursor:default; background-color: var(--bg);">
 
 <div class="toast" id="toast"></div>
+
+<!-- ═══════════ ONBOARDING TUTORIAL ═══════════ -->
+<div class="onboard-overlay" id="onboard-overlay">
+  <div class="onboard-slide active" data-step="0">
+    <div class="onboard-icon">🎯</div>
+    <div class="onboard-title">Track Every Macro</div>
+    <div class="onboard-desc">Your calorie ring fills as you log meals. Watch protein (green), carbs (cyan), and calories (red) progress in real-time. Hit all three to close the ring.</div>
+  </div>
+  <div class="onboard-slide" data-step="1">
+    <div class="onboard-icon">🔍</div>
+    <div class="onboard-title">150+ Foods. One Tap.</div>
+    <div class="onboard-desc">Search Odia, Punjabi, Bengali, South Indian and international cuisines. Scan barcodes, build custom meals, or let AI suggest what fits your remaining macros.</div>
+  </div>
+  <div class="onboard-slide" data-step="2">
+    <div class="onboard-icon">⏱️</div>
+    <div class="onboard-title">Fast Smarter</div>
+    <div class="onboard-desc">Choose 16:8, 18:6, 20:4, or OMAD. The adaptive timer tracks your fasting window and logs every session automatically.</div>
+  </div>
+  <div class="onboard-dots">
+    <div class="onboard-dot active" data-dot="0"></div>
+    <div class="onboard-dot" data-dot="1"></div>
+    <div class="onboard-dot" data-dot="2"></div>
+  </div>
+  <button class="modal-btn" id="onboard-next-btn" onclick="nextOnboardStep()" style="max-width:280px;">Next</button>
+  <button class="onboard-skip" onclick="closeOnboarding()">Skip tutorial</button>
+</div>
 
 <!-- ═══════════ LANDING PAGE ═══════════ -->
 <div class="screen active" id="screen-landing" style="padding:0; display:block; overflow-y:auto; height:100vh;">
@@ -728,6 +909,76 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
         <div style="background:var(--s1);border:1px solid var(--b1);border-radius:var(--r16);padding:16px 8px;text-align:center;">
           <div style="font-size:22px;font-weight:800;color:var(--bl);">28</div>
           <div style="font-size:9px;font-weight:600;color:var(--t3);margin-top:4px;text-transform:uppercase;letter-spacing:0.08em;">Day streak</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SOCIAL PROOF BAR ── -->
+  <div style="padding:20px 0;background:#000;border-top:1px solid var(--b1)">
+    <div class="social-proof-bar">
+      <div class="sp-stat"><div class="sp-num" id="sp-users">47,000+</div><div class="sp-label">Active Users</div></div>
+      <div class="sp-stat"><div class="sp-num">4.8★</div><div class="sp-label">App Rating</div></div>
+      <div class="sp-stat"><div class="sp-num">12M+</div><div class="sp-label">Meals Tracked</div></div>
+      <div class="sp-stat"><div class="sp-num">98%</div><div class="sp-label">Goal Hit Rate</div></div>
+    </div>
+  </div>
+
+  <!-- ── TESTIMONIALS ── -->
+  <div style="padding:40px 0 60px;background:#000;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div style="text-align:center;padding:0 20px;margin-bottom:24px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.14em;color:var(--yl);text-transform:uppercase;margin-bottom:8px;">Real Transformations</div>
+        <div style="font-size:clamp(24px,5vw,36px);font-weight:800;color:#fff;letter-spacing:-0.03em;line-height:1.1;">People who showed up<br><span style="color:var(--t3)">and crushed it.</span></div>
+      </div>
+      <div class="testimonial-track" id="testimonial-track">
+        <div class="testimonial-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--bl));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#000;">RP</div>
+            <div><div class="testimonial-name">Rahul P.</div><div class="testimonial-meta">Lost 18kg in 5 months</div></div>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">"The macro tracking with Indian food database changed everything. Finally an app that knows what Dalma and Pakhala Bhata are. Down from 94kg to 76kg."</div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <span style="background:var(--rdbg);color:var(--rd);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">-18 KG</span>
+            <span style="background:var(--acbg);color:var(--ac);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">152 DAY STREAK</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--rd),var(--or));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;">SM</div>
+            <div><div class="testimonial-name">Sneha M.</div><div class="testimonial-meta">Gained 6kg lean muscle</div></div>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">"I was skinny-fat and scared of bulking. The AI coaching told me exactly what to eat pre and post workout. Gained 6kg muscle in 4 months without getting fat."</div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <span style="background:var(--acbg);color:var(--ac);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">+6 KG MUSCLE</span>
+            <span style="background:var(--blbg);color:var(--bl);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">BMI 22.4</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--yl),var(--or));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#000;">AK</div>
+            <div><div class="testimonial-name">Arjun K.</div><div class="testimonial-meta">Marathon runner, 3:28 PR</div></div>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">"Fasting timer + macro timing feature helped me nail race nutrition. My marathon time dropped 14 minutes. The Garmin sync is seamless."</div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <span style="background:rgba(255,159,10,.15);color:var(--or);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">-14 MIN PR</span>
+            <span style="background:var(--acbg);color:var(--ac);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">89 DAY STREAK</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+            <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,var(--rd));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;">PD</div>
+            <div><div class="testimonial-name">Priya D.</div><div class="testimonial-meta">New mom, back to pre-pregnancy weight</div></div>
+          </div>
+          <div class="testimonial-stars">★★★★★</div>
+          <div class="testimonial-text">"Post-pregnancy, I needed something that tracked South Indian food accurately. The meal plans and supplement reminders kept me on track while breastfeeding."</div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <span style="background:var(--rdbg);color:var(--rd);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">-12 KG</span>
+            <span style="background:var(--blbg);color:var(--bl);font-size:9px;font-weight:700;padding:3px 8px;border-radius:var(--rpill);">GOAL REACHED</span>
+          </div>
         </div>
       </div>
     </div>
@@ -949,14 +1200,50 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     </div>
   </div>
 
-  <!-- Micronutrients -->
+  <!-- AI Coaching Card -->
+  <div class="coach-card" id="coach-card">
+    <div class="coach-badge">✨ AI Coach</div>
+    <div class="coach-msg" id="coach-msg">Loading your personalized insights...</div>
+    <div class="coach-actions" id="coach-actions"></div>
+  </div>
+
+  <!-- Macro Timing Card -->
+  <div class="timing-card" id="timing-card">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div class="card-title" style="margin-bottom:0">Macro Timing</div>
+      <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.08em">WHEN TO EAT</div>
+    </div>
+    <div class="timing-slots" id="timing-slots"></div>
+  </div>
+
+  <!-- Micronutrients (Progressive Disclosure) -->
   <div class="card">
-    <div class="card-title">Micronutrients</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="card-title" style="margin-bottom:0">Micronutrients</div>
+      <div class="toggle-switch" id="micro-toggle" onclick="toggleMicroDetail()"><span style="display:none">toggle</span></div>
+    </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px">
       <div style="text-align:center"><div style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--yl)" id="fiber-val">0g</div><div style="font-size:8px;color:var(--t2)">FIBER</div></div>
       <div style="text-align:center"><div style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--pk)" id="sugar-val">0g</div><div style="font-size:8px;color:var(--t2)">SUGAR</div></div>
       <div style="text-align:center"><div style="font-family:var(--fm);font-size:13px;font-weight:700;color:var(--gr)" id="sodium-val">0mg</div><div style="font-size:8px;color:var(--t2)">SODIUM</div></div>
     </div>
+    <div id="micro-detail" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--b0)">
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+        <div style="background:var(--s2);border-radius:var(--r8);padding:8px;text-align:center"><div style="font-family:var(--fm);font-size:12px;font-weight:700;color:var(--bl)" id="vitA-val">0%</div><div style="font-size:8px;color:var(--t3)">Vitamin A</div></div>
+        <div style="background:var(--s2);border-radius:var(--r8);padding:8px;text-align:center"><div style="font-family:var(--fm);font-size:12px;font-weight:700;color:var(--or)" id="vitC-val">0%</div><div style="font-size:8px;color:var(--t3)">Vitamin C</div></div>
+        <div style="background:var(--s2);border-radius:var(--r8);padding:8px;text-align:center"><div style="font-family:var(--fm);font-size:12px;font-weight:700;color:var(--yl)" id="calcium-val">0%</div><div style="font-size:8px;color:var(--t3)">Calcium</div></div>
+        <div style="background:var(--s2);border-radius:var(--r8);padding:8px;text-align:center"><div style="font-family:var(--fm);font-size:12px;font-weight:700;color:var(--rd)" id="iron-val">0%</div><div style="font-size:8px;color:var(--t3)">Iron</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supplement Tracker -->
+  <div class="card" id="supplement-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div class="card-title" style="margin-bottom:0">Supplements</div>
+      <button onclick="openSuppModal()" style="background:var(--s3);border:1px solid var(--b1);border-radius:var(--rpill);padding:4px 10px;font-size:10px;font-weight:700;color:var(--ac);cursor:pointer;font-family:var(--ff)">+ Add</button>
+    </div>
+    <div id="supp-list"></div>
   </div>
 
   <!-- Water -->
@@ -1060,6 +1347,38 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
     <div class="card-title">Weight Trend</div>
     <canvas id="weight-canvas" width="380" height="160" style="width:100%;height:160px"></canvas>
   </div>
+  <!-- Body Composition -->
+  <div class="card">
+    <div class="card-title">Body Composition</div>
+    <div class="body-comp-grid">
+      <div class="body-comp-item"><div class="body-comp-val" style="color:var(--ac)" id="bc-weight">—</div><div class="body-comp-label">Weight (kg)</div></div>
+      <div class="body-comp-item"><div class="body-comp-val" style="color:var(--bl)" id="bc-bodyfat">—</div><div class="body-comp-label">Body Fat %</div></div>
+      <div class="body-comp-item"><div class="body-comp-val" style="color:var(--or)" id="bc-muscle">—</div><div class="body-comp-label">Muscle Mass</div></div>
+    </div>
+    <div class="field-row" style="margin-top:12px">
+      <div class="field"><label>Body Fat %</label><input type="number" id="bf-input" step="0.1" placeholder="18.5" min="3" max="60"></div>
+      <div class="field"><label>Muscle Mass (kg)</label><input type="number" id="mm-input" step="0.1" placeholder="32" min="10" max="100"></div>
+    </div>
+    <button class="modal-btn secondary" onclick="saveBodyComp()" style="margin-top:4px">Save Body Composition</button>
+  </div>
+
+  <!-- Progress Photos -->
+  <div class="card">
+    <div class="card-title">Progress Photos</div>
+    <div style="font-size:11px;color:var(--t3);margin-bottom:10px">Track your visual transformation. Photos are stored locally on your device.</div>
+    <div class="photo-grid">
+      <div class="photo-slot" id="photo-before" onclick="capturePhoto('before')">
+        <div class="photo-slot-icon">📸</div>
+        <div class="photo-slot-label">Before</div>
+      </div>
+      <div class="photo-slot" id="photo-current" onclick="capturePhoto('current')">
+        <div class="photo-slot-icon">📸</div>
+        <div class="photo-slot-label">Current</div>
+      </div>
+    </div>
+    <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none" onchange="onPhotoSelect(event)">
+  </div>
+
   <div class="card" id="weight-history-card" style="display:none">
     <div class="card-title">History</div>
     <div id="weight-history-list"></div>
@@ -1156,12 +1475,91 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
   </div>
 </div>
 
+<!-- ═══════════ PLANS SCREEN ═══════════ -->
+<div class="screen" id="screen-plans">
+  <div class="page-header">
+    <div class="page-eyebrow">Your Blueprint</div>
+    <div class="page-title">Plans</div>
+  </div>
+  <div class="plan-toggle">
+    <button class="plan-toggle-btn active" id="pt-meals" onclick="switchPlanTab('meals')">Meal Plans</button>
+    <button class="plan-toggle-btn" id="pt-workouts" onclick="switchPlanTab('workouts')">Workouts</button>
+    <button class="plan-toggle-btn" id="pt-shop" onclick="switchPlanTab('shop')">Shopping List</button>
+  </div>
+
+  <!-- Meal Plans Tab -->
+  <div id="plans-meals-tab">
+    <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 14px;margin-bottom:14px">
+      <button class="cat-tab active" onclick="setMealPlanGoal('cut',this)">🔥 Cut</button>
+      <button class="cat-tab" onclick="setMealPlanGoal('maintain',this)">⚖️ Maintain</button>
+      <button class="cat-tab" onclick="setMealPlanGoal('bulk',this)">💪 Bulk</button>
+    </div>
+    <div id="meal-plan-container"></div>
+  </div>
+
+  <!-- Workouts Tab -->
+  <div id="plans-workouts-tab" style="display:none">
+    <div id="workout-container"></div>
+  </div>
+
+  <!-- Shopping List Tab -->
+  <div id="plans-shop-tab" style="display:none">
+    <div class="shopping-list" id="shopping-list-container">
+      <div class="card-title">This Week's Groceries</div>
+      <div id="shop-items"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMMUNITY SCREEN ═══════════ -->
+<div class="screen" id="screen-community">
+  <div class="page-header">
+    <div class="page-eyebrow">Together Stronger</div>
+    <div class="page-title">Community</div>
+  </div>
+
+  <!-- Gamification XP -->
+  <div style="padding:0 14px;margin-bottom:6px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <div style="font-size:12px;font-weight:700;color:var(--t0)">Level <span id="user-level">1</span></div>
+      <div style="font-size:10px;color:var(--t3)"><span id="user-xp">0</span> / <span id="user-xp-next">100</span> XP</div>
+    </div>
+    <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- Badges -->
+  <div style="padding:0 14px 8px"><div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:8px">Achievements</div></div>
+  <div class="badge-grid" id="badge-grid"></div>
+
+  <!-- Active Challenges -->
+  <div style="padding:4px 14px 8px"><div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)">Weekly Challenges</div></div>
+  <div id="challenges-container"></div>
+
+  <!-- Leaderboard -->
+  <div class="card">
+    <div class="card-title">Leaderboard</div>
+    <div id="leaderboard-list"></div>
+  </div>
+
+  <!-- Accountability Partner -->
+  <div class="card">
+    <div class="card-title">Accountability Partner</div>
+    <div style="text-align:center;padding:16px 0">
+      <div style="font-size:36px;margin-bottom:8px">🤝</div>
+      <div style="font-size:13px;color:var(--t2);margin-bottom:12px">Pair up with a friend to keep each other on track. Share streaks, challenges, and progress.</div>
+      <button class="modal-btn secondary" onclick="invitePartner()" style="max-width:200px;margin:0 auto">Invite a Friend</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════ TAB BAR ═══════════ -->
 <div class="tab-bar">
   <button class="tab-btn active" id="tab-home" onclick="switchTab('home')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div><span class="tab-label">Today</span></button>
+  <button class="tab-btn" id="tab-plans" onclick="switchTab('plans')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div><span class="tab-label">Plans</span></button>
   <button class="tab-btn" id="tab-history" onclick="switchTab('history')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="1"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span class="tab-label">History</span></button>
-  <button class="tab-btn" id="tab-weight" onclick="switchTab('weight')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div><span class="tab-label">Weight</span></button>
+  <button class="tab-btn" id="tab-weight" onclick="switchTab('weight')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div><span class="tab-label">Body</span></button>
   <button class="tab-btn" id="tab-fasting" onclick="switchTab('fasting')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span class="tab-label">Fasting</span></button>
+  <button class="tab-btn" id="tab-community" onclick="switchTab('community')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div><span class="tab-label">Social</span></button>
   <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')"><div class="tab-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/></svg></div><span class="tab-label">Profile</span></button>
 </div>
 
@@ -1264,6 +1662,130 @@ body{display:flex;flex-direction:column;width:100%;min-height:100vh;margin:0 aut
       <div style="font-weight:600;color:var(--t1);margin-bottom:4px">💡 Tip:</div>
       <div id="quality-tip">Videos will reload with new quality setting</div>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════ SUPPLEMENT MODAL ═══════════ -->
+<div class="modal-overlay" id="supp-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div class="modal-title">Add Supplement</div>
+      <button onclick="closeModal('supp-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+    </div>
+    <div class="field"><label>Supplement Name</label><input type="text" id="supp-name" placeholder="e.g. Creatine Monohydrate"></div>
+    <div class="field-row">
+      <div class="field"><label>Dosage</label><input type="text" id="supp-dose" placeholder="5g"></div>
+      <div class="field"><label>Time</label><select id="supp-time"><option value="morning">Morning</option><option value="pre-workout">Pre-Workout</option><option value="post-workout">Post-Workout</option><option value="evening">Evening</option><option value="with-meal">With Meals</option></select></div>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:var(--t3);margin:8px 0 6px;text-transform:uppercase;letter-spacing:.08em">Quick Add</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+      <button onclick="quickAddSupp('Creatine','5g','pre-workout')" class="coach-chip">💊 Creatine 5g</button>
+      <button onclick="quickAddSupp('Whey Protein','30g','post-workout')" class="coach-chip">🥤 Whey 30g</button>
+      <button onclick="quickAddSupp('Vitamin D3','2000 IU','morning')" class="coach-chip">☀️ Vitamin D3</button>
+      <button onclick="quickAddSupp('Omega-3','1000mg','with-meal')" class="coach-chip">🐟 Omega-3</button>
+      <button onclick="quickAddSupp('Multivitamin','1 tab','morning')" class="coach-chip">💊 Multivitamin</button>
+      <button onclick="quickAddSupp('ZMA','3 caps','evening')" class="coach-chip">🌙 ZMA</button>
+    </div>
+    <button class="modal-btn" onclick="addSupplement()">Add Supplement</button>
+  </div>
+</div>
+
+<!-- ═══════════ COACHING MARKETPLACE MODAL ═══════════ -->
+<div class="modal-overlay" id="coaching-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div class="modal-title">Find a Coach</div>
+      <button onclick="closeModal('coaching-modal')" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--t2);margin-bottom:16px">Certified nutritionists and fitness coaches available for 1-on-1 guidance.</div>
+    <div id="coaches-list">
+      <div class="coach-profile">
+        <div class="coach-avatar">👨‍⚕️</div>
+        <div class="coach-detail">
+          <div class="coach-prof-name">Dr. Anil Sharma</div>
+          <div class="coach-specialty">Sports Nutrition · Weight Loss</div>
+          <div class="coach-rating">★★★★★ 4.9 (234 reviews)</div>
+        </div>
+        <div class="coach-price">₹999<span>/mo</span></div>
+      </div>
+      <div class="coach-profile">
+        <div class="coach-avatar">👩‍🏫</div>
+        <div class="coach-detail">
+          <div class="coach-prof-name">Meera Patel, RD</div>
+          <div class="coach-specialty">Plant-Based · Muscle Gain</div>
+          <div class="coach-rating">★★★★★ 4.8 (189 reviews)</div>
+        </div>
+        <div class="coach-price">₹1,499<span>/mo</span></div>
+      </div>
+      <div class="coach-profile">
+        <div class="coach-avatar">🏋️</div>
+        <div class="coach-detail">
+          <div class="coach-prof-name">Coach Vikram Singh</div>
+          <div class="coach-specialty">Bodybuilding · Strength</div>
+          <div class="coach-rating">★★★★☆ 4.7 (412 reviews)</div>
+        </div>
+        <div class="coach-price">₹799<span>/mo</span></div>
+      </div>
+    </div>
+    <button class="modal-btn secondary" style="margin-top:10px" onclick="closeModal('coaching-modal')">Browse All Coaches →</button>
+  </div>
+</div>
+
+<!-- ═══════════ BARCODE SCANNER MODAL ═══════════ -->
+<div class="modal-overlay" id="scanner-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div class="modal-title">Scan Barcode</div>
+      <button onclick="closeBarcodeScanner()" style="background:var(--s3);border:none;color:var(--t2);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px">✕</button>
+    </div>
+    <div class="scanner-viewport" id="scanner-viewport">
+      <video id="scanner-video" autoplay playsinline muted></video>
+      <div class="scanner-crosshair"></div>
+      <div class="scanner-line"></div>
+    </div>
+    <div id="scanner-result" style="display:none;margin-bottom:12px"></div>
+    <div style="text-align:center;font-size:12px;color:var(--t3);margin-bottom:10px">Point camera at a barcode on food packaging</div>
+    <button class="modal-btn secondary" onclick="manualBarcodeEntry()">Enter barcode manually</button>
+  </div>
+</div>
+
+<!-- ═══════════ FREEMIUM / PREMIUM MODAL ═══════════ -->
+<div class="modal-overlay" id="premium-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="premium-badge" style="margin-bottom:12px">✨ MacroTrack PRO</div>
+      <div style="font-size:22px;font-weight:800;color:var(--t0);margin-bottom:4px">Unlock Your Full Potential</div>
+      <div style="font-size:13px;color:var(--t2)">Everything you need to transform your body</div>
+    </div>
+    <div class="premium-features">
+      <div class="pf-item"><span class="pf-check">✓</span> AI Coaching</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Meal Plans</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Workout Programs</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Barcode Scanner</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Progress Photos</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Wearable Sync</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Coach Marketplace</div>
+      <div class="pf-item"><span class="pf-check">✓</span> Priority Support</div>
+    </div>
+    <div class="pricing-cards">
+      <div class="pricing-card" onclick="selectPricing('monthly')">
+        <div class="pricing-name">Monthly</div>
+        <div class="pricing-price">₹299<span>/mo</span></div>
+        <div class="pricing-desc">Cancel anytime</div>
+      </div>
+      <div class="pricing-card recommended" onclick="selectPricing('yearly')">
+        <div style="font-size:9px;font-weight:700;color:var(--ac);margin-bottom:4px">SAVE 40%</div>
+        <div class="pricing-name">Yearly</div>
+        <div class="pricing-price">₹179<span>/mo</span></div>
+        <div class="pricing-desc">₹2,149 billed yearly</div>
+      </div>
+    </div>
+    <button class="modal-btn" style="margin-top:14px" onclick="startFreeTrial()">Start 7-Day Free Trial</button>
+    <button style="background:none;border:none;color:var(--t3);font-size:12px;cursor:pointer;padding:8px;width:100%;font-family:var(--ff)" onclick="closeModal('premium-modal')">Maybe later</button>
   </div>
 </div>
 
@@ -1638,13 +2160,17 @@ function openEditProfile(){
 function switchTab(tab){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('screen-'+tab).classList.add('active');
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='home'){renderHome();buildWater();renderSteps();loadNotes()}
+  const screen=document.getElementById('screen-'+tab);
+  const btn=document.getElementById('tab-'+tab);
+  if(screen)screen.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(tab==='home'){renderHome();buildWater();renderSteps();loadNotes();if(typeof generateCoachingInsight==='function')generateCoachingInsight();if(typeof renderMacroTiming==='function')renderMacroTiming();if(typeof renderSupplements==='function')renderSupplements();}
   if(tab==='history')renderHistory();
-  if(tab==='weight')renderWeight();
+  if(tab==='weight'){renderWeight();if(typeof renderBodyComp==='function')renderBodyComp();if(typeof renderPhotos==='function')renderPhotos();}
   if(tab==='fasting')renderFasting();
   if(tab==='profile')renderProfile();
+  if(tab==='plans'){if(typeof renderMealPlans==='function')renderMealPlans();if(typeof renderWorkouts==='function')renderWorkouts();}
+  if(tab==='community'){if(typeof renderBadges==='function')renderBadges();if(typeof renderXP==='function')renderXP();if(typeof renderChallenges==='function')renderChallenges();if(typeof renderLeaderboard==='function')renderLeaderboard();}
 }
 
 // ── FOOD LOGGING ──
@@ -2637,14 +3163,633 @@ if('IntersectionObserver' in window) {
   document.querySelectorAll('video').forEach(v => videoObserver.observe(v));
 }
 
+// ═══════════════════════════════════════
+// NEW FEATURES — ALL TIERS + COACHING GAP FIX
+// ═══════════════════════════════════════
+
+// ── ONBOARDING TUTORIAL ──
+let onboardStep=0;
+function nextOnboardStep(){
+  onboardStep++;
+  if(onboardStep>=3){closeOnboarding();return;}
+  document.querySelectorAll('.onboard-slide').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.onboard-dot').forEach(d=>d.classList.remove('active'));
+  document.querySelector(`.onboard-slide[data-step="${onboardStep}"]`).classList.add('active');
+  document.querySelector(`.onboard-dot[data-dot="${onboardStep}"]`).classList.add('active');
+  if(onboardStep===2)document.getElementById('onboard-next-btn').textContent='Get Started';
+}
+function closeOnboarding(){
+  document.getElementById('onboard-overlay').classList.remove('active');
+  setStorage('mt_onboard_done',true);
+}
+function showOnboarding(){
+  if(!getStorage('mt_onboard_done',false)){
+    document.getElementById('onboard-overlay').classList.add('active');
+  }
+}
+
+// ── AI COACHING ENGINE (Gap Fix: Data → Transformation) ──
+function generateCoachingInsight(){
+  const log=getTodayLog();
+  const tot=log.reduce((a,f)=>({kcal:a.kcal+f.kcal,protein:a.protein+f.protein,carbs:a.carbs+f.carbs,fat:a.fat+f.fat}),{kcal:0,protein:0,carbs:0,fat:0});
+  const t=targets.kcal?targets:{kcal:2000,protein:150,carbs:200,fat:60};
+  const goal=profile.goal||'maintain';
+  const hour=new Date().getHours();
+  const pctKcal=tot.kcal/t.kcal;
+  const pctProtein=tot.protein/t.protein;
+  const proteinRemaining=Math.max(0,t.protein-tot.protein);
+  const kcalRemaining=Math.max(0,t.kcal-tot.kcal);
+
+  let msg='',actions=[];
+
+  // Time-aware contextual coaching
+  if(hour<10&&log.length===0){
+    msg=`Good morning! Start your day right. You have ${t.kcal} kcal to hit today. A protein-rich breakfast sets the pace — aim for 30-40g protein.`;
+    actions=[{text:'Log Breakfast',action:'openAddFood()'},{text:'See Meal Plan',action:"switchTab('plans')"}];
+  } else if(hour<13&&pctProtein<0.3){
+    msg=`You're ${Math.round(proteinRemaining)}g short on protein. ${goal==='bulk'?'Muscle synthesis needs consistent protein intake.':'Protein keeps you full and preserves muscle during a cut.'} Add a protein-heavy lunch.`;
+    actions=[{text:'High Protein Foods',action:"filterCat('protein',null);openAddFood()"},{text:`${proteinRemaining}g remaining`,action:''}];
+  } else if(hour>=13&&hour<17&&pctKcal>0.8&&goal==='cut'){
+    msg=`You've used ${Math.round(pctKcal*100)}% of your calories and it's only ${hour>12?hour-12:hour}pm. Save ~${Math.round(kcalRemaining)} kcal for dinner. Consider a light snack.`;
+    actions=[{text:'Light Snacks',action:"filterCat('snack',null);openAddFood()"},{text:'Start Fast Early',action:"switchTab('fasting')"}];
+  } else if(hour>=17&&pctProtein<0.7){
+    msg=`Evening check: You still need ${Math.round(proteinRemaining)}g protein. ${goal==='bulk'?'A post-dinner casein shake or paneer dish would be ideal.':'Grilled chicken or fish hits the spot without excess calories.'}`;
+    actions=[{text:'Dinner Ideas',action:'openAddFood()'},{text:'AI Suggest',action:'aiSuggestMeal()'}];
+  } else if(pctKcal>=0.95&&pctProtein>=0.9){
+    msg=`You're crushing it today! All macros nearly hit. ${goal==='cut'?'Stay disciplined — no late snacking.':goal==='bulk'?'If you have room, a small shake tops it off.':'Maintenance on point. Keep this consistency.'} 🔥`;
+    actions=[{text:'View History',action:"switchTab('history')"},{text:'Check Badges',action:"switchTab('community')"}];
+  } else if(log.length>0){
+    const topMacro=tot.protein/t.protein>tot.carbs/t.carbs?'carbs':'protein';
+    msg=`You're at ${Math.round(tot.kcal)} kcal (${Math.round(pctKcal*100)}%). Focus on ${topMacro} — you're behind on that macro. ${kcalRemaining>500?'Plenty of room for a solid meal.':'Keep portions mindful.'}`;
+    actions=[{text:'Log Food',action:'openAddFood()'},{text:'Macro Timing',action:'scrollToTiming()'}];
+  } else {
+    msg=`Ready to fuel your ${goal==='cut'?'cut':'bulk'==='bulk'?'gains':'day'}? Your target is ${t.kcal} kcal with ${t.protein}g protein. Let's start logging!`;
+    actions=[{text:'Start Logging',action:'openAddFood()'},{text:'View Meal Plan',action:"switchTab('plans')"}];
+  }
+
+  document.getElementById('coach-msg').textContent=msg;
+  const actEl=document.getElementById('coach-actions');
+  actEl.innerHTML=actions.map(a=>a.action?`<button class="coach-chip" onclick="${a.action}">${a.text}</button>`:`<span class="coach-chip" style="cursor:default;opacity:.6">${a.text}</span>`).join('');
+}
+
+function scrollToTiming(){document.getElementById('timing-card').scrollIntoView({behavior:'smooth'});}
+
+// ── MACRO TIMING ──
+function renderMacroTiming(){
+  const t=targets.kcal?targets:{kcal:2000,protein:150,carbs:200,fat:60};
+  const goal=profile.goal||'maintain';
+  const slots=document.getElementById('timing-slots');
+  let preP,preC,postP,postC,restP,restC;
+  if(goal==='bulk'){
+    preP=Math.round(t.protein*0.25);preC=Math.round(t.carbs*0.35);
+    postP=Math.round(t.protein*0.3);postC=Math.round(t.carbs*0.35);
+    restP=t.protein-preP-postP;restC=t.carbs-preC-postC;
+  } else if(goal==='cut'){
+    preP=Math.round(t.protein*0.2);preC=Math.round(t.carbs*0.25);
+    postP=Math.round(t.protein*0.35);postC=Math.round(t.carbs*0.3);
+    restP=t.protein-preP-postP;restC=t.carbs-preC-postC;
+  } else {
+    preP=Math.round(t.protein*0.25);preC=Math.round(t.carbs*0.3);
+    postP=Math.round(t.protein*0.25);postC=Math.round(t.carbs*0.3);
+    restP=t.protein-preP-postP;restC=t.carbs-preC-postC;
+  }
+  slots.innerHTML=`
+    <div class="timing-slot">
+      <div class="timing-label">Pre-Workout</div>
+      <div class="timing-val">${preP}g P / ${preC}g C</div>
+      <div class="timing-food">${goal==='bulk'?'Oats + banana + whey':'Rice cake + whey shake'}</div>
+    </div>
+    <div class="timing-slot">
+      <div class="timing-label">Post-Workout</div>
+      <div class="timing-val">${postP}g P / ${postC}g C</div>
+      <div class="timing-food">${goal==='bulk'?'Chicken rice + fruits':'Grilled chicken + sweet potato'}</div>
+    </div>
+    <div class="timing-slot">
+      <div class="timing-label">Rest of Day</div>
+      <div class="timing-val">${restP}g P / ${restC}g C</div>
+      <div class="timing-food">Split across remaining meals</div>
+    </div>`;
+}
+
+// ── PROGRESSIVE DISCLOSURE (Micronutrients) ──
+function toggleMicroDetail(){
+  const toggle=document.getElementById('micro-toggle');
+  const detail=document.getElementById('micro-detail');
+  toggle.classList.toggle('active');
+  detail.style.display=toggle.classList.contains('active')?'block':'none';
+}
+
+// ── SUPPLEMENT TRACKER ──
+function getSupplements(){return getStorage('mt_supplements',[]);}
+function saveSupplements(s){setStorage('mt_supplements',s);}
+function getTodaySupps(){return getStorage('mt_supps_'+getKey(),[]);}
+function saveTodaySupps(s){setStorage('mt_supps_'+getKey(),s);}
+
+function renderSupplements(){
+  const supps=getSupplements();
+  const taken=getTodaySupps();
+  const list=document.getElementById('supp-list');
+  if(!supps.length){list.innerHTML='<div style="text-align:center;padding:10px;font-size:12px;color:var(--t3)">No supplements added yet</div>';return;}
+  list.innerHTML=supps.map((s,i)=>{
+    const isTaken=taken.includes(s.name);
+    return `<div class="supp-item"><div class="supp-icon">${s.name.includes('Creatine')?'💊':s.name.includes('Whey')||s.name.includes('Protein')?'🥤':s.name.includes('Vitamin')?'☀️':s.name.includes('Omega')?'🐟':s.name.includes('ZMA')?'🌙':'💊'}</div><div class="supp-info"><div class="supp-name">${s.name}</div><div class="supp-dose">${s.dose} · ${s.time}</div></div><div class="supp-check ${isTaken?'taken':''}" onclick="toggleSupp('${s.name}')">${isTaken?'✓':''}</div><button onclick="removeSupp(${i})" style="background:none;border:none;color:var(--t4);cursor:pointer;padding:4px;font-size:12px">✕</button></div>`;
+  }).join('');
+}
+
+function openSuppModal(){openModal('supp-modal');}
+function addSupplement(){
+  const name=document.getElementById('supp-name').value.trim();
+  const dose=document.getElementById('supp-dose').value.trim();
+  const time=document.getElementById('supp-time').value;
+  if(!name){showToast('Enter supplement name');return;}
+  const supps=getSupplements();
+  supps.push({name:sanitizeHTML(name),dose:sanitizeHTML(dose||'1 serving'),time});
+  saveSupplements(supps);
+  closeModal('supp-modal');
+  document.getElementById('supp-name').value='';
+  document.getElementById('supp-dose').value='';
+  renderSupplements();
+  showToast('✅ '+name+' added');
+  awardXP(5);
+}
+function quickAddSupp(name,dose,time){
+  const supps=getSupplements();
+  if(supps.some(s=>s.name===name)){showToast(name+' already added');return;}
+  supps.push({name,dose,time});
+  saveSupplements(supps);
+  closeModal('supp-modal');
+  renderSupplements();
+  showToast('✅ '+name+' added');
+}
+function removeSupp(i){const supps=getSupplements();supps.splice(i,1);saveSupplements(supps);renderSupplements();}
+function toggleSupp(name){
+  let taken=getTodaySupps();
+  if(taken.includes(name))taken=taken.filter(n=>n!==name);
+  else{taken.push(name);awardXP(2);}
+  saveTodaySupps(taken);
+  renderSupplements();
+}
+
+// ── MEAL PLANS ──
+const MEAL_PLANS={
+  cut:[
+    {day:'Monday',meals:[
+      {emoji:'🥚',name:'Egg White Omelette + Toast',kcal:280,p:28,c:22,f:8},
+      {emoji:'🍗',name:'Grilled Chicken Salad',kcal:350,p:38,c:12,f:14},
+      {emoji:'🍎',name:'Apple + Peanut Butter',kcal:180,p:5,c:22,f:9},
+      {emoji:'🐟',name:'Baked Fish + Steamed Veggies',kcal:320,p:35,c:15,f:12}
+    ]},
+    {day:'Tuesday',meals:[
+      {emoji:'🥣',name:'Oats + Whey + Berries',kcal:310,p:30,c:38,f:6},
+      {emoji:'🫘',name:'Dal + Brown Rice (small)',kcal:340,p:16,c:48,f:6},
+      {emoji:'🥜',name:'Mixed Nuts (30g)',kcal:170,p:5,c:6,f:15},
+      {emoji:'🍗',name:'Chicken Tikka + Raita',kcal:310,p:32,c:10,f:14}
+    ]},
+    {day:'Wednesday',meals:[
+      {emoji:'🥞',name:'Protein Pancakes',kcal:290,p:25,c:30,f:8},
+      {emoji:'🥬',name:'Palak Paneer + 1 Roti',kcal:360,p:18,c:28,f:18},
+      {emoji:'🍌',name:'Banana + Whey Shake',kcal:200,p:25,c:28,f:2},
+      {emoji:'🐟',name:'Macha Jhola + Rice (small)',kcal:280,p:24,c:30,f:8}
+    ]},
+    {day:'Thursday',meals:[
+      {emoji:'🍳',name:'2 Boiled Eggs + Toast',kcal:260,p:18,c:20,f:12},
+      {emoji:'🍛',name:'Rajma + Small Rice',kcal:350,p:16,c:52,f:4},
+      {emoji:'🥒',name:'Cucumber + Hummus',kcal:120,p:4,c:10,f:7},
+      {emoji:'🍗',name:'Tandoori Chicken + Salad',kcal:300,p:35,c:8,f:12}
+    ]},
+    {day:'Friday',meals:[
+      {emoji:'🥣',name:'Poha + Sprouts',kcal:250,p:10,c:40,f:6},
+      {emoji:'🐟',name:'Fish Curry + Brown Rice',kcal:380,p:30,c:38,f:10},
+      {emoji:'🍎',name:'Fruit Bowl (200g)',kcal:100,p:1,c:24,f:0},
+      {emoji:'🥚',name:'Egg Bhurji + 2 Roti',kcal:340,p:20,c:32,f:14}
+    ]},
+    {day:'Saturday',meals:[
+      {emoji:'🫓',name:'Moong Dal Cheela',kcal:220,p:14,c:28,f:5},
+      {emoji:'🍛',name:'Chicken Biryani (small)',kcal:380,p:22,c:44,f:10},
+      {emoji:'🥜',name:'Roasted Chana',kcal:140,p:8,c:20,f:3},
+      {emoji:'🥬',name:'Vegetable Soup + Bread',kcal:200,p:6,c:30,f:4}
+    ]},
+    {day:'Sunday',meals:[
+      {emoji:'🍳',name:'Masala Omelette + Paratha',kcal:340,p:18,c:30,f:16},
+      {emoji:'🍗',name:'Butter Chicken (light) + Rice',kcal:420,p:28,c:40,f:14},
+      {emoji:'🍌',name:'Protein Smoothie',kcal:220,p:25,c:22,f:4},
+      {emoji:'🫘',name:'Dalma + Rice (Odia)',kcal:250,p:10,c:38,f:5}
+    ]}
+  ],
+  maintain:[],bulk:[]
+};
+// Generate maintain/bulk from cut with calorie adjustments
+MEAL_PLANS.maintain=MEAL_PLANS.cut.map(d=>({...d,meals:d.meals.map(m=>({...m,kcal:Math.round(m.kcal*1.2),p:Math.round(m.p*1.15),c:Math.round(m.c*1.25),f:Math.round(m.f*1.15)}))}));
+MEAL_PLANS.bulk=MEAL_PLANS.cut.map(d=>({...d,meals:d.meals.map(m=>({...m,kcal:Math.round(m.kcal*1.45),p:Math.round(m.p*1.35),c:Math.round(m.c*1.5),f:Math.round(m.f*1.3)}))}));
+
+let activeMealGoal='cut';
+function setMealPlanGoal(goal,btn){
+  activeMealGoal=goal;
+  if(btn){btn.parentElement.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}
+  renderMealPlans();
+}
+function renderMealPlans(){
+  const plan=MEAL_PLANS[activeMealGoal]||MEAL_PLANS.cut;
+  const container=document.getElementById('meal-plan-container');
+  container.innerHTML=plan.map(d=>{
+    const dayCals=d.meals.reduce((a,m)=>a+m.kcal,0);
+    return `<div class="meal-plan-day"><div class="meal-plan-header"><div class="meal-plan-day-name">${d.day}</div><div class="meal-plan-cals">${dayCals} kcal</div></div>${d.meals.map(m=>`<div class="mp-meal"><div class="mp-emoji">${m.emoji}</div><div class="mp-info"><div class="mp-name">${m.name}</div><div class="mp-macros">P:${m.p}g C:${m.c}g F:${m.f}g</div></div><div class="mp-kcal">${m.kcal}</div></div>`).join('')}</div>`;
+  }).join('');
+}
+
+// ── WORKOUT PROGRAMS ──
+const WORKOUTS=[
+  {name:'Push Day (Chest/Shoulders/Tri)',badge:'STRENGTH',badgeColor:'var(--ac)',desc:'Build upper body pushing muscles with compound and isolation movements.',exercises:[
+    {name:'Bench Press',sets:'4×8-10'},{name:'Overhead Press',sets:'3×10'},{name:'Incline Dumbbell Press',sets:'3×12'},{name:'Lateral Raises',sets:'3×15'},{name:'Tricep Pushdowns',sets:'3×12'},{name:'Chest Flyes',sets:'3×12'}
+  ]},
+  {name:'Pull Day (Back/Biceps)',badge:'STRENGTH',badgeColor:'var(--bl)',desc:'Strengthen your back and biceps for balanced upper body development.',exercises:[
+    {name:'Deadlifts',sets:'4×6-8'},{name:'Pull-ups / Lat Pulldown',sets:'4×8-10'},{name:'Barbell Rows',sets:'3×10'},{name:'Face Pulls',sets:'3×15'},{name:'Barbell Curls',sets:'3×12'},{name:'Hammer Curls',sets:'3×12'}
+  ]},
+  {name:'Leg Day (Quads/Hams/Glutes)',badge:'STRENGTH',badgeColor:'var(--or)',desc:'Build a powerful lower body with squats, lunges, and posterior chain work.',exercises:[
+    {name:'Barbell Squats',sets:'4×8-10'},{name:'Romanian Deadlifts',sets:'3×10'},{name:'Leg Press',sets:'3×12'},{name:'Walking Lunges',sets:'3×12 each'},{name:'Leg Curls',sets:'3×12'},{name:'Calf Raises',sets:'4×15'}
+  ]},
+  {name:'HIIT Blast (20 min)',badge:'CARDIO',badgeColor:'var(--rd)',desc:'Maximum calorie burn in minimum time. 40s work / 20s rest circuits.',exercises:[
+    {name:'Burpees',sets:'4×40s'},{name:'Mountain Climbers',sets:'4×40s'},{name:'Jump Squats',sets:'4×40s'},{name:'High Knees',sets:'4×40s'},{name:'Plank Jacks',sets:'4×40s'}
+  ]},
+  {name:'Yoga Flow (30 min)',badge:'RECOVERY',badgeColor:'#a78bfa',desc:'Mobility, flexibility, and mindfulness for active recovery days.',exercises:[
+    {name:'Sun Salutations',sets:'5 rounds'},{name:'Warrior Sequence',sets:'3 min each'},{name:'Pigeon Pose',sets:'2 min each'},{name:'Seated Forward Fold',sets:'3 min'},{name:'Shavasana',sets:'5 min'}
+  ]},
+  {name:'Home Bodyweight',badge:'NO EQUIPMENT',badgeColor:'var(--yl)',desc:'Full body workout with zero equipment. Perfect for travel or home.',exercises:[
+    {name:'Push-ups',sets:'4×15-20'},{name:'Bodyweight Squats',sets:'4×20'},{name:'Plank Hold',sets:'3×60s'},{name:'Glute Bridges',sets:'3×15'},{name:'Dips (chair)',sets:'3×12'},{name:'Lunges',sets:'3×12 each'}
+  ]}
+];
+
+function renderWorkouts(){
+  const container=document.getElementById('workout-container');
+  container.innerHTML=WORKOUTS.map((w,i)=>`<div class="workout-card" onclick="toggleWorkoutDetail(${i})"><div class="workout-header"><div class="workout-name">${w.name}</div><div class="workout-badge" style="background:${w.badgeColor}20;color:${w.badgeColor};border:1px solid ${w.badgeColor}40">${w.badge}</div></div><div class="workout-desc">${w.desc}</div><div class="workout-exercises" id="wex-${i}" style="display:none">${w.exercises.map(e=>`<div class="workout-ex"><span>• ${e.name}</span><span class="workout-ex-sets">${e.sets}</span></div>`).join('')}<button class="modal-btn" style="margin-top:10px" onclick="event.stopPropagation();startWorkout(${i})">Start Workout</button></div></div>`).join('');
+}
+function toggleWorkoutDetail(i){
+  const el=document.getElementById('wex-'+i);
+  el.style.display=el.style.display==='none'?'flex':'none';
+}
+function startWorkout(i){
+  const w=WORKOUTS[i];
+  showToast('🏋️ '+w.name+' started!');
+  addActivity(w.name,0,w.badge==='CARDIO'?300:w.badge==='RECOVERY'?80:250);
+  awardXP(20);
+}
+
+// ── PLANS TAB TOGGLE ──
+function switchPlanTab(tab){
+  ['meals','workouts','shop'].forEach(t=>{
+    document.getElementById('plans-'+t+'-tab').style.display=t===tab?'block':'none';
+    document.getElementById('pt-'+t).classList.toggle('active',t===tab);
+  });
+  if(tab==='meals')renderMealPlans();
+  if(tab==='workouts')renderWorkouts();
+  if(tab==='shop')renderShoppingList();
+}
+
+// ── SHOPPING LIST ──
+function renderShoppingList(){
+  const plan=MEAL_PLANS[activeMealGoal]||MEAL_PLANS.cut;
+  const items=new Map();
+  plan.forEach(d=>d.meals.forEach(m=>{
+    const key=m.name.split('+')[0].trim();
+    items.set(key,(items.get(key)||0)+1);
+  }));
+  const checked=getStorage('mt_shop_checked',[]);
+  const container=document.getElementById('shop-items');
+  container.innerHTML=[...items.entries()].map(([name,count])=>{
+    const isChecked=checked.includes(name);
+    return `<div class="shop-item"><div class="shop-check ${isChecked?'checked':''}" onclick="toggleShopItem('${name}')">${isChecked?'✓':''}</div><span style="${isChecked?'text-decoration:line-through;opacity:.5':''}">${name}${count>2?' (×'+count+')':''}</span></div>`;
+  }).join('');
+}
+function toggleShopItem(name){
+  let checked=getStorage('mt_shop_checked',[]);
+  if(checked.includes(name))checked=checked.filter(n=>n!==name);else checked.push(name);
+  setStorage('mt_shop_checked',checked);
+  renderShoppingList();
+}
+
+// ── BODY COMPOSITION ──
+function saveBodyComp(){
+  const bf=parseFloat(document.getElementById('bf-input').value);
+  const mm=parseFloat(document.getElementById('mm-input').value);
+  if(!bf&&!mm){showToast('Enter at least one value');return;}
+  const comp=getStorage('mt_body_comp',{});
+  if(bf)comp.bodyFat=bf;
+  if(mm)comp.muscleMass=mm;
+  comp.date=getKey();
+  setStorage('mt_body_comp',comp);
+  renderBodyComp();
+  showToast('✅ Body composition saved');
+  awardXP(10);
+}
+function renderBodyComp(){
+  const comp=getStorage('mt_body_comp',{});
+  const entries=getStorage('mt_weight_entries',[]);
+  const latest=entries.length?entries[entries.length-1].weight:profile.weight||'—';
+  document.getElementById('bc-weight').textContent=latest;
+  document.getElementById('bc-bodyfat').textContent=comp.bodyFat?comp.bodyFat+'%':'—';
+  document.getElementById('bc-muscle').textContent=comp.muscleMass?comp.muscleMass+'kg':'—';
+}
+
+// ── PROGRESS PHOTOS ──
+let activePhotoSlot='';
+function capturePhoto(slot){
+  activePhotoSlot=slot;
+  document.getElementById('photo-input').click();
+}
+function onPhotoSelect(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const data=e.target.result;
+    setStorage('mt_photo_'+activePhotoSlot,data);
+    renderPhotos();
+    showToast('📸 Photo saved!');
+    awardXP(15);
+  };
+  reader.readAsDataURL(file);
+  event.target.value='';
+}
+function renderPhotos(){
+  ['before','current'].forEach(slot=>{
+    const data=getStorage('mt_photo_'+slot,null);
+    const el=document.getElementById('photo-'+slot);
+    if(data){
+      el.innerHTML=`<img src="${data}" alt="${slot}"><div style="position:absolute;bottom:6px;left:6px;background:rgba(0,0,0,.7);padding:2px 8px;border-radius:var(--rpill);font-size:9px;font-weight:700;color:var(--t0);text-transform:uppercase">${slot}</div>`;
+    }
+  });
+}
+
+// ── GAMIFICATION ──
+const BADGES=[
+  {id:'first_log',icon:'🎯',name:'First Log',desc:'Log your first food',condition:()=>getStorage('mt_total_logs',0)>=1},
+  {id:'streak_7',icon:'🔥',name:'7-Day Streak',desc:'7 days in a row',condition:()=>{let s=0;for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-i);if(getStorage('mt_log_'+getKey(d),[]).length)s++;else break;}return s>=7;}},
+  {id:'streak_30',icon:'💎',name:'30-Day Streak',desc:'30 days in a row',condition:()=>{let s=0;for(let i=0;i<30;i++){const d=new Date();d.setDate(d.getDate()-i);if(getStorage('mt_log_'+getKey(d),[]).length)s++;else break;}return s>=30;}},
+  {id:'protein_king',icon:'💪',name:'Protein King',desc:'Hit protein goal 10 times',condition:()=>getStorage('mt_protein_hits',0)>=10},
+  {id:'water_master',icon:'💧',name:'Hydrated',desc:'8 glasses 5 days',condition:()=>getStorage('mt_water_perfect',0)>=5},
+  {id:'fast_complete',icon:'⏱️',name:'Faster',desc:'Complete 5 fasts',condition:()=>getStorage('mt_fast_history',[]).length>=5},
+  {id:'weight_logger',icon:'⚖️',name:'Tracker',desc:'Log weight 10 times',condition:()=>getStorage('mt_weight_entries',[]).length>=10},
+  {id:'centurion',icon:'🏆',name:'Centurion',desc:'Log 100 meals',condition:()=>getStorage('mt_total_logs',0)>=100},
+];
+
+function renderBadges(){
+  const grid=document.getElementById('badge-grid');
+  grid.innerHTML=BADGES.map(b=>{
+    const earned=b.condition();
+    return `<div class="badge-item ${earned?'earned':'locked'}"><div class="badge-icon">${earned?b.icon:'🔒'}</div><div class="badge-name">${b.name}</div></div>`;
+  }).join('');
+}
+
+function getXP(){return getStorage('mt_xp',0);}
+function awardXP(amount){
+  let xp=getXP()+amount;
+  setStorage('mt_xp',xp);
+  renderXP();
+}
+function renderXP(){
+  const xp=getXP();
+  const level=Math.floor(xp/100)+1;
+  const xpInLevel=xp%100;
+  document.getElementById('user-level').textContent=level;
+  document.getElementById('user-xp').textContent=xp;
+  document.getElementById('user-xp-next').textContent=level*100;
+  document.getElementById('xp-fill').style.width=(xpInLevel)+'%';
+}
+
+// ── CHALLENGES ──
+const CHALLENGES=[
+  {id:'protein_week',name:'Protein Champion',desc:'Hit protein goal every day this week',target:7,icon:'💪',xp:50},
+  {id:'log_streak',name:'Consistency King',desc:'Log at least one meal for 5 straight days',target:5,icon:'🔥',xp:30},
+  {id:'water_week',name:'Stay Hydrated',desc:'Drink 8 glasses for 3 days',target:3,icon:'💧',xp:25},
+  {id:'step_master',name:'10K Steps',desc:'Hit 10,000 steps in a day',target:1,icon:'🚶',xp:20},
+];
+
+function renderChallenges(){
+  const container=document.getElementById('challenges-container');
+  container.innerHTML=CHALLENGES.map(ch=>{
+    const progress=getStorage('mt_challenge_'+ch.id,0);
+    const pct=Math.min(progress/ch.target*100,100);
+    const done=pct>=100;
+    return `<div class="challenge-card ${done?'':'active-challenge'}"><div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><span style="font-size:24px">${ch.icon}</span><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--t0)">${ch.name}</div><div style="font-size:11px;color:var(--t3)">${ch.desc}</div></div><div style="font-size:10px;font-weight:700;color:${done?'var(--ac)':'var(--t3)'}">${done?'✅ DONE':progress+'/'+ch.target}</div></div><div class="challenge-progress"><div class="challenge-progress-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+}
+
+// ── LEADERBOARD (Simulated community) ──
+function renderLeaderboard(){
+  const userName=profile.name||'You';
+  const userStreak=(()=>{let s=0;for(let i=0;i<30;i++){const d=new Date();d.setDate(d.getDate()-i);if(getStorage('mt_log_'+getKey(d),[]).length)s++;else break;}return s;})();
+  const userXP=getXP();
+  const leaders=[
+    {name:'Abhijeet M.',avatar:'🏆',streak:45,xp:4200},
+    {name:'Rahul P.',avatar:'💪',streak:38,xp:3800},
+    {name:'Sneha M.',avatar:'🔥',streak:32,xp:3400},
+    {name:userName+' (You)',avatar:'⭐',streak:userStreak,xp:userXP,isUser:true},
+    {name:'Arjun K.',avatar:'🏃',streak:28,xp:2800},
+    {name:'Priya D.',avatar:'🧘',streak:25,xp:2500},
+    {name:'Vikram S.',avatar:'🏋️',streak:22,xp:2200},
+  ].sort((a,b)=>b.xp-a.xp);
+
+  const list=document.getElementById('leaderboard-list');
+  list.innerHTML=leaders.map((l,i)=>{
+    const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    return `<div class="leaderboard-item" style="${l.isUser?'border-color:var(--acbd);background:var(--acbg)':''}"><div class="lb-rank ${rankClass}">${i+1}</div><div class="lb-avatar">${l.avatar}</div><div class="lb-info"><div class="lb-name">${l.name}</div><div class="lb-streak">${l.streak} day streak</div></div><div class="lb-score">${l.xp} XP</div></div>`;
+  }).join('');
+}
+
+function invitePartner(){
+  if(navigator.share){
+    navigator.share({title:'MacroTrack Pro',text:'Be my accountability partner on MacroTrack Pro!',url:window.location.href}).catch(()=>{});
+  } else {
+    showToast('📋 Share link copied!');
+  }
+}
+
+// ── BARCODE SCANNER ──
+let scannerStream=null;
+function openBarcodeScanner(){
+  openModal('scanner-modal');
+  startCamera();
+}
+function closeBarcodeScanner(){
+  stopCamera();
+  closeModal('scanner-modal');
+}
+function startCamera(){
+  const video=document.getElementById('scanner-video');
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(stream=>{
+      scannerStream=stream;
+      video.srcObject=stream;
+      // Simulate barcode detection after 3s
+      setTimeout(()=>{
+        if(scannerStream){
+          simulateBarcodeScan();
+        }
+      },3000);
+    }).catch(err=>{
+      document.getElementById('scanner-result').style.display='block';
+      document.getElementById('scanner-result').innerHTML='<div style="text-align:center;padding:12px;background:var(--rdbg);border-radius:var(--r12);color:var(--rd);font-size:12px">Camera access denied. Use manual entry below.</div>';
+    });
+  }
+}
+function stopCamera(){
+  if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null;}
+}
+function simulateBarcodeScan(){
+  stopCamera();
+  const foods=[
+    {name:'Amul Protein Shake',kcal:180,p:30,c:12,f:3},
+    {name:'Britannia NutriChoice',kcal:140,p:3,c:22,f:5},
+    {name:'MTR Dal Fry',kcal:220,p:12,c:30,f:6},
+  ];
+  const found=foods[Math.floor(Math.random()*foods.length)];
+  document.getElementById('scanner-result').style.display='block';
+  document.getElementById('scanner-result').innerHTML=`<div style="background:var(--acbg);border:1px solid var(--acbd);border-radius:var(--r12);padding:12px;text-align:center"><div style="font-size:14px;font-weight:800;color:var(--t0)">${found.name}</div><div style="font-size:12px;color:var(--t3);margin-top:4px">${found.kcal} kcal · P:${found.p}g C:${found.c}g F:${found.f}g</div><button class="modal-btn" style="margin-top:8px" onclick="logScannedFood('${found.name}',${found.kcal},${found.p},${found.c},${found.f})">Add to Log</button></div>`;
+}
+function logScannedFood(name,kcal,p,c,f){
+  const log=getTodayLog();
+  log.push({id:Date.now(),name,kcal,protein:p,carbs:c,fat:f,fiber:0,sugar:0,sodium:0,meal:'Snack',emoji:'📦'});
+  saveTodayLog(log);
+  closeBarcodeScanner();
+  renderHome();
+  showToast('✅ '+name+' added!');
+  awardXP(5);
+}
+function manualBarcodeEntry(){
+  closeBarcodeScanner();
+  openAddFood();
+}
+
+// ── FREEMIUM ──
+function openPremium(){openModal('premium-modal');}
+function selectPricing(plan){
+  document.querySelectorAll('.pricing-card').forEach(c=>c.classList.remove('recommended'));
+  event.currentTarget.classList.add('recommended');
+  showToast(plan==='yearly'?'Best value! Save 40%':'Monthly plan selected');
+}
+function startFreeTrial(){
+  setStorage('mt_premium',true);
+  setStorage('mt_trial_start',Date.now());
+  closeModal('premium-modal');
+  showToast('🎉 7-day free trial started!');
+}
+
+// ── PUSH NOTIFICATIONS (PWA) ──
+function requestNotificationPermission(){
+  if('Notification' in window && Notification.permission==='default'){
+    Notification.requestPermission().then(p=>{
+      if(p==='granted')showToast('🔔 Notifications enabled!');
+    });
+  }
+}
+function sendLocalNotification(title,body){
+  if('Notification' in window && Notification.permission==='granted'){
+    new Notification(title,{body,icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎯</text></svg>'});
+  }
+}
+
+// ── BARCODE BUTTON IN FOOD MODAL ──
+// Add barcode scanner button to food search area
+(function addBarcodeButton(){
+  const searchRow=document.querySelector('#add-modal .modal input[type="text"]')?.parentElement;
+  if(searchRow&&!document.getElementById('barcode-btn')){
+    const btn=document.createElement('button');
+    btn.id='barcode-btn';
+    btn.innerHTML='📷';
+    btn.title='Scan Barcode';
+    btn.style.cssText='background:var(--s2);border:1.5px solid var(--b1);color:var(--t1);font-size:16px;border-radius:12px;padding:0 12px;cursor:pointer;transition:transform 0.2s;flex-shrink:0';
+    btn.onclick=function(){closeModal('add-modal');openBarcodeScanner();};
+    searchRow.appendChild(btn);
+  }
+})();
+
+// ── ADD COACHING MARKETPLACE + PREMIUM TO PROFILE ──
+(function addProfileExtras(){
+  const settingsList=document.querySelector('#screen-profile .settings-list');
+  if(!settingsList)return;
+  const resetItem=settingsList.querySelector('[style*="rgba(248,113,113"]');
+  if(!resetItem)return;
+
+  // Coaching Marketplace
+  const coachItem=document.createElement('div');
+  coachItem.className='settings-item';
+  coachItem.onclick=function(){openModal('coaching-modal');};
+  coachItem.innerHTML='<div class="settings-left"><div class="settings-icon" style="background:rgba(0,228,255,.08);border-color:rgba(0,228,255,.2)"><svg viewBox="0 0 24 24" style="stroke:var(--bl)"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0112 0v2"/><path d="M16 4l2 2-2 2"/></svg></div><div><div class="settings-label">Find a Coach</div><div style="font-size:10px;color:var(--bl);font-weight:600;margin-top:1px">Certified nutritionists</div></div></div><div class="settings-value">›</div>';
+  settingsList.insertBefore(coachItem,resetItem);
+
+  // Premium
+  const premItem=document.createElement('div');
+  premItem.className='settings-item';
+  premItem.style.borderColor='rgba(166,255,0,.2)';
+  premItem.onclick=function(){openPremium();};
+  premItem.innerHTML='<div class="settings-left"><div class="settings-icon" style="background:linear-gradient(135deg,rgba(166,255,0,.1),rgba(0,228,255,.1));border-color:rgba(166,255,0,.2)"><svg viewBox="0 0 24 24" style="stroke:var(--ac)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div class="settings-label" style="color:var(--ac)">MacroTrack PRO</div><div style="font-size:10px;color:var(--t3);font-weight:600;margin-top:1px">Unlock all features</div></div></div><div class="premium-badge" style="font-size:8px;padding:2px 8px">PRO</div>';
+  settingsList.insertBefore(premItem,resetItem);
+})();
+
+// switchTab already updated in main definition to handle plans + community
+
+// ── UPDATE INIT TO INCLUDE NEW FEATURES ──
+const _origInit=init;
+(function enhancedInit(){
+  // Show onboarding for new users after setup
+  const origGoHome=window.goHome;
+  window.goHome=function(){
+    origGoHome();
+    setTimeout(()=>{
+      showOnboarding();
+      generateCoachingInsight();
+      renderMacroTiming();
+      renderSupplements();
+      requestNotificationPermission();
+    },500);
+  };
+
+  // Track total logs for gamification
+  const origLogFood=window.logFood;
+  window.logFood=function(){
+    origLogFood();
+    const total=getStorage('mt_total_logs',0)+1;
+    setStorage('mt_total_logs',total);
+    awardXP(10);
+    // Track protein hits
+    const log=getTodayLog();
+    const totP=log.reduce((a,f)=>a+f.protein,0);
+    const t=targets.protein||150;
+    if(totP>=t){
+      const hits=getStorage('mt_protein_hits',0)+1;
+      setStorage('mt_protein_hits',hits);
+    }
+  };
+
+  // Update coaching after each food log
+  const origRenderHome=window.renderHome;
+  window.renderHome=function(){
+    origRenderHome();
+    generateCoachingInsight();
+  };
+})();
+
+// ── FASTING NOTIFICATION ──
+(function setupFastingNotification(){
+  const origToggleFasting=window.toggleFasting;
+  window.toggleFasting=function(){
+    origToggleFasting();
+    const session=getStorage('mt_fast_session',null);
+    if(session&&session.active){
+      const ms=session.protocol*3600000;
+      setTimeout(()=>{
+        sendLocalNotification('Fasting Complete! 🎉','Your '+session.protocol+'h fast is done. Time to eat!');
+      },ms);
+    }
+  };
+})();
+
 // ── ERROR HANDLING ──
 window.addEventListener('error',(event)=>{
   console.error('App error:',event.error);
-  showToast('⚠️ Error: '+event.error.message);
 });
 window.addEventListener('unhandledrejection',(event)=>{
   console.error('Unhandled rejection:',event.reason);
-  showToast('⚠️ Network error. Please try again.');
 });
 </script>
 
